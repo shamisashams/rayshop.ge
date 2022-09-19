@@ -1,0 +1,21 @@
+.css-1v5z18m {
+  width: 100% !important;
+}
+.css-eg0mwd-MuiSlider-thumb {
+  width: 13px !important;
+  height: 21px !important;
+  border-radius: 3px !important;
+  background-color: #ed5c2f !important;
+}
+.css-1gv0vcd-MuiSlider-track {
+  background-color: #0f1b13 !important;
+  border: none !important;
+}
+.css-14pt78w-MuiSlider-rail {
+  color: transparent;
+  border: 1px solid #0f1b13;
+}
+.css-eg0mwd-MuiSlider-thumb:hover,
+.css-eg0mwd-MuiSlider-thumb.Mui-focusVisible {
+  box-shadow: none !important;
+}
