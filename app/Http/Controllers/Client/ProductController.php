@@ -35,7 +35,7 @@ class ProductController extends Controller
         $page = Page::where('key', 'products')->firstOrFail();
         $products = Product::with(['files'])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
-        })->paginate(16);
+        })->paginate(12);
 
         $images = [];
         foreach ($page->sections as $sections) {
@@ -200,7 +200,7 @@ class ProductController extends Controller
         /*return view('client.pages.product.show', [
             'product' => $product
         ]);*/
-        return Inertia::render('ProductDetails/ProductDetails', [
+        return Inertia::render('SingleProucts', [
             'product' => $product,
             'category_path' => $path,
             'similar_products' => $similar_products,

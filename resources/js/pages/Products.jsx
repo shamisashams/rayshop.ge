@@ -6,9 +6,10 @@ import ProductBox from "../components/ProductBox";
 import { CommonButton, SizePick } from "../components/Shared";
 import { IoMdOptions } from "react-icons/io";
 import Layout from "../Layouts/Layout";
+import { Route } from "react-router-dom";
 
 
-const Products = ({seo}) => {
+const Products = ({seo, products}) => {
   const [showFilter, setShowfilter] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -74,16 +75,26 @@ const Products = ({seo}) => {
           ფილტერ
         </button>
         <div className="xl:pl-5  xl:ml-80 2xl:ml-96  grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-8">
-          {productGrid.map((item, index) => {
+          {products.data.map((data, index) => {
             return (
               <ProductBox
                 key={index}
-                image={item.image}
-                link={item.link}
-                name={item.name}
-                sale={item.sale}
-                oldPrice={item.oldPrice}
-                price={item.price}
+                image={
+                    data.files != null
+                    ? "/" +
+                      data.files[0].path +
+                      "/" +
+                      data.files[0].title
+                    : null
+                }
+                // link={data.link}
+                link={
+                    route("client.product.show", data.slug)
+                }
+                name={data.name}
+                sale={data.sale}
+                oldPrice={data.oldPrice}
+                price={data.price}
               />
             );
           })}

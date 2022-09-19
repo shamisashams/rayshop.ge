@@ -18,7 +18,7 @@ import {
 
 import Layout from "../Layouts/Layout";
 
-const Home = ({seo}) => {
+const Home = ({seo,gallery}) => {
   return (
     <Layout seo={seo}>
       <HeroSlider />
@@ -36,7 +36,7 @@ const Home = ({seo}) => {
           useWindowMouseEvents
           className="flex flex-wrap justify-between lg:-mx-5 -mx-2"
         >
-          {galleryGrid.map((item, index) => {
+          {gallery.map((item, index) => {
             return (
               <MouseParallaxChild
                 className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
@@ -51,7 +51,15 @@ const Home = ({seo}) => {
                   <div className="w-full h-full relative after:left-0 after:top-0 after:w-full after:h-full hover:after:bg-white/[0.5] after:transition-all">
                     <img
                       className="w-full h-full object-cover"
-                      src={item.img}
+                    //   src={item.img}
+                    src={
+                        item.file != null
+                        ? "/" +
+                          item.file.path +
+                          "/" +
+                          item.file.title
+                        : null
+                    }
                       alt=""
                     />
                   </div>

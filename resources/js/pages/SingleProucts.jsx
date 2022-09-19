@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Link } from '@inertiajs/inertia-react'
 // import Img1 from "../assets/images/products/1.png";
@@ -7,12 +8,13 @@ import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
 // import { ReactComponent as ShareIcon } from "/assets/svg/share.svg";
 import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
+import Layout from "../Layouts/Layout";
 
-const SingleProucts = () => {
+const SingleProucts = ({seo}) => {
   const [imageIndex, setImageIndex] = useState(0);
   const imgs = ["/assets/images/products/1.png", "/assets/images/products/2.png", "/assets/images/products/5.png"];
   return (
-    <>
+    <Layout seo={seo}>
       <section className="h-fit min-h-screen relative">
         <div className=" absolute left-0 top-0 w-1/2 h-full bg-custom-slate-300"></div>
         <div className="wrapper flex items-start justify-start relative pt-40 pb-10 flex-col lg:flex-row">
@@ -77,7 +79,7 @@ const SingleProucts = () => {
       <section className="wrapper pt-10 pb-20">
         <Form />
       </section>
-    </>
+    </Layout>
   );
 };
 

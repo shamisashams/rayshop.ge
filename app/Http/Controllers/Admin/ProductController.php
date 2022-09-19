@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Http/Controllers/Admin/ProductController.php
  *
@@ -55,8 +56,7 @@ class ProductController extends Controller
         CategoryRepositoryInterface $categoryRepository,
         AttributeRepository $attributeRepository,
         ProductAttributeValueRepository $productAttributeValueRepository
-    )
-    {
+    ) {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->categories = $this->categoryRepository->getCategoryTree();
@@ -77,8 +77,8 @@ class ProductController extends Controller
 
         return view('admin.nowa.views.products.index', [
             'data' => $this->productRepository->getData($request, ['translations', 'categories']),
-            'categories' => $this->categoryRepository->model->leftJoin('category_translations',function ($join){
-                $join->on('category_translations.category_id','categories.id')->where('category_translations.locale',app()->getLocale());
+            'categories' => $this->categoryRepository->model->leftJoin('category_translations', function ($join) {
+                $join->on('category_translations.category_id', 'categories.id')->where('category_translations.locale', app()->getLocale());
             })->orderBy('title')->get()
         ]);
     }
@@ -152,27 +152,27 @@ class ProductController extends Controller
 
         //save product attributes
         $attr = [];
-        foreach ($attributes as $key => $item){
-            if ($item){
+        foreach ($attributes as $key => $item) {
+            if ($item) {
                 $attr[$key] = $item;
             }
         }
 
         $attr_ids = array_keys($attr);
 
-        $_attributes = Attribute::whereIn('id',$attr_ids)->get();
+        $_attributes = Attribute::whereIn('id', $attr_ids)->get();
 
         $arr = [];
-        foreach ($_attributes as $item){
+        foreach ($_attributes as $item) {
             $arr[$item->id] = $item;
         }
 
         $data = [];
-        foreach ($attr as $key => $item){
+        foreach ($attr as $key => $item) {
             $data['product_id'] = $product->id;
             $data['attribute_id'] = $arr[$key]->id;
             $data['type'] = $arr[$key]->type;
-            if($data['type'] == 'boolean') $data['value'] = (bool)$item;
+            if ($data['type'] == 'boolean') $data['value'] = (bool)$item;
             else $data['value'] = $item;
 
             //dd($data);
@@ -182,7 +182,6 @@ class ProductController extends Controller
 
 
         return redirect(locale_route('product.index', $product->id))->with('success', __('admin.create_successfully'));
-
     }
 
     /**
@@ -268,15 +267,15 @@ class ProductController extends Controller
         //update product attributes
         $attr = [];
         $attr_del = [];
-        foreach ($attributes as $key => $item){
-            if ($item){
+        foreach ($attributes as $key => $item) {
+            if ($item) {
 
-                $product_atribute = ProductAttributeValue::where('product_id',$product->id)
-                    ->where('attribute_id',$key)->first();
-                if ($product_atribute){
+                $product_atribute = ProductAttributeValue::where('product_id', $product->id)
+                    ->where('attribute_id', $key)->first();
+                if ($product_atribute) {
                     $data['integer_value'] = $item;
-                    ProductAttributeValue::where('product_id',$product_atribute->product_id)
-                        ->where('attribute_id',$product_atribute->attribute_id)
+                    ProductAttributeValue::where('product_id', $product_atribute->product_id)
+                        ->where('attribute_id', $product_atribute->attribute_id)
                         ->update($data);
                 } else {
                     $attr[$key] = $item;
@@ -286,20 +285,20 @@ class ProductController extends Controller
 
         $attr_ids = array_keys($attr);
 
-        $_attributes = Attribute::whereIn('id',$attr_ids)->get();
+        $_attributes = Attribute::whereIn('id', $attr_ids)->get();
 
         $arr = [];
-        foreach ($_attributes as $item){
+        foreach ($_attributes as $item) {
             $arr[$item->id] = $item;
         }
 
         $data = [];
-        foreach ($attr as $key => $item){
+        foreach ($attr as $key => $item) {
             $data['product_id'] = $product->id;
             $data['attribute_id'] = $arr[$key]->id;
             $data['type'] = $arr[$key]->type;
 
-            if($data['type'] == 'boolean') $data['value'] = (bool)$item;
+            if ($data['type'] == 'boolean') $data['value'] = (bool)$item;
             else $data['value'] = $item;
 
             //dd($data);
@@ -307,8 +306,8 @@ class ProductController extends Controller
         }
 
 
-        ProductAttributeValue::where('product_id',$product->id)
-            ->whereIn('attribute_id',$attr_del)->delete();
+        ProductAttributeValue::where('product_id', $product->id)
+            ->whereIn('attribute_id', $attr_del)->delete();
 
 
 
