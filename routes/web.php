@@ -126,12 +126,16 @@ Route::prefix('{locale?}')
 
             Route::any('payments/bog/status', [\App\Http\Controllers\Client\OrderController::class, 'bogResponse'])->name('bogResponse');
 
-            // Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest_client');
-            Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index');
-            Route::post('login', [\App\Http\Controllers\Client\AuthController::class, 'login'])->name('client.login');
             Route::get('cabinet', [\App\Http\Controllers\Client\AuthController::class, 'cabinet'])->name('client.cabinet');
-            Route::get('registration', [\App\Http\Controllers\Client\AuthController::class, 'registrationView'])->name('client.registration.index');
-            Route::post('registration', [\App\Http\Controllers\Client\AuthController::class, 'createAccount'])->name('client.register');
+
+            Route::middleware(['guest'])->group(function () {
+                Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest');
+                Route::post('login', [\App\Http\Controllers\Client\AuthController::class, 'login'])->name('client.login');
+                Route::get('registration', [\App\Http\Controllers\Client\AuthController::class, 'registrationView'])->name('client.registration.index');
+                Route::post('registration', [\App\Http\Controllers\Client\AuthController::class, 'createAccount'])->name('client.register');
+            });
+            // Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest_client');
+
 
             Route::get('logout', [\App\Http\Controllers\Client\AuthController::class, 'logout'])->name('logout');
             /*Route::get('test/{method}',function ($locale,$method,\App\Http\Controllers\TestController $testController){

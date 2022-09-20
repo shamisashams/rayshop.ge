@@ -161,8 +161,7 @@ const Header = () => {
               {
                 user?
 <>
-<Link
-                href="/signup"
+<div
                 className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
                   accountDrop ? "translate-x-0" : "translate-x-32"
                 }`}
@@ -170,7 +169,7 @@ const Header = () => {
                 {/* <UserIcon className="mr-2" /> */}
                 <img src="/assets/svg/user.svg" alt="user" className="mr-2" />
                 <p>სახელი გვარი</p>
-              </Link>
+              </div>
               <Link
                 href="/"
                 className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end  transition-all duration-300 ${
@@ -179,7 +178,9 @@ const Header = () => {
               >
                 {/* <SettingIcon className="mr-2" /> */}
                 <img src="/assets/svg/settings.svg" alt="setting" className="mr-2"/>
+                <Link href={route("client.cabinet")}>
                 <p>პირადი კაბინეტი</p>
+                </Link>
               </Link>
               <button className="flex items-center !cursor-pointer whitespace-nowrap justify-end mx-auto mr-0 text-custom-blue">
                 {/* <LogoutIcon className="mr-2" /> */}
@@ -199,7 +200,7 @@ const Header = () => {
                 <p>სისტემაში შესვლა</p>
               </Link>
               <Link
-                href="/signup"
+                href={route("client.registration.index")}
                 className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end  transition-all duration-300 text-custom-blue ${
                   accountDrop ? "translate-x-0" : "translate-x-20"
                 }`}
@@ -209,25 +210,6 @@ const Header = () => {
                 </>
               }
 
-
-              {/* if not logged in 👇  */}
-
-              {/* <Link
-                href="/login"
-                className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
-                  accountDrop ? "translate-x-0" : "translate-x-32"
-                }`}
-              >
-                <p>სისტემაში შესვლა</p>
-              </Link>
-              <Link
-                href="/signup"
-                className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end  transition-all duration-300 text-custom-blue ${
-                  accountDrop ? "translate-x-0" : "translate-x-20"
-                }`}
-              >
-                <p>შექმენი ექაუნთი</p>
-              </Link> */}
             </div>
           </div>
           <button

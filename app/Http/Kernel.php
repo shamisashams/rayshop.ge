@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\AuthenticateClient;
 
 class Kernel extends HttpKernel
 {
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'setlocale' => \App\Http\Middleware\SetLocale::class,
+        'auth_client' => AuthenticateClient::class,
         'active' => \App\Http\Middleware\EnableGlobalScopeMiddleware::class,
     ];
 }
