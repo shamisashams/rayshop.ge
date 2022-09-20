@@ -2,7 +2,7 @@ import  React from 'react';
 import { useRef, useState, useEffect } from "react";
 import { Link, usePage } from "@inertiajs/inertia-react";
 // import {  useLocation } from "react-router-dom";
-import Logo from "/assets/images/logo/1.png";
+// import Logo from "/assets/images/logo/1.png";
 // import { ReactComponent as SearchIcon } from "/assets/svg/search.svg";
 // import { ReactComponent as UserIcon } from "/assets/svg/user.svg";
 // import { ReactComponent as CartIcon } from "/assets/svg/cart.svg";
@@ -81,10 +81,10 @@ const Header = () => {
     >
       <div className="wrapper relative lg:py-10 py-5 flex items-center justify-between">
         <Link
-          href="/"
+          href={route("client.home.index")}
           className="z-50 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pl-6 w-36 "
         >
-          <img src={Logo} alt="" />
+          <img src={"/assets/images/logo/1.png"} alt="" />
         </Link>
         <button
           onClick={() => setShowMobileNav(!showMobileNav)}

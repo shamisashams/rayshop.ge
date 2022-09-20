@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/inertia-react'
 const ProductBox = (props) => {
   return (
     <div className=" p-5 bg-custom-slate-100 text-center group">
-      <div className="h-72 mb-5 relative">
+      <div className="h-72 mb-5 relative" >
         <img
           className="h-full w-full object-contain"
           src={props.image}
@@ -20,7 +20,7 @@ const ProductBox = (props) => {
               <img src="/assets/svg/eye.svg" alt="eye" />
             </div>
           </Link>
-          <Link href="/">
+          <Link onClick={() => props.handleClick(props.product)}>
             <div className="flex items-center justify-center w-12 h-12 mx-1 shadow-lg rounded-full bg-white hover:bg-custom-orange translate-y-40 group-hover:translate-y-0 group transition-all duration-500">
               {/* <CartIcon /> */}
               <img src="/assets/svg/cart.svg" alt="cart" />
