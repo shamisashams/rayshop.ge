@@ -90,9 +90,6 @@ Route::prefix('{locale?}')
 
             // Home Page
             Route::get('', [HomeController::class, 'index'])->name('client.home.index');
-
-
-
             // Contact Page
             Route::get('/contact', [ContactController::class, 'index'])->name('client.contact.index');
             Route::post('/contact-us', [ContactController::class, 'mail'])->name('client.contact.mail');

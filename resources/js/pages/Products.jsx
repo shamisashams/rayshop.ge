@@ -118,8 +118,8 @@ const Products = ({seo, products}) => {
     const [picked, setPicked] = useState(0);
     const [values, setValues] = useState({
         cat: "",
-        price: "",
-        size: "",
+        price: [0,100],
+        size: "s",
       })
 
       function handleChange(e) {
@@ -129,6 +129,8 @@ const Products = ({seo, products}) => {
             ...values,
             [key]: value,
         }))
+
+        console.log(values, 'esaa');
       }
 
       function handleSubmit(e) {
@@ -158,7 +160,10 @@ const Products = ({seo, products}) => {
                 key={index}
                 className="xl:mb-5 mb-2 flex items-center justify-start"
               >
-                <input type="checkbox" name="cat" value={values.cat} onChange={handleChange} id={`checkbox-${index}`} />
+                <input type="checkbox" name="cat" value={values.cat} onChange={
+                    handleChange
+                    }
+                     id={`checkbox-${index}`} />
                 <label className="mr-2" htmlFor={`checkbox-${index}`}>
                   <div></div>
                 </label>

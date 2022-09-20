@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Inertia } from '@inertiajs/inertia'
 import Img1 from "/assets/images/products/3.png";
 import Img2 from "/assets/images/products/4.png";
 import Img3 from "/assets/images/products/5.png";
@@ -10,19 +11,20 @@ import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 
 
 const Cart = ({ show, closeCart }) => {
+    const [quantity, setquantity] = useState(2);
 
     const [number, setNumber] = useState(1);
 
-  const decrease = () => {
-    if (number > 1) {
-      setNumber(number - 1);
-    } else {
-      setNumber(1);
-    }
-  };
-  const increase = () => {
-    setNumber(number + 1);
-  };
+//   const decrease = () => {
+//     if (number > 1) {
+//       setNumber(number - 1);
+//     } else {
+//       setNumber(1);
+//     }
+//   };
+//   const increase = () => {
+//     setNumber(number + 1);
+//   };
 
     const [remove, setRemove] = useState(false);
   const [clear, setClear] = useState(false);
@@ -62,7 +64,7 @@ const Cart = ({ show, closeCart }) => {
         cart = JSON.parse(cart);
         cart[index].qty = quantity;
         localStorage.setItem("cart", JSON.stringify(cart));
-        Inertia.visit(window.location.href);
+        // Inertia.visit(window.location.href);
     }
 
 
@@ -75,38 +77,6 @@ const Cart = ({ show, closeCart }) => {
         Inertia.visit(window.location.href);
     };
 
-  const itemsInCart = [
-    {
-      img: Img1,
-      name: "დასახელება",
-      price: "31.90",
-      size: "m",
-    },
-    {
-      img: Img2,
-      name: "დხეასა ხეასა ლეddბა",
-      price: "310",
-      size: "m",
-    },
-    {
-      img: Img3,
-      name: "jiga kokolapic",
-      price: "50.90",
-      size: "m",
-    },
-    {
-      img: Img2,
-      name: "დხეასა ხეასა ლეddბა",
-      price: "310",
-      size: "m",
-    },
-    {
-      img: Img3,
-      name: "jiga kokolapic",
-      price: "50.90",
-      size: "m",
-    },
-  ];
 
 console.log(getCart().items);
   return (
@@ -129,6 +99,7 @@ console.log(getCart().items);
         {
             getCart().items.map(
                 (item, index) =>{
+                    const [quantity, setquantity] = useState(item.qty);
                     return(
                         <div
       className={`flex items-center justify-between mb-4 text-sm transition-all duration-500  ${
@@ -142,7 +113,22 @@ console.log(getCart().items);
         </label>
         <div className="lg:w-28 w-20 h-fit shrink-0 sm:mx-5 mx-2">
           {/* <img className="w-full object-cover" src={item.product.img} alt="" /> */}
-          <img className="w-full object-cover" alt=""
+{
+    item.product.latest_image ?
+    <img className="w-full object-cover" alt=""
+                                                        src={
+                                                            item.product.latest_image !=null
+                                                                ? "/" +
+                                                                  item.product
+                                                                      .latest_image.path +"/" +
+                                                                  item.product
+                                                                      .latest_image
+                                                                      .title
+                                                                : null
+                                                        }
+                                                    />
+                                                    :
+                                                    <img className="w-full object-cover" alt=""
                                                         src={
                                                             item.product
                                                                 .files !=
@@ -157,12 +143,17 @@ console.log(getCart().items);
                                                                       .title
                                                                 : null
                                                         }
-                                                        alt=""
                                                     />
+}
+
+
         </div>
         <div className="lg:w-32 w-24">
           <div>{item.product.name}</div>
-          <div className="bold mb-3 mt-1">{item.product.price} ლარი</div>
+          <div className="bold mb-3 mt-1">
+            { item.product.special_price ? item.product.special_price :item.product.price}
+
+           ლარი</div>
           <div>
             ზომა: <span className="bold uppercase">{item.product.size}</span>
           </div>
@@ -171,21 +162,44 @@ console.log(getCart().items);
       <div className="flex items-center">
         {/* <Quantity /> */}
         <div className="flex items-center ">
+
+
       <button
         className="flex items-center justify-center border border-black rounded-full w-6 h-6"
-        onClick={decrease}
+        // onClick={
+        //     ()=>{
+        //         setquantity(
+        //             quantity > 1 ? quantity - 1 : 1
+        //         )
+        //         updateCart(quantity > 1 ? quantity - 1 : 1,index)
+        //     }
+        // }
+        onClick={() => {
+            setquantity(
+                quantity > 1 ? quantity - 1 : 1
+            )
+            updateCart(quantity > 1 ? quantity - 1 : 1,index)
+        }
+        }
       >
         <HiOutlineMinus />
       </button>
-      <div className="bold mx-3 text-lg">{number}</div>
+      <div className="bold mx-3 text-lg">{quantity}</div>
       <button
         className="flex items-center justify-center border border-black rounded-full w-6 h-6"
-        onClick={increase}
+        onClick={()=>{
+            setquantity(quantity + 1)
+            updateCart(quantity + 1,index)
+        }}
       >
         <HiOutlinePlus />
       </button>
     </div>
-        <button onClick={removeItem} className="sm:ml-10 ml-6 group">
+        <button onClick={
+            ()=>{
+                removeCartItem(index)
+            }
+            } className="sm:ml-10 ml-6 group">
           {/* <Delete className="fill-black group-hover:fill-custom-orange transition " /> */}
           <img src="/assets/svg/delete.svg" alt="del" className="fill-black group-hover:fill-custom-orange transition " />
         </button>
@@ -200,11 +214,15 @@ console.log(getCart().items);
       <div className="mt-5">
         <div className="flex item-center justify-between mb-3">
           <div className="opacity-50">რაოდენობა:</div>
-          <div className="bold text-lg">2</div>
+          <div className="bold text-lg">{getCart().items.length}</div>
         </div>
         <div className="flex item-center justify-between">
           <div className="bold">პროდუქტის ფასი:</div>
-          <div className="bold text-lg text-custom-orange">₾ 155.00</div>
+          <div className="bold text-lg text-custom-orange">₾
+
+          {getCart().total.toFixed(2)}
+
+          </div>
         </div>
       </div>
 
