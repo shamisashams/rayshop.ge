@@ -4,9 +4,11 @@ import { CommonButton } from "../components/Shared";
 import { BsPlusCircle, BsEye } from "react-icons/bs";
 import { useState } from "react";
 import Layout from "../Layouts/Layout";
+import { Link, usePage } from "@inertiajs/inertia-react";
 
 const Account = ({seo}) => {
   const [displayPassword, setDisplayPassword] = useState(false);
+  const {user} = usePage().props;
 
   return (
     <Layout seo={seo}>
@@ -25,10 +27,11 @@ const Account = ({seo}) => {
         <div className="md:w-2/3 mt-10  md:mt-0 pb-20 md:pb-0">
           <div className="max-w-md  m-auto text-center">
             <div className="bold text-2xl mb-10">პირადი ინფორმაცია</div>
-            <input className="bg-white mb-5" type="text" placeholder="სახელი" />
-            <input className="bg-white mb-5" type="text" placeholder="გვარი" />
-            <input className="bg-white mb-5" type="text" placeholder="იმეილი" />
+            <input className="bg-white mb-5" type="text" placeholder="სახელი" value={user.name} />
+            <input className="bg-white mb-5" type="text" placeholder="გვარი" value={user.surname} />
+            <input className="bg-white mb-5" type="text" placeholder="იმეილი"  value={user.email}/>
             <input
+            value={user.phone}
               className="bg-white mb-5"
               type="text"
               placeholder="მობილურის ნომერი"

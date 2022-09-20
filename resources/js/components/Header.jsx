@@ -168,7 +168,9 @@ const Header = () => {
               >
                 {/* <UserIcon className="mr-2" /> */}
                 <img src="/assets/svg/user.svg" alt="user" className="mr-2" />
-                <p>სახელი გვარი</p>
+                <p>
+                    {`${user.name}`}
+                </p>
               </div>
               <Link
                 href="/"

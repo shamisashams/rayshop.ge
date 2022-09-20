@@ -13,7 +13,7 @@ const Signup = ({seo}) => {
     const {errors,localizations} = usePage().props
     const [values, setValues] = useState({
         name: "",
-        Surname: "",
+        surname: "",
         email: "",
         password: "",
         password_repeat: "",
@@ -48,7 +48,7 @@ const Signup = ({seo}) => {
         {errors.name && <div>{errors.name}</div>}
         <input onChange={handleChange} name="name" className="mb-3" type="text" placeholder="სახელი" />
         {errors.surname && <div>{errors.surname}</div>}
-        <input onChange={handleChange} name="Surname" className="mb-3" type="text" placeholder="გვარი" />
+        <input onChange={handleChange} name="surname" className="mb-3" type="text" placeholder="გვარი" />
         {errors.email && <div>{errors.email}</div>}
         <input onChange={handleChange} name="email"  className="mb-3" type="email" placeholder="ელ. ფოსტა" />
         <input onChange={handleChange} name="phone" className="mb-3" type="text" placeholder="მობილურის ნომერი" />

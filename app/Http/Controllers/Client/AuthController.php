@@ -217,7 +217,7 @@ class AuthController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'Surname' => 'required',
+            'surname' => 'required',
             // 'id' => 'required|unique:users,id_number',
             'phone' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -230,9 +230,14 @@ class AuthController extends Controller
         $attributes['affiliate_id'] = (string) Str::uuid();
         $attributes['referred_by'] = $request->cookie('referral');
 
-        // dd($attributes);
-
         User::query()->create($attributes);
+        // User::create([
+        //     "name" => $attributes['name'],
+        //     "surname" => $attributes['surname'],
+        //     "phone" => $attributes['phone'],
+        //     "email" => $attributes['email'],
+        //     "password" => $attributes['password'],
+        // ]);
 
         return redirect()->back()->with('success', 'registered');
     }
