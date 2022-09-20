@@ -1,12 +1,15 @@
 // import UserImg from "../assets/images/icons/user.png";
+import React from "react";
 import { CommonButton } from "../components/Shared";
 import { BsPlusCircle, BsEye } from "react-icons/bs";
 import { useState } from "react";
+import Layout from "../Layouts/Layout";
 
-const Account = () => {
+const Account = ({seo}) => {
   const [displayPassword, setDisplayPassword] = useState(false);
 
   return (
+    <Layout seo={seo}>
     <div className="relative bg-custom-slate-300">
       <div className="md:block hidden absolute bg-white w-1/5 h-full left-0 top-0"></div>
       <div className="wrapper flex min-h-screen relative items-center flex-col md:flex-row">
@@ -56,6 +59,7 @@ const Account = () => {
         </div>
       </div>
     </div>
+</Layout>
   );
 };
 

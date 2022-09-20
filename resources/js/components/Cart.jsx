@@ -101,7 +101,7 @@ console.log(getCart().items);
                 (item, index) =>{
                     const [quantity, setquantity] = useState(item.qty);
                     return(
-                        <div
+                        <div key={index}
       className={`flex items-center justify-between mb-4 text-sm transition-all duration-500  ${
         remove ? "opacity-0" : ""
       } ${clear ? "hidden" : ""} `}

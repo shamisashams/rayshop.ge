@@ -118,8 +118,8 @@ const Products = ({seo, products}) => {
     const [picked, setPicked] = useState(0);
     const [values, setValues] = useState({
         cat: "",
-        price: [0,100],
-        size: "s",
+        price: "",
+        size: "",
       })
 
       function handleChange(e) {

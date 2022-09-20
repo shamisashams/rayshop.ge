@@ -40,6 +40,10 @@ Route::prefix('{locale?}')
 
                 Route::redirect('', 'adminpanel/category');
 
+                // users
+                Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
+                Route::get('user/{user}/destroy', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('user.destroy');
+
                 // Language
                 Route::resource('language', LanguageController::class);
                 Route::get('language/{language}/destroy', [LanguageController::class, 'destroy'])->name('language.destroy');
@@ -88,6 +92,7 @@ Route::prefix('{locale?}')
         });
         Route::middleware(['active'])->group(function () {
 
+            // Route::get('client/cabinet', [\App\Http\Controllers\Client\UserController::class, 'index'])->name('client.cabinet');
             // Home Page
             Route::get('', [HomeController::class, 'index'])->name('client.home.index');
             // Contact Page
@@ -121,6 +126,14 @@ Route::prefix('{locale?}')
 
             Route::any('payments/bog/status', [\App\Http\Controllers\Client\OrderController::class, 'bogResponse'])->name('bogResponse');
 
+            // Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest_client');
+            Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index');
+            Route::post('login', [\App\Http\Controllers\Client\AuthController::class, 'login'])->name('client.login');
+            Route::get('cabinet', [\App\Http\Controllers\Client\AuthController::class, 'cabinet'])->name('client.cabinet');
+            Route::get('registration', [\App\Http\Controllers\Client\AuthController::class, 'registrationView'])->name('client.registration.index');
+            Route::post('registration', [\App\Http\Controllers\Client\AuthController::class, 'createAccount'])->name('client.register');
+
+            Route::get('logout', [\App\Http\Controllers\Client\AuthController::class, 'logout'])->name('logout');
             /*Route::get('test/{method}',function ($locale,$method,\App\Http\Controllers\TestController $testController){
 
                 return $testController->{$method}();
@@ -128,4 +141,65 @@ Route::prefix('{locale?}')
 
             Route::post('test/filter',[\App\Http\Controllers\TestController::class,'filter']);*/
         });
+
+        //Social-------------------------------------------------------
+        Route::get('/auth/facebook/redirect', function () {
+            return Socialite::driver('facebook')->redirect();
+        })->name('fb-redirect');
+
+        Route::get('/auth/facebook/callback', function () {
+            //dd('jdfhgjdhjf urkl');
+            $facebookUser = Socialite::driver('facebook')->stateless()->user();
+
+            //dd($facebookUser);
+            $email = uniqid();
+            if ($facebookUser->email !== null) $email = $facebookUser->email;
+            $user = User::updateOrCreate([
+                'facebook_id' => $facebookUser->id,
+
+            ], [
+                'email' => $email,
+                'name' => $facebookUser->name,
+                'facebook_id' => $facebookUser->id,
+                'facebook_token' => $facebookUser->token,
+                'facebook_refresh_token' => $facebookUser->refreshToken,
+                'avatar' => $facebookUser->avatar,
+            ]);
+
+
+
+            //dd($user);
+
+            Auth::login($user);
+
+            return redirect(route('profile'));
+        })->name('fb-callback');
+
+        Route::get('/auth/google/redirect', function () {
+            return Socialite::driver('google')->redirect();
+        })->name('google-redirect');
+
+        Route::get('/auth/google/callback', function () {
+            $googleUser = Socialite::driver('google')->user();
+
+            //dd($googleUser);
+            $user = User::updateOrCreate([
+                //'facebook_id' => $facebookUser->id,
+                'email' => $googleUser->email,
+            ], [
+                'name' => $googleUser->name,
+                'google_id' => $googleUser->id,
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+                'avatar' => $googleUser->avatar,
+            ]);
+
+
+            //dd($user);
+
+            Auth::login($user);
+
+            return redirect(route('profile'));
+        })->name('google-callback');
+        //--------------------------------------------------------------------------
     });

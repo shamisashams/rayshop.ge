@@ -12,6 +12,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import Cart from "./Cart";
 
 const Header = () => {
+    const {user} = usePage().props;
   const { pathname } = usePage().props;
   const [search, setSearch] = useState(false);
   const [accountDrop, setaAcountDrop] = useState(false);
@@ -156,7 +157,11 @@ const Header = () => {
               } `}
             >
               {/* if logged in 👇  */}
-              <Link
+
+              {
+                user?
+<>
+<Link
                 href="/signup"
                 className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
                   accountDrop ? "translate-x-0" : "translate-x-32"
@@ -179,8 +184,31 @@ const Header = () => {
               <button className="flex items-center !cursor-pointer whitespace-nowrap justify-end mx-auto mr-0 text-custom-blue">
                 {/* <LogoutIcon className="mr-2" /> */}
                 <img src="/assets/svg/logout.svg" alt="logout" className="mr-2" />
-                <p>გასვლა</p>
+                <Link href={route("logout")}><p>გასვლა</p></Link>
+
               </button>
+</>
+                :
+                <>
+                  <Link
+                href="/login"
+                className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
+                  accountDrop ? "translate-x-0" : "translate-x-32"
+                }`}
+              >
+                <p>სისტემაში შესვლა</p>
+              </Link>
+              <Link
+                href="/signup"
+                className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end  transition-all duration-300 text-custom-blue ${
+                  accountDrop ? "translate-x-0" : "translate-x-20"
+                }`}
+              >
+                <p>შექმენი ექაუნთი</p>
+              </Link>
+                </>
+              }
+
 
               {/* if not logged in 👇  */}
 

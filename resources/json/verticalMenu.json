@@ -1,5 +1,14 @@
 {
     "menu": [
+
+        {
+                "url": "user.index",
+                "name": "მომხმარებლები",
+                "i18n": "user",
+                "icon": "user",
+                "slug": "user"
+        }
+        ,
         {
             "url": "category.index",
             "name": "პროდ. კატეგორიები",
