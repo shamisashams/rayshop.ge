@@ -36,9 +36,7 @@ class SearchController extends Controller
      */
     public function index(string $locale, Request $request)
     {
-
-        dd($request->all());
-        $page = Page::where('key', 'search')->firstOrFail();
+        $page = Page::where('key', 'home')->firstOrFail();
         //        return 1;
 
         //dd($category->getAncestors());
@@ -49,7 +47,6 @@ class SearchController extends Controller
 
         $products = $this->productRepository->getAll();
 
-        //dd($products);
 
         foreach ($products as $product) {
             $product_attributes = $product->attribute_values;

@@ -10,8 +10,17 @@ import { Link, usePage } from "@inertiajs/inertia-react";
 // import { ReactComponent as LogoutIcon } from "/assets/svg/logout.svg";
 import { IoCloseOutline } from "react-icons/io5";
 import Cart from "./Cart";
+import { Inertia } from '@inertiajs/inertia'
 
 const Header = () => {
+    const sharedData = usePage().props.localizations;
+
+    // const searchProduct = function () {
+    //     let term = document.getElementById("search_inp").value;
+    //     Inertia.get(route("search.index"), { term: term });
+    // };
+
+
     const {user} = usePage().props;
   const { pathname } = usePage().props;
   const [search, setSearch] = useState(false);
@@ -101,9 +110,11 @@ const Header = () => {
           <div className="relative search_mobile flex items-center justify-center hidden">
             <input
               type="text"
+              id="search_inp"
               placeholder="ძიება საიტზე"
               className={` text-sm bg-custom-slate-300 pr-10 pl-5 h-10 w-72 rounded-full transition-all duration-300 origin-right `}
             />
+
             <button className="absolute right-0 top-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-custom-slate-300 z-20 ">
               {/* {search ? <IoCloseOutline /> : <SearchIcon /> } */}
               {search? <IoCloseOutline /> :   <img src={"/assets/svg/search.svg"} alt="ss" />}
@@ -127,6 +138,12 @@ const Header = () => {
         <div className="z-50  flex items-center justiry-between">
           <div className="relative search_desktop">
             <input
+            id="search_inp"
+            onKeyPress={(e) => {
+                if (e.key === "Enter") {
+        Inertia.get(route("search.index"), { term: e.target.value });
+                }
+              }}
               type="text"
               placeholder="ძიება საიტზე"
               className={`absolute right-0 top-0 text-sm bg-custom-slate-200 pr-10 pl-5 h-full w-72 rounded-full transition-all duration-300 origin-right ${
@@ -194,7 +211,7 @@ const Header = () => {
                 :
                 <>
                   <Link
-                href="/login"
+                href={route("client.login.index")}
                 className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
                   accountDrop ? "translate-x-0" : "translate-x-32"
                 }`}

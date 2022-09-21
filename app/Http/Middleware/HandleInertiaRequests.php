@@ -80,6 +80,7 @@ class HandleInertiaRequests extends Middleware
             'categories' => $result,
             'info' => $_result,
             'user' => auth()->user(),
+            "flash" => $request->session()->get('success')
         ]);
     }
 

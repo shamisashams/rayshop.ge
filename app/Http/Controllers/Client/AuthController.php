@@ -230,17 +230,35 @@ class AuthController extends Controller
         $attributes['affiliate_id'] = (string) Str::uuid();
         $attributes['referred_by'] = $request->cookie('referral');
 
-        User::query()->create($attributes);
-        // User::create([
-        //     "name" => $attributes['name'],
-        //     "surname" => $attributes['surname'],
-        //     "phone" => $attributes['phone'],
-        //     "email" => $attributes['email'],
-        //     "password" => $attributes['password'],
-        // ]);
+        // User::query()->create($attributes);
+        User::create([
+            "name" => $attributes['name'],
+            "surname" => $attributes['surname'],
+            "phone" => $attributes['phone'],
+            "email" => $attributes['email'],
+            "password" => $attributes['password'],
+        ]);
 
-        return redirect()->back()->with('success', 'registered');
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            // dd(Auth::user());
+            // return redirect()->intended('client.cabinet');
+            return redirect(route("client.cabinet"));
+        } else {
+            // return 'Incorrect mail or password !';
+            return redirect()->back()->with('error', 'Incorrect mail or password !');
+        }
+        // return redirect()->back()->with('success', 'registered');
     }
+
+    public function updateuser(Request $request)
+    {
+        $request['password'] = Hash::make($request->post('password'));
+        $userid = User::where('id', Auth::user()->id)->update($request->all());
+        return back()->with('success', 'success');
+    }
+
 
     public function partnerLoginView()
     {

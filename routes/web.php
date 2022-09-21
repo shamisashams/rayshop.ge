@@ -127,6 +127,7 @@ Route::prefix('{locale?}')
             Route::any('payments/bog/status', [\App\Http\Controllers\Client\OrderController::class, 'bogResponse'])->name('bogResponse');
 
             Route::get('cabinet', [\App\Http\Controllers\Client\AuthController::class, 'cabinet'])->name('client.cabinet');
+            Route::post('updateuser', [\App\Http\Controllers\Client\AuthController::class, 'updateuser'])->name('client.updateuser');
 
             Route::middleware(['guest'])->group(function () {
                 Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest');
