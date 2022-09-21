@@ -52,6 +52,7 @@ class ContactController extends Controller
             //dd($request->all());
             $request->validate([
                 'name' => 'required|string|max:55',
+                'surname' => 'required|string|max:55',
                 'email' => 'required|email',
                 'phone' => 'required',
                 'message' => 'required|max:1024'

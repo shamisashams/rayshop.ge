@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/inertia-react'
 // import Img3 from "../assets/images/products/5.png";
 import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
 // import { ReactComponent as ShareIcon } from "/assets/svg/share.svg";
-import ProductSlider from "../components/ProductSlider";
+// import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
 import Layout from "../Layouts/Layout";
 
@@ -74,7 +74,7 @@ const SingleProucts = ({seo}) => {
       </section>
       <section className="py-10">
         <div className="wrapper bold text-xl pb-8">მსგავსი პროდუქტი</div>
-        <ProductSlider />
+        {/* <ProductSlider /> */}
       </section>
       <section className="wrapper pt-10 pb-20">
         <Form />

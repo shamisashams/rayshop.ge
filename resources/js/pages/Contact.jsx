@@ -1,9 +1,29 @@
 // import AbsImage1 from "../assets/images/abs/5.png";
-import React from "react";
+import React, { useState } from 'react'
+import { Inertia } from '@inertiajs/inertia'
 import { CommonButton, SocialMedia } from "../components/Shared";
 import Layout from "../Layouts/Layout";
 
 const Contact = ({seo}) => {
+    const [values, setValues] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        surname: "",
+        message: "",
+      })
+      function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setValues(values => ({
+            ...values,
+            [key]: value,
+        }))
+      }
+      function handleSubmit(e) {
+        e.preventDefault()
+        Inertia.post(route("client.contact.mail"), values)
+      }
   return (
     <Layout seo={seo}>
     <div className="relative">
@@ -28,7 +48,7 @@ const Contact = ({seo}) => {
           </div>
         </div>
         <div className="2xl:mr-20">
-          <form className="xl:max-w-md max-w-sm mx-auto text-center ">
+          <form className="xl:max-w-md max-w-sm mx-auto text-center " onSubmit={handleSubmit}>
             <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl mb-12 text-custom-blue w-fit mx-auto text-left">
               <span className="bold sm:text-lg text-sm text-black ">
                 გაქვს კითხვები?
@@ -36,15 +56,17 @@ const Contact = ({seo}) => {
               <br />
               დაგვიკავშირდი
             </div>
-            <input className="mb-3" type="text" placeholder="სახელი" />
-            <input className="mb-3" type="text" placeholder="გვარი" />
+            <input className="mb-3" id="name" type="text" placeholder="სახელი" value={values.name} onChange={handleChange}/>
+            <input className="mb-3" id="surname" type="text" placeholder="გვარი" value={values.surname} onChange={handleChange} />
             <input
+            id="phone"
               className="mb-3"
               type="text"
               placeholder="მობილურის ნომერი"
+              value={values.phone} onChange={handleChange}
             />
-            <input className="mb-3" type="text" placeholder="იმეილი" />
-            <textarea className="mb-8" placeholder="შეტყობინება"></textarea>
+            <input id="email" className="mb-3" type="text" placeholder="იმეილი"  value={values.email} onChange={handleChange}/>
+            <textarea id="message" className="mb-8" placeholder="შეტყობინება" value={values.message} onChange={handleChange}></textarea>
             <CommonButton text="გაგზავნა" />
           </form>
         </div>

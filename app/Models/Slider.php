@@ -21,7 +21,9 @@ class Slider extends Model
 
     protected $fillable = [
         'status',
-        'youtube_url'
+        'product',
+        'youtube_url',
+        'product',
     ];
 
 
@@ -52,11 +54,17 @@ class Slider extends Model
         ];
     }
 
+    public function product()
+    {
+        // return $this->belongsTo(Product::class);
+        return $this->hasOne(Slider::class, 'id');
+    }
+
     public function files(): MorphMany
     {
         return $this->morphMany(File::class, 'fileable');
     }
-    /**
+/**
      * @return MorphOne
      */
     public function file(): MorphOne

@@ -85,19 +85,6 @@
                                                 </small>
                                                 @enderror
                                             </div>
-                                            {{--<div class="form-group">
-                                                {!! Form::label($locale.'[title_2]',__('admin.title_2'),['class' => 'form-label']) !!}
-                                                {!! Form::text($locale.'[title_2]',$slider->translate($locale)->title_2 ?? '',['class' => 'form-control']) !!}
-
-                                                @error($locale.'.title_2')
-                                                <small class="text-danger">
-                                                    <div class="error">
-                                                        {{$message}}
-                                                    </div>
-                                                </small>
-                                                @enderror
-                                            </div>--}}
-
 
                                             <div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.description')</label>
@@ -113,6 +100,7 @@
                                                 </small>
                                                 @enderror
                                             </div>
+
 
                                         </div>
 
@@ -145,6 +133,27 @@
                         </small>
                         @enderror
                     </div>
+                    {{-- @dd($slider->product) --}}
+                    <div class="form-group">
+                        {!! Form::label("product",__('admin.product'),['class' => 'form-label']) !!}
+                        <select class="form-control" name="product">
+                            <option value="">product id</option>
+                        @foreach($product as $item)
+                            <label class="form-label">{{$item->title}}</label>
+
+                                    <option
+                                     value="{{$item->id}}"
+                                     @if ($slider->product == $item->id)
+                                     selected
+                                     @endif
+                                     >{{$item->title}}</option>
+
+
+                        @endforeach
+                        </select>
+                        </div>
+
+
                     <div class="form-group">
                         <label class="ckbox">
                             <input type="checkbox" name="status"

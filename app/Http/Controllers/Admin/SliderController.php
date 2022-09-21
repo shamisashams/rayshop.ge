@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SliderRequest;
 use App\Models\Slider;
+use App\Models\Product;
 use App\Repositories\SliderRepositoryInterface;
 use Illuminate\Support\Arr;
 
@@ -20,10 +21,8 @@ class SliderController extends Controller
      */
     public function __construct(
         SliderRepositoryInterface $slideRepository
-    )
-    {
+    ) {
         $this->slideRepository = $slideRepository;
-
     }
 
     /**
@@ -64,6 +63,7 @@ class SliderController extends Controller
             'slider' => $slider,
             'url' => $url,
             'method' => $method,
+            'product' => Product::all(),
         ]);
     }
 
@@ -80,14 +80,12 @@ class SliderController extends Controller
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
         $slider = $this->slideRepository->create($saveData);
-
         // Save Files
         if ($request->hasFile('images')) {
             $slider = $this->slideRepository->saveFiles($slider->id, $request);
         }
 
         return redirect(locale_route('slider.index', $slider->id))->with('success', __('admin.create_successfully'));
-
     }
 
     /**
@@ -128,6 +126,7 @@ class SliderController extends Controller
             'slider' => $slider,
             'url' => $url,
             'method' => $method,
+            'product' => Product::all(),
         ]);
     }
 

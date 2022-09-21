@@ -153,6 +153,11 @@ class Product extends Model implements Searchable
         return $this->belongsToMany(Category::class, 'product_categories');
     }
 
+    public function slider()
+    {
+        // return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
+    }
     /**
      * Get the product attribute values that owns the product.
      */
@@ -180,7 +185,6 @@ class Product extends Model implements Searchable
 
     public function latestImage()
     {
-        return $this->morphOne(File::class, 'fileable')->orderBy('main','desc');
+        return $this->morphOne(File::class, 'fileable')->orderBy('main', 'desc');
     }
-
 }

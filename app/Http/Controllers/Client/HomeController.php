@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Slider;
+use App\Models\Product;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
@@ -28,7 +29,7 @@ class HomeController extends Controller
             }
         }
 
-        $sliders = Slider::query()->where("status", 1)->with(['file', 'translations']);
+        $sliders = Slider::query()->where("status", 1)->with(['file', 'translations', 'product']);
         //        dd($page->file);
         //        dd(App::getLocale());
         $_products = app(ProductRepository::class)->getHomePageProducts();
@@ -69,6 +70,8 @@ class HomeController extends Controller
         //dd($products);
 
         return Inertia::render('Home', [
+            'products' => $products,
+            'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),
             "gallery" => Gallery::with("file")->get()->take(8),
             "page" => $page, "seo" => [

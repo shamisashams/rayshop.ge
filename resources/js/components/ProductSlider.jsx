@@ -14,76 +14,76 @@ import Product3 from "/assets/images/products/3.png";
 import Product4 from "/assets/images/products/4.png";
 import Product5 from "/assets/images/products/5.png";
 
-const ProductSlider = () => {
+const ProductSlider = ({data}) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  const data = [
-    {
-      link: "/",
-      image: Product3,
-      name: "პირობითი მაქვს",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product4,
-      name: "მემერიდე ბრატ",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product5,
-      name: "პარასკევი",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product1,
-      name: "მემერიდე ბრატ",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product2,
-      name: "პარასკევი",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product3,
-      name: "პირობითი მაქვს",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product4,
-      name: "მემერიდე ბრატ",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-    {
-      link: "/",
-      image: Product5,
-      name: "პარასკევი",
-      sale: false,
-      price: "31.90",
-      oldPrice: "",
-    },
-  ];
+//   const data = [
+//     {
+//       link: "/",
+//       image: Product3,
+//       name: "პირობითი მაქვს",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product4,
+//       name: "მემერიდე ბრატ",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product5,
+//       name: "პარასკევი",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product1,
+//       name: "მემერიდე ბრატ",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product2,
+//       name: "პარასკევი",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product3,
+//       name: "პირობითი მაქვს",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product4,
+//       name: "მემერიდე ბრატ",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//     {
+//       link: "/",
+//       image: Product5,
+//       name: "პარასკევი",
+//       sale: false,
+//       price: "31.90",
+//       oldPrice: "",
+//     },
+//   ];
 
   return (
     <Swiper
@@ -127,7 +127,15 @@ const ProductSlider = () => {
           <SwiperSlide key={index}>
             <ProductBox
               link={item.link}
-              image={item.image}
+              image={
+                item.files != null
+                ? "/" +
+                  item.files[0].path +
+                  "/" +
+                  item.files[0].title
+                : null
+
+              }
               name={item.name}
               sale={item.sale}
               price={item.price}
