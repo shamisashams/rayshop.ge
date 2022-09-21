@@ -9,19 +9,20 @@ import Layout from "../Layouts/Layout";
 import { Link, usePage,useForm } from "@inertiajs/inertia-react";
 
 
-const Login = ({seo,error}) => {
+const ChangePassword = ({seo,error, token}) => {
 
     const { data, setData, post, processing, errors } = useForm({
 
         email: '',
         password: null,
-        remember: false,
+        // remember: false,
+        token: token,
     })
 
     function submit(e) {
         // alert('asdas')
         e.preventDefault()
-        post(route("client.login"))
+        post(route("password.update"))
     }
 
 
@@ -120,4 +121,4 @@ value={data.email} onChange={e => setData('email', e.target.value)}
   );
 };
 
-export default Login;
+export default ChangePassword;

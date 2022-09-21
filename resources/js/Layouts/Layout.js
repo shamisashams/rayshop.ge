@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./index.css";
-
 import "aos/dist/aos.css";
+import CursorFollower from "../components/AnimatedCursor";
 import Header from "../components/Header";
 
 import Footer from "../components/Footer";
@@ -31,6 +31,7 @@ export default function Layout({ children, seo = null }) {
 
     return (
         <>
+        <CursorFollower/>
             {/*<Router>*/}
             {/*<Fragment>*/}
             <Header />

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Repositories/Eloquent/ProductRepository.php
  *
@@ -27,22 +28,23 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     private $attributeRepository;
 
-    public function __construct(Product $model,AttributeRepository $attributeRepository)
+    public function __construct(Product $model, AttributeRepository $attributeRepository)
     {
         parent::__construct($model);
         $this->attributeRepository = $attributeRepository;
     }
 
-    public function getHomePageProducts(){
-        $products = $this->model->where('popular',1)
-            ->orWhere('new_collection',1)
-            ->orWhere('bunker',1)
-            ->orWhere('day_product',1)
-            ->orWhere('day_price',1)
-            ->orWhere('special_price_tag',1)
-            ->whereHas('categories',function ($query){
-            $query->where('status',1);
-        })->with(['latestImage'])->inRandomOrder()->get();
+    public function getHomePageProducts()
+    {
+        $products = $this->model->where('popular', 1)
+            ->orWhere('new_collection', 1)
+            ->orWhere('bunker', 1)
+            ->orWhere('day_product', 1)
+            ->orWhere('day_price', 1)
+            ->orWhere('special_price_tag', 1)
+            ->whereHas('categories', function ($query) {
+                $query->where('status', 1);
+            })->with(['latestImage', 'files'])->inRandomOrder()->get();
 
         //dd($products);
         return $products;
@@ -51,18 +53,19 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     private function checkSortAttributeAndGenerateQuery($query, $sort, $direction)
     {
 
-            if ($sort === 'price') {
-                $query->orderBy('price', $direction);
-            } else {
-                $query->orderBy($attribute->code, $direction);
-            }
+        if ($sort === 'price') {
+            $query->orderBy('price', $direction);
+        } else {
+            $query->orderBy($attribute->code, $direction);
+        }
 
 
         return $query;
     }
 
 
-    public function getAll($categoryId = null, $popular = null, $special = null, $new = null){
+    public function getAll($categoryId = null, $popular = null, $special = null, $new = null)
+    {
 
 
         //dd(request()->post());
@@ -70,65 +73,63 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
         $query =  $this->model->select('products.*')
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
-            ->leftJoin('product_attribute_values','product_attribute_values.product_id','products.id');
+            ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', 'products.id');
 
         if ($categoryId) {
             $query->whereIn('product_categories.category_id', explode(',', $categoryId));
         }
 
-        if ($popular){
+        if ($popular) {
             $query->where('products.popular', 1);
         }
 
-        if ($special){
+        if ($special) {
             $query->where('products.special_price_tag', 1);
         }
 
-        if ($new){
+        if ($new) {
             $query->where('products.new', 1);
         }
 
-        if(isset($params['term'])){
-            $query->where(function ($tQ) use ($params){
-                $tQ->whereTranslationLike('title', '%'.$params['term'].'%')
-                    ->orWhereTranslationLike('description', '%'.$params['term'].'%');
+        if (isset($params['term'])) {
+            $query->where(function ($tQ) use ($params) {
+                $tQ->whereTranslationLike('title', '%' . $params['term'] . '%')
+                    ->orWhereTranslationLike('description', '%' . $params['term'] . '%');
             });
-
         }
 
 
         # sort direction
         $orderDirection = 'asc';
-        $sortOptions = ['created_at','desc'];
+        $sortOptions = ['created_at', 'desc'];
         if (isset($params['order']) && in_array($params['order'], ['desc', 'asc'])) {
             $orderDirection = $params['order'];
         } else {
 
 
-            $orderDirection = ! empty($sortOptions) ? $sortOptions[1] : 'asc';
+            $orderDirection = !empty($sortOptions) ? $sortOptions[1] : 'asc';
         }
 
         if (isset($params['sort'])) {
-            if($params['sort'] == 'title')
-                $query->orderByTranslation('title',$orderDirection);
+            if ($params['sort'] == 'title')
+                $query->orderByTranslation('title', $orderDirection);
             else
-            $query->orderBy($params['sort'], $orderDirection);
+                $query->orderBy($params['sort'], $orderDirection);
         } else {
 
-            if (! empty($sortOptions)) {
+            if (!empty($sortOptions)) {
                 $query->orderBy($sortOptions[0], $orderDirection);
             }
         }
 
 
-        if($priceFilter = request('price')){
+        if ($priceFilter = request('price')) {
             $priceRange = explode(',', $priceFilter);
 
-            $query->where(function ($pQ) use ($priceRange){
+            $query->where(function ($pQ) use ($priceRange) {
                 $pQ->where('products.price', '>=', $priceRange[0])
                     ->where('products.price', '<=', end($priceRange));
             });
-
         }
 
 
@@ -147,9 +148,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                         //dd($filterInputValues);
                         $aQ->where('product_attribute_values.attribute_id', $attribute->id);
 
-                        $aQ->where(function ($attributeValueQuery) use ($column, $filterInputValues,$attribute) {
+                        $aQ->where(function ($attributeValueQuery) use ($column, $filterInputValues, $attribute) {
 
-                            if($attribute->type !== 'boolean'){
+                            if ($attribute->type !== 'boolean') {
                                 foreach ($filterInputValues as $filterValue) {
                                     if (!is_numeric($filterValue)) {
                                         continue;
@@ -162,35 +163,32 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                                 if (is_numeric($filterInputValues[0])) {
                                     $attributeValueQuery->whereRaw("find_in_set(?, {$column})", [1]);
                                 }
-
                             }
-
                         });
                     });
-
-
                 }
             });
         }
 
         $query->groupBy('products.id');
-        return $query->with('latestImage')->paginate('16')->withQueryString();
+        return $query->with('latestImage', 'files')->paginate('16')->withQueryString();
     }
 
 
-    public function getMaxPrice(){
+    public function getMaxPrice()
+    {
         return $this->model->max('price');
     }
-    public function getMinPrice(){
+    public function getMinPrice()
+    {
         return $this->model->min('price');
     }
 
 
-    public function search($term){
-        return $this->model->whereTranslationLike('title', '%'.$term.'%')
-            ->orWhereTranslationLike('description', '%'.$term.'%')
-            ->with('latestImage')->paginate(16);
+    public function search($term)
+    {
+        return $this->model->whereTranslationLike('title', '%' . $term . '%')
+            ->orWhereTranslationLike('description', '%' . $term . '%')
+            ->with('latestImage', 'files')->paginate(16);
     }
-
-
 }

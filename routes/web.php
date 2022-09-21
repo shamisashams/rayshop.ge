@@ -8,6 +8,8 @@
  * @author Insite LLC <hello@insite.international>
  */
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LanguageController;
@@ -137,6 +139,25 @@ Route::prefix('{locale?}')
             });
             // Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest_client');
 
+
+            // password recovery
+            Route::get('/forgot-password', [\App\Http\Controllers\Client\AuthController::class, 'forgotPass'])->middleware('guest')->name('password.request');
+
+            Route::post('/forgot-password', function (Request $request) {
+                $request->validate(['email' => 'required|email']);
+
+                $status = Password::sendResetLink(
+                    $request->only('email')
+                );
+
+                return $status === Password::RESET_LINK_SENT
+                    ? back()->with(['status' => __($status)])
+                    : back()->withErrors(['email' => __($status)]);
+            })->middleware('guest')->name('password.email');
+
+
+            Route::get('/reset-password/{token}', [\App\Http\Controllers\Client\AuthController::class, 'recoveryPass'])->middleware('guest')->name('password.reset');
+            Route::get('/reset-password', [\App\Http\Controllers\Client\AuthController::class, 'UpdatePass'])->middleware('guest')->name('password.update');
 
             Route::get('logout', [\App\Http\Controllers\Client\AuthController::class, 'logout'])->name('logout');
             /*Route::get('test/{method}',function ($locale,$method,\App\Http\Controllers\TestController $testController){

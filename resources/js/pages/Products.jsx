@@ -2,6 +2,7 @@ import React, {useState,useEffect, useRef} from "react";
 import { productGrid } from "../components/Data";
 import RangeSlider from "../components/PriceRange/PriceRange";
 import ProductBox from "../components/ProductBox";
+import { Link, usePage } from "@inertiajs/inertia-react";
 import { CommonButton, SizePick } from "../components/Shared";
 import { IoMdOptions } from "react-icons/io";
 import Layout from "../Layouts/Layout";
@@ -236,27 +237,71 @@ const Products = ({seo, products}) => {
         </button>
         <div className="xl:pl-5  xl:ml-80 2xl:ml-96  grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-8">
           {products.data.map((data, index) => {
+
+            console.log(data, 'saxeli');
             return (
-              <ProductBox
-                key={index}
-                image={
+            //   <ProductBox
+            //     key={index}
+            //     image={
+            //         data.files != null
+            //         ? "/" +
+            //           data.files[0].path +
+            //           "/" +
+            //           data.files[0].title
+            //         : null
+            //     }
+            //     // link={data.link}
+            //     link={
+            //         route("client.product.show", data.slug)
+            //     }
+            //     name={data.name}
+            //     sale={data.sale}
+            //     oldPrice={data.oldPrice}
+            //     price={data.price}
+            //     handleClick={() => addToCart(data)}
+            <div className=" p-5 bg-custom-slate-100 text-center group">
+            <div className="h-72 mb-5 relative" >
+              <img
+                className="h-full w-full object-contain"
+                src={
+
                     data.files != null
-                    ? "/" +
-                      data.files[0].path +
-                      "/" +
-                      data.files[0].title
-                    : null
-                }
-                // link={data.link}
-                link={
-                    route("client.product.show", data.slug)
-                }
-                name={data.name}
-                sale={data.sale}
-                oldPrice={data.oldPrice}
-                price={data.price}
-                handleClick={() => addToCart(data)}
+                            ? "/" +
+                              data.files[0].path +
+                              "/" +
+                              data.files[0].title
+                            : null
+
+                        }
+                alt="img"
               />
+              <div className="absolute w-full h-full left-0 top-0 flex items-center justify-center bg-custom-slate-100/[0.6] opacity-0  transition-all duration-500 group-hover:opacity-100">
+                <Link href={data.link}>
+                  <div className="flex items-center justify-center w-12 h-12 mx-1 shadow-lg rounded-full bg-white hover:bg-custom-orange translate-y-32 group-hover:translate-y-0 group transition-all duration-500">
+                    {/* <Eye /> */}
+                    <img src="/assets/svg/eye.svg" alt="eye" />
+                  </div>
+                </Link>
+                <Link onClick={() => data.handleClick(data.product)}>
+                  <div className="flex items-center justify-center w-12 h-12 mx-1 shadow-lg rounded-full bg-white hover:bg-custom-orange translate-y-40 group-hover:translate-y-0 group transition-all duration-500">
+                    {/* <CartIcon /> */}
+                    <img src="/assets/svg/cart.svg" alt="cart" />
+                  </div>
+                </Link>
+              </div>
+            </div>
+            <div className="mb-1">{data.title}</div>
+            {data.sale ? (
+              <div className="bold text-xl">
+                <span className="text-sm text-gray-400 crossed relative mr-1">
+                  {data.oldPrice}
+                </span>{" "}
+                {data.price}₾
+              </div>
+            ) : (
+              <div className="bold">{data.price} ლარი</div>
+            )}
+          </div>
             );
           })}
         </div>

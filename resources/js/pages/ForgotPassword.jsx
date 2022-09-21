@@ -1,20 +1,48 @@
+import { Inertia } from '@inertiajs/inertia'
+import React, { useState } from 'react'
 import { CommonButton } from "../components/Shared";
 // import AbsImage from "../assets/images/abs/2.png";
 import { Link } from "react-router-dom";
+import Layout from "../Layouts/Layout";
 // import Google from "../assets/images/icons/sm/google.png";
 // import Facebook from "../assets/images/icons/sm/facebook.png";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({seo, email, status}) => {
+    const [values, setValues] = useState({
+        email: "",
+      })
+      function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setValues(values => ({
+            ...values,
+            [key]: value,
+        }))
+      }
+      function handleSubmit(e) {
+        e.preventDefault()
+        Inertia.post(route("password.email"), values)
+      }
+
   return (
+    <Layout seo={seo}>
     <div className="py-20 lg:pt-40 pt-32 wrapper relative text-center min-h-screen">
       <div className="max-w-md mx-auto">
         <div className="text-lg mb-2 bold">პაროლის აღდგენა</div>
         <p className="opacity-50 mb-6">
           მიიღე პაროლის აღსადგენი ბმული ელფოსტაზე
         </p>
-        <input className="mb-10" type="text" placeholder="ელ. ფოსტა" />
+        <form onSubmit={handleSubmit}>
+        <input className="mb-10" type="text" id="email" name="email"  placeholder="ელ. ფოსტა" value={values.email} onChange={handleChange}/>
 
         <CommonButton text="მოითხოვე ბმული" />
+        {
+            status? <p>success</p> : ""
+        }
+        {
+            email ? <p>error</p> : ""
+         }
+        </form>
         <div className="mt-10">
           <div className="opacity-30 relative text-center ">
             <div className="h-px w-full bg-black absolute left-0 top-1/2 -translate-y-1/2"></div>
@@ -31,6 +59,7 @@ const ForgotPassword = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

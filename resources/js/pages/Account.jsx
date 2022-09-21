@@ -12,10 +12,11 @@ const Account = ({seo}) => {
 
 
   const [values, setValues] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    phone: "",
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
     password: "",
   })
 
@@ -68,7 +69,7 @@ const Account = ({seo}) => {
               <input
               value={values.password} onChange={handleChange}
               id="password"
-              required
+            //   required
                 className="bg-white"
                 type={displayPassword ? "text" : "password"}
                 placeholder="ახალი პაროლი"
