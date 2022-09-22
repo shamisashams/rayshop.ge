@@ -6,13 +6,19 @@ import { Link } from '@inertiajs/inertia-react'
 // import Img3 from "../assets/images/products/5.png";
 import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
 // import { ReactComponent as ShareIcon } from "/assets/svg/share.svg";
-// import ProductSlider from "../components/ProductSlider";
+import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
 import Layout from "../Layouts/Layout";
+import { identity } from "lodash";
 
-const SingleProucts = ({seo}) => {
+const SingleProucts = ({seo,sizes,product,sameproduct}) => {
+    const [picked, setPicked] = useState(0);
+    console.log(sameproduct, 'esaa');
   const [imageIndex, setImageIndex] = useState(0);
-  const imgs = ["/assets/images/products/1.png", "/assets/images/products/2.png", "/assets/images/products/5.png"];
+let imgs = new Array();
+product.files.map((e,i)=>{
+    imgs.push("/"+e.path+"/"+e.title)
+})
   return (
     <Layout seo={seo}>
       <section className="h-fit min-h-screen relative">
@@ -44,17 +50,44 @@ const SingleProucts = ({seo}) => {
           </div>
           <div className="">
             <div className="lg:text-3xl text-2xl bold mb-6">
-              მაისურის დასახელება
+              {/* მაისურის დასახელება */}
+              {product.title}
             </div>
             <div className="lg:text-left ">
               <div className="text-custom-blue bold lg:block hidden mb-2">
                 ფასი:
               </div>
               <div className="lg:mb-7 mb-3 lg:text-3xl text-2xl gadzen">
-                <span className=" text-6xl 2xl:pr-3 pr-2">112</span>
+                <span className=" text-6xl 2xl:pr-3 pr-2">
+                 {product.special_price ? product.special_price: product.price}
+                </span>
                 ლარი
               </div>
-              <SizePick sizes={["s", "m", "l", "xl"]} />
+              <div className="bold mb-5">აირჩიე ზომა:</div>
+      <div className="sizeFlex flex flex-wrap">
+        {sizes.map((size, i) => {
+          return (
+            <button
+              onClick={() =>
+                {
+                    setPicked(i)
+                    if(!product.sizes.find((e)=> e.id == size.id)){
+                       alert('araa maragshi')
+                    }
+                }
+            }
+              key={i}
+              className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
+                picked === i
+                  ? "bg-black text-white"
+                  : "bg-custom-slate-200 text-black"
+              }`}
+            >
+              {size.name}
+            </button>
+          );
+        })}
+      </div>
               <div className="flex  flex-nowrap mt-10 mb-16 ">
                 <Link href="/" className="sm:mr-6 mr-3 ">
                   <CommonButton text="შეიძინე" />
@@ -75,6 +108,7 @@ const SingleProucts = ({seo}) => {
       <section className="py-10">
         <div className="wrapper bold text-xl pb-8">მსგავსი პროდუქტი</div>
         {/* <ProductSlider /> */}
+        <ProductSlider data={sameproduct} />
       </section>
       <section className="wrapper pt-10 pb-20">
         <Form />

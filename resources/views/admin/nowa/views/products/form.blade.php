@@ -430,16 +430,32 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
 
                     @endforeach --}}
 
-
-                    @foreach ($size as $item)
- {{-- <p>{{$item->name}}</p> --}}
+<?php
+$tmp = \App\Models\ProductSize::where('product_id',$product->id)->get();
+$sizesArr = [];
+ if(isset($tmp)){
+    foreach ($tmp as $k => $v) {
+        array_push($sizesArr,$v->size_id);
+    }
+ }
+?>
+                 @foreach ($size as $key=>$item)
  <div class="form-group">
     <label class="ckbox">
         <input type="checkbox" name="size{{$item->id}}"
-               value="{{$item->name}}" {{$product->new_collection ? 'checked' : ''}}>
+               value="{{$item->name}}"
+
+               @if (in_array($item->id, $sizesArr))
+                 checked
+               @endif
+               >
         <span>{{$item->name}}</span>
     </label>
 </div>
+@php
+
+// echo $item->id;
+@endphp
                     @endforeach
 
                     <div class="form-group mb-0 mt-3 justify-content-end">

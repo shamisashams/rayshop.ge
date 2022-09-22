@@ -29,7 +29,8 @@ class OrderController extends Controller
 
 
 
-    public function __construct(ProductRepository $productRepository){
+    public function __construct(ProductRepository $productRepository)
+    {
         $this->productRepository = $productRepository;
     }
 
@@ -41,33 +42,32 @@ class OrderController extends Controller
     public function index(string $locale, Request $request)
     {
         $page = Page::where('key', 'products')->firstOrFail();
-        $products = Product::with(['files'])->whereHas('categories',function (Builder $query){
+        $products = Product::with(['files'])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
         })->paginate(16);
 
         $images = [];
-        foreach ($page->sections as $sections){
-            if($sections->file){
+        foreach ($page->sections as $sections) {
+            if ($sections->file) {
                 $images[] = asset($sections->file->getFileUrlAttribute());
             } else {
                 $images[] = null;
             }
-
         }
 
         //dd($products);
-        return Inertia::render('OrderForm/OrderForm',[
+        return Inertia::render('Payment', [
             'products' => $products,
             'images' => $images,
             'page' => $page,
             "seo" => [
-                "title"=>$page->meta_title,
-                "description"=>$page->meta_description,
-                "keywords"=>$page->meta_keyword,
-                "og_title"=>$page->meta_og_title,
-                "og_description"=>$page->meta_og_description,
-//            "image" => "imgg",
-//            "locale" => App::getLocale()
+                "title" => $page->meta_title,
+                "description" => $page->meta_description,
+                "keywords" => $page->meta_keyword,
+                "og_title" => $page->meta_og_title,
+                "og_description" => $page->meta_og_description,
+                //            "image" => "imgg",
+                //            "locale" => App::getLocale()
             ]
         ])->withViewData([
             'meta_title' => $page->meta_title,
@@ -91,27 +91,24 @@ class OrderController extends Controller
 
         $product = Product::where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
-
         })->with(['latestImage'])->firstOrFail();
 
-        $productImages = $product->files()->orderBy('id','desc')->get();
+        $productImages = $product->files()->orderBy('id', 'desc')->get();
 
         $product_attributes = $product->attribute_values;
 
         $result = [];
 
-        foreach ($product_attributes as $item){
+        foreach ($product_attributes as $item) {
             $options = $item->attribute->options;
             $value = '';
-            foreach ($options as $option){
-                if($item->attribute->type == 'select'){
-                    if($item->integer_value == $option->id) {
+            foreach ($options as $option) {
+                if ($item->attribute->type == 'select') {
+                    if ($item->integer_value == $option->id) {
                         $result[$item->attribute->code] = $option->label;
                     }
-
                 }
             }
-
         }
 
 
@@ -121,12 +118,12 @@ class OrderController extends Controller
 
         $path = [];
         $arr = [];
-        foreach ($categories as $key =>$item){
+        foreach ($categories as $key => $item) {
 
 
             $ancestors = $item->ancestors;
-            if(count($ancestors)){
-                foreach ($ancestors as $ancestor){
+            if (count($ancestors)) {
+                foreach ($ancestors as $ancestor) {
                     $arr[count($ancestors)]['ancestors'][] = $ancestor;
                     $arr[count($ancestors)]['current'] = $item;
                 }
@@ -156,13 +153,12 @@ class OrderController extends Controller
             } else {
 
             }*/
-
         }
 
         $max = max(array_keys($arr));
 
         $k = 0;
-        foreach ($arr[$max]['ancestors'] as $ancestor){
+        foreach ($arr[$max]['ancestors'] as $ancestor) {
             $path[$k]['id'] = $ancestor->id;
             $path[$k]['slug'] = $ancestor->slug;
             $path[$k]['title'] = $ancestor->title;
@@ -176,7 +172,7 @@ class OrderController extends Controller
 
 
         $similar_products = Product::where(['status' => 1, 'product_categories.category_id' => $path[0]['id']])
-            ->where('products.id','!=',$product->id)
+            ->where('products.id', '!=', $product->id)
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
             ->inRandomOrder()
             ->with('latestImage')->get();
@@ -189,20 +185,20 @@ class OrderController extends Controller
         /*return view('client.pages.product.show', [
             'product' => $product
         ]);*/
-        return Inertia::render('ProductDetails/ProductDetails',[
+        return Inertia::render('ProductDetails/ProductDetails', [
             'product' => $product,
             'category_path' => $path,
             'similar_products' => $similar_products,
             'product_images' => $productImages,
             'product_attributes' => $result,
             "seo" => [
-                "title"=>$product->meta_title,
-                "description"=>$product->meta_description,
-                "keywords"=>$product->meta_keyword,
-                "og_title"=>$product->meta_og_title,
-                "og_description"=>$product->meta_og_description,
-//            "image" => "imgg",
-//            "locale" => App::getLocale()
+                "title" => $product->meta_title,
+                "description" => $product->meta_description,
+                "keywords" => $product->meta_keyword,
+                "og_title" => $product->meta_og_title,
+                "og_description" => $product->meta_og_description,
+                //            "image" => "imgg",
+                //            "locale" => App::getLocale()
             ]
         ])->withViewData([
             'meta_title' => $product->meta_title,
@@ -214,7 +210,8 @@ class OrderController extends Controller
         ]);
     }
 
-    public function order(Request $request){
+    public function order(Request $request)
+    {
         //dd($request->all());
         $request->validate([
             'first_name' => 'required',
@@ -228,22 +225,22 @@ class OrderController extends Controller
         ]);
 
         $data = $request->all();
-        $cart = Arr::pull($data,'cart');
+        $cart = Arr::pull($data, 'cart');
         $data['locale'] = app()->getLocale();
         $data['grand_total'] = $cart['total'];
 
 
 
         $product_ids = [];
-        foreach ($cart['items'] as $item){
+        foreach ($cart['items'] as $item) {
             $product_ids[] = $item['product']['id'];
         }
 
-        $products = Product::whereIn('id',$product_ids)->get();
+        $products = Product::whereIn('id', $product_ids)->get();
 
-        if($products){
+        if ($products) {
             $prod_data = [];
-            foreach ($products as $product){
+            foreach ($products as $product) {
                 $prod_data[$product->id]['qty'] = $product->quantity;
                 $prod_data[$product->id]['status'] = $product->status;
                 $prod_data[$product->id]['price'] = $product->price;
@@ -251,10 +248,10 @@ class OrderController extends Controller
             }
 
             $error = true;
-            foreach ($cart['items'] as $item){
-                if(isset($prod_data[$item['product']['id']])){
+            foreach ($cart['items'] as $item) {
+                if (isset($prod_data[$item['product']['id']])) {
                     $price = ($prod_data[$item['product']['id']]['special_price'] !== null) ? $prod_data[$item['product']['id']]['special_price'] : $prod_data[$item['product']['id']]['price'];
-                    if ($prod_data[$item['product']['id']]['qty'] >= $item['qty'] && $price == $item['product']['price'] && $prod_data[$item['product']['id']]['status'] == 1){
+                    if ($prod_data[$item['product']['id']]['qty'] >= $item['qty'] && $price == $item['product']['price'] && $prod_data[$item['product']['id']]['status'] == 1) {
                         $error = false;
                     }
                 } else {
@@ -265,8 +262,8 @@ class OrderController extends Controller
 
             //dd($prod_data);
 
-            if ($error){
-                 dd('error cart is not valid');
+            if ($error) {
+                dd('error cart is not valid');
             }
 
             try {
@@ -275,7 +272,7 @@ class OrderController extends Controller
 
                 $data = [];
                 $insert = [];
-                foreach ($cart['items'] as $item){
+                foreach ($cart['items'] as $item) {
                     $data['order_id'] = $order->id;
                     $data['product_id'] = $item['product']['id'];
                     $data['name'] = $item['product']['title'];
@@ -293,40 +290,37 @@ class OrderController extends Controller
 
 
 
-                if($order->payment_method == 1 && $order->payment_type == 'bog'){
-                    return app(BogPaymentController::class)->make_order($order->id,$order->grand_total);
-                } elseif($order->payment_method == 1 && $order->payment_type == 'tbc'){
-                    return redirect(locale_route('order.failure',$order->id));
+                if ($order->payment_method == 1 && $order->payment_type == 'bog') {
+                    return app(BogPaymentController::class)->make_order($order->id, $order->grand_total);
+                } elseif ($order->payment_method == 1 && $order->payment_type == 'tbc') {
+                    return redirect(locale_route('order.failure', $order->id));
+                } else {
+                    return redirect(locale_route('order.success', $order->id));
                 }
-                 else {
-                    return redirect(locale_route('order.success',$order->id));
-                }
-
-            } catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 DataBase::rollBack();
             }
-
-
         }
-
     }
 
-    public function bogResponse(Request $request){
+    public function bogResponse(Request $request)
+    {
         //dump($request->order_id);
-        $order = Order::query()->where('id',$request->get('order_id'))->first();
+        $order = Order::query()->where('id', $request->get('order_id'))->first();
 
         //dd($order);
-        if($order->status == 'success') return redirect(locale_route('order.success',$order->id));
-        else if($order->status == 'error') return redirect(route('order.failure'));
+        if ($order->status == 'success') return redirect(locale_route('order.success', $order->id));
+        else if ($order->status == 'error') return redirect(route('order.failure'));
         else {
             sleep(3);
-            return redirect('https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id='.$order->id);
+            return redirect('https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order->id);
         }
     }
 
-    public function statusSuccess($order_id){
-        $order = Order::query()->where('id',$order_id)->with('items')->first();
-        return Inertia::render('Success/Success',['order' => $order])->withViewData([
+    public function statusSuccess($order_id)
+    {
+        $order = Order::query()->where('id', $order_id)->with('items')->first();
+        return Inertia::render('Success/Success', ['order' => $order])->withViewData([
             'meta_title' => 'success',
             'meta_description' => 'success',
             'meta_keyword' => 'success',
@@ -336,8 +330,9 @@ class OrderController extends Controller
         ]);
     }
 
-    public function statusFail($order_id){
-        return Inertia::render('Success/Failure',[])->withViewData([
+    public function statusFail($order_id)
+    {
+        return Inertia::render('Success/Failure', [])->withViewData([
             'meta_title' => 'success',
             'meta_description' => 'success',
             'meta_keyword' => 'success',
@@ -346,5 +341,4 @@ class OrderController extends Controller
             'og_description' => 'success',
         ]);
     }
-
 }

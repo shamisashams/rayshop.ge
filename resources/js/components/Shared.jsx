@@ -62,7 +62,7 @@ export const SizePick = ({ sizes }) => {
                   : "bg-custom-slate-200 text-black"
               }`}
             >
-              {size}
+              {size.name}
             </button>
           );
         })}

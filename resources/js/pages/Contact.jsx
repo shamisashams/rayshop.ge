@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import { Inertia } from '@inertiajs/inertia'
 import { CommonButton, SocialMedia } from "../components/Shared";
 import Layout from "../Layouts/Layout";
+import { Link, usePage } from "@inertiajs/inertia-react";
 
 const Contact = ({seo}) => {
+    const { errors, gphone, gemail, gaddress, gfacebook, ginstagram } = usePage().props;
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -37,12 +39,12 @@ const Contact = ({seo}) => {
         <div className="lg:w-auto w-full mb-10 lg:mb-0">
           <div className="opacity-80 font-bold mb-3">მისამართი</div>
           <div className="bold lg:text-xl  mb-8">
-            ქუჩის დასახელება #212, თბილისი.
+            {gaddress.value}
           </div>
           <div className="opacity-80 font-bold mb-3">ტელეფონის ნომერი</div>
-          <div className="bold lg:text-xl  mb-8">+995 032 2 00 00 00</div>
+          <div className="bold lg:text-xl  mb-8">{gphone.value}</div>
           <div className="opacity-80 font-bold mb-3">ელ-ფოსტა</div>
-          <div className="bold lg:text-xl  mb-8">example@mail.com</div>
+          <div className="bold lg:text-xl  mb-8">{gemail.value}</div>
           <div className="absolute left-0 bottom-10">
             <SocialMedia />
           </div>

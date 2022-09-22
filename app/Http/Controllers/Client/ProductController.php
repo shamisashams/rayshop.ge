@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Size;
 use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -82,25 +83,12 @@ class ProductController extends Controller
 
         $product = Product::where(['status' => true, 'slug' => $slug])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
-        })->with(['latestImage'])->firstOrFail();
+        })->with(['latestImage', 'files', 'sizes'])->firstOrFail();
 
         $productImages = $product->files()->orderBy('id', 'desc')->get();
 
-        $product_attributes = $product->attribute_values;
-
         $result = [];
 
-        foreach ($product_attributes as $item) {
-            $options = $item->attribute->options;
-            $value = '';
-            foreach ($options as $option) {
-                if ($item->attribute->type == 'select') {
-                    if ($item->integer_value == $option->id) {
-                        $result[$item->attribute->code] = $option->label;
-                    }
-                }
-            }
-        }
 
         $product['attributes'] = $result;
 
@@ -126,28 +114,6 @@ class ProductController extends Controller
                 $arr[0]['ancestors'] = [];
                 $arr[0]['current'] = $item;
             }
-
-
-
-            /*if($item->isLeaf()){
-
-                $ancestors = $item->ancestors;
-
-                $k = 0;
-                foreach ($ancestors as $ancestor){
-                    $path[$k]['id'] = $ancestor->id;
-                    $path[$k]['slug'] = $ancestor->slug;
-                    $path[$k]['title'] = $ancestor->title;
-                    $k++;
-                }
-
-                $path[$k]['id'] = $item->id;
-                $path[$k]['slug'] = $item->slug;
-                $path[$k]['title'] = $item->title;
-                break;
-            } else {
-
-            }*/
         }
 
         $max = max(array_keys($arr));
@@ -201,7 +167,9 @@ class ProductController extends Controller
             'product' => $product
         ]);*/
         return Inertia::render('SingleProucts', [
+            'sizes' => Size::all(),
             'product' => $product,
+            "sameproduct" => Product::where('slug', '!=', $slug)->with('latestImage', 'sizes', 'files')->latest()->limit(8)->get(),
             'category_path' => $path,
             'similar_products' => $similar_products,
             'product_images' => $productImages,

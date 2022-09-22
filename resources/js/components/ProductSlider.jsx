@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { Pagination, FreeMode, Navigation } from "swiper";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { ReactComponent as Arrow } from "/assets/svg/longArrow.svg";
 import ProductBox from "./ProductBox";
 import Product1 from "/assets/images/products/1.png";
@@ -122,11 +122,12 @@ const ProductSlider = ({data}) => {
         },
       }}
     >
-      {data.map((item, index) => {
+      {data.map((e, index) => {
         return (
           <SwiperSlide key={index}>
-            <ProductBox
-              link={item.link}
+            {/* <ProductBox
+            //   link={item.link}
+              link={route("client.product.show", item.slug)}
               image={
                 item.files != null
                 ? "/" +
@@ -136,11 +137,33 @@ const ProductSlider = ({data}) => {
                 : null
 
               }
-              name={item.name}
-              sale={item.sale}
+              name={item.title}
+              sale={item.special_price? true : false}
               price={item.price}
               oldPrice={item.oldPrice}
+            /> */}
+             <ProductBox
+key={index}
+              link={route("client.product.show", e.slug)}
+              image={
+                e.files != null
+                ? "/" +
+                  e.files[0].path +
+                  "/" +
+                  e.files[0].title
+                : null
+
+              }
+              name={e.title}
+              sale={e.special_price? true : false}
+              oldPrice={e.price}
+              price={e.special_price}
             />
+
+
+{/* sale={e.special_price? true : false}
+              oldPrice={e.price}
+              price={e.special_price} */}
           </SwiperSlide>
         );
       })}

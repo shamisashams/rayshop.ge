@@ -252,7 +252,7 @@ const Products = ({seo, products}) => {
                 link={
                     route("client.product.show", data.slug)
                 }
-                name={data.name}
+                name={data.title}
                 sale={data.sale}
                 oldPrice={data.oldPrice}
                 price={data.price}

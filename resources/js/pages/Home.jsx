@@ -103,7 +103,7 @@ const Home = ({seo,gallery, products, productsAll, sliders}) => {
                         return(
                             <ProductBox
 key={i}
-              link="/"
+              link={route("client.product.show", e.slug)}
               image={
                 e.files != null
                 ? "/" +
@@ -113,7 +113,7 @@ key={i}
                 : null
 
               }
-              name={e.name}
+              name={e.title}
               sale={e.special_price? true : false}
               oldPrice={e.price}
               price={e.special_price}
