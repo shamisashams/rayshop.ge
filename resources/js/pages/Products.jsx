@@ -106,7 +106,7 @@ const addToCart = function (product) {
     Inertia.visit(window.location.href)
 };
 
-const Products = ({seo, products}) => {
+const Products = ({seo, products, sizes,cat}) => {
 
     // pricerange
     const [value, setValue] = useState([20, 37]);
@@ -131,7 +131,7 @@ const Products = ({seo, products}) => {
             [key]: value,
         }))
 
-        console.log(values, 'esaa');
+        // console.log(values, 'esaa');
       }
 
       function handleSubmit(e) {
@@ -155,7 +155,7 @@ const Products = ({seo, products}) => {
         <div className="bold xl:mb-6 mb-3">პროდუქცია</div>
         <form onSubmit={handleSubmit}>
         <div className="xl:mb-12 mb-8">
-          {checkboxes.map((check, index) => {
+          {/* {checkboxes.map((check, index) => {
             return (
               <div
                 key={index}
@@ -171,7 +171,29 @@ const Products = ({seo, products}) => {
                 <label htmlFor={`checkbox-${index}`}>{check}</label>
               </div>
             );
-          })}
+          })} */}
+          {
+            cat.map((e,i)=>{
+                return (
+                    <div
+                key={i}
+                className="xl:mb-5 mb-2 flex items-center justify-start"
+              >
+                   <input type="checkbox" name="cat" onChange={
+                    ()=>{
+                        alert(e.title)
+                    }
+                    }
+                     id={`checkbox-${e.title}`} />
+                     {/* <p>{e.title}</p> */}
+                     <label className="mr-2" htmlFor={`checkbox-${i}`}>
+                  <div></div>
+                </label>
+                     <label htmlFor={`checkbox-${i}`}>{e.title}</label>
+                </div>
+                )
+            })
+          }
         </div>
         <div className="xl:mb-10 mb-6">
           <div className="bold xl:mb-6 mb-3">შეარჩიე საფასო კატეგორია</div>
@@ -195,10 +217,9 @@ const Products = ({seo, products}) => {
       </Box>
         </div>
         <div className="xl:mb-10 mb-6">
-          {/* <SizePick sizes={["s", "m", "l", "xl"]} /> */}
           <div className="bold mb-5">აირჩიე ზომა:</div>
       <div className="sizeFlex flex flex-wrap">
-        {["s", "m", "l", "xl"].map((size, i) => {
+        {/* {["s", "m", "l", "xl"].map((size, i) => {
           return (
             <button type="button" id='size'
               onClick={(e) =>
@@ -221,7 +242,30 @@ const Products = ({seo, products}) => {
         //    <input type="button" value="Click me"></input>
 
           );
-        })}
+        })} */}
+
+        {
+            sizes.map((e,i)=>{
+                return(
+                    <button type="button" id='size'
+                    onClick={(e) =>
+                      {
+                          setPicked(i)
+                          values.size = sizes[i].id, 'esaa'
+                      }
+                  }
+                    key={i}
+                    className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
+                      picked === i
+                        ? "bg-black text-white"
+                        : "bg-custom-slate-200 text-black"
+                    }`}
+                  >
+                    {e.name}
+                  </button>
+                )
+            })
+        }
       </div>
         </div>
         <CommonButton width="245px" text="გაფილტრე პროდუქცია" />

@@ -50,6 +50,8 @@ class ProductController extends Controller
         //dd($products);
         return Inertia::render('Products', [
             'products' => $products,
+            "cat" => Category::all(),
+            "sizes" => Size::all(),
             'images' => $images,
             'page' => $page,
             "seo" => [

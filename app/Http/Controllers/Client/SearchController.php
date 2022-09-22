@@ -36,9 +36,10 @@ class SearchController extends Controller
      */
     public function index(string $locale, Request $request)
     {
+        dd($request->all());
         $page = Page::where('key', 'home')->firstOrFail();
         //        return 1;
-        
+
         //dd($category->getAncestors());
         /*$products = Product::where(['status' => 1, 'product_categories.category_id' => $category->id])
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')->with(['latestImage'])
