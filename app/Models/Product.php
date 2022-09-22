@@ -187,4 +187,10 @@ class Product extends Model implements Searchable
     {
         return $this->morphOne(File::class, 'fileable')->orderBy('main', 'desc');
     }
+
+    public function sizes()
+    {
+        // return $this->hasMany(ProductSize::class, 'product_id');
+        return $this->belongsToMany(Size::class, 'product_sizes');
+    }
 }

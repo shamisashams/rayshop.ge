@@ -34,13 +34,6 @@
             ]
         },
         {
-            "url": "attribute.index",
-            "name": "ატრიბუტები",
-            "i18n": "attributes",
-            "icon": "language",
-            "slug": "attribute"
-        },
-        {
             "url": "color.index",
             "name": "ზომები",
             "i18n": "attributes",

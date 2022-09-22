@@ -15,6 +15,8 @@ use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
+use App\Models\ProductSize;
 use App\Models\ProductAttributeValue;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\Eloquent\ProductAttributeValueRepository;
@@ -88,13 +90,9 @@ class ProductController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(ProductRequest $request)
     {
         $product = $this->productRepository->model;
-
-
-
-
 
         $url = locale_route('product.store', [], false);
         $method = 'POST';
@@ -109,6 +107,8 @@ class ProductController extends Controller
         return view('admin.nowa.views.products.form', [
             'product' => $product,
             'url' => $url,
+            "size" => Size::all(),
+            "product_size" => ProductSize::all(),
             'method' => $method,
             'categories' => $this->categories,
             'attributes' => $this->attributeRepository->all()
@@ -125,8 +125,17 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $sizes = [];
+        foreach ($request->post() as $key => $value) {
+            if (str_contains($key, 'size')) {
+                array_push($sizes, $key);
+            }
+        }
 
-        //dd($request->all());
+        $sizesId = [];
+        foreach ($sizes as $key => $value) {
+            array_push($sizesId, str_replace("size", "", $value));
+        }
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
         $saveData['stock'] = isset($saveData['stock']) && (bool)$saveData['stock'];
@@ -138,47 +147,39 @@ class ProductController extends Controller
         $saveData['day_product'] = isset($saveData['day_product']) && (bool)$saveData['day_product'];
         $saveData['special_price_tag'] = isset($saveData['special_price_tag']) && (bool)$saveData['special_price_tag'];
 
-        $attributes = $saveData['attribute'];
-        unset($saveData['attribute']);
+        // $attributes = $saveData['attribute'];
+        // unset($saveData['attribute']);
 
+        // create product
         $product = $this->productRepository->create($saveData);
-        $product->categories()->sync($saveData['categories']);
+        // $product->categories()->sync($saveData['categories']);
+
+        // $saveSize = [];
+        $data = [];
+        // // dd(json_encode($sizesId));
+        // $saveSize['product_id'] = $product->id;
+        // foreach ($sizesId as $key => $item) {
+        //     // $data['size_id'] = $item;
+        //     array_push($data, $item);
+        // }
+        // $saveSize['product_id'] = $product->id;
+        // $saveSize['size_id'] = json_encode($data);
+        // ProductSize::create($saveSize);
+
+        // dd($sizesId);
+        $product->sizes()->sync($sizesId);
+        // foreach ($sizesId as $key => $value) {
+        //     # code...
+
+        //     $data['product_id'] = $product->id;
+        //     $data['size_id'] = $value;
+        //     ProductSize::create($data);
+        // }
 
         // Save Files
         if ($request->hasFile('images')) {
             $product = $this->productRepository->saveFiles($product->id, $request);
         }
-
-
-        //save product attributes
-        $attr = [];
-        foreach ($attributes as $key => $item) {
-            if ($item) {
-                $attr[$key] = $item;
-            }
-        }
-
-        $attr_ids = array_keys($attr);
-
-        $_attributes = Attribute::whereIn('id', $attr_ids)->get();
-
-        $arr = [];
-        foreach ($_attributes as $item) {
-            $arr[$item->id] = $item;
-        }
-
-        $data = [];
-        foreach ($attr as $key => $item) {
-            $data['product_id'] = $product->id;
-            $data['attribute_id'] = $arr[$key]->id;
-            $data['type'] = $arr[$key]->type;
-            if ($data['type'] == 'boolean') $data['value'] = (bool)$item;
-            else $data['value'] = $item;
-
-            //dd($data);
-            $this->productAttributeValueRepository->create($data);
-        }
-
 
 
         return redirect(locale_route('product.index', $product->id))->with('success', __('admin.create_successfully'));
@@ -222,6 +223,8 @@ class ProductController extends Controller
         return view('admin.nowa.views.products.form', [
             'product' => $product,
             'url' => $url,
+            "size" => Size::all(),
+            "product_size" => ProductSize::all(),
             'method' => $method,
             'categories' => $this->categories,
             'attributes' => $this->attributeRepository->all()
@@ -240,6 +243,17 @@ class ProductController extends Controller
     public function update(ProductRequest $request, string $locale, Product $product)
     {
         //dd($request->all());
+        $sizes = [];
+        foreach ($request->post() as $key => $value) {
+            if (str_contains($key, 'size')) {
+                array_push($sizes, $key);
+            }
+        }
+        $sizesId = [];
+        foreach ($sizes as $key => $value) {
+            array_push($sizesId, str_replace("size", "", $value));
+        }
+
         $saveData = Arr::except($request->except('_token'), []);
         $saveData['status'] = isset($saveData['status']) && (bool)$saveData['status'];
         $saveData['popular'] = isset($saveData['popular']) && (bool)$saveData['popular'];
@@ -252,62 +266,27 @@ class ProductController extends Controller
         $saveData['special_price_tag'] = isset($saveData['special_price_tag']) && (bool)$saveData['special_price_tag'];
 
         //dd($saveData);
-        $attributes = $saveData['attribute'];
-        unset($saveData['attribute']);
-
-        //dd($attributes);
 
         $this->productRepository->update($product->id, $saveData);
 
+
+        $data = [];
+        // foreach ($sizesId as $key => $item) {
+        //     // $data['size_id'] = $item;
+        //     array_push($data, $item);
+        // }
+        // $saveSize['size_id'] = json_encode($data);
+        // ProductSize::create($saveSize);
+        // ProductSize::where("product_id", $product->id)->update($saveSize);
+        // $product->sizes()->sync($sizesId);
+        // dd($sizesId);
+        $product->sizes()->sync($sizesId);
         $this->productRepository->saveFiles($product->id, $request);
 
         $product->categories()->sync($saveData['categories'] ?? []);
 
 
-        //update product attributes
-        $attr = [];
-        $attr_del = [];
-        foreach ($attributes as $key => $item) {
-            if ($item) {
-
-                $product_atribute = ProductAttributeValue::where('product_id', $product->id)
-                    ->where('attribute_id', $key)->first();
-                if ($product_atribute) {
-                    $data['integer_value'] = $item;
-                    ProductAttributeValue::where('product_id', $product_atribute->product_id)
-                        ->where('attribute_id', $product_atribute->attribute_id)
-                        ->update($data);
-                } else {
-                    $attr[$key] = $item;
-                }
-            } else $attr_del[] = $key;
-        }
-
-        $attr_ids = array_keys($attr);
-
-        $_attributes = Attribute::whereIn('id', $attr_ids)->get();
-
-        $arr = [];
-        foreach ($_attributes as $item) {
-            $arr[$item->id] = $item;
-        }
-
-        $data = [];
-        foreach ($attr as $key => $item) {
-            $data['product_id'] = $product->id;
-            $data['attribute_id'] = $arr[$key]->id;
-            $data['type'] = $arr[$key]->type;
-
-            if ($data['type'] == 'boolean') $data['value'] = (bool)$item;
-            else $data['value'] = $item;
-
-            //dd($data);
-            $this->productAttributeValueRepository->create($data);
-        }
-
-
-        ProductAttributeValue::where('product_id', $product->id)
-            ->whereIn('attribute_id', $attr_del)->delete();
+        //update product sizes
 
 
 
