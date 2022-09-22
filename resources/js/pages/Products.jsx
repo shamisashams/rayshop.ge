@@ -101,7 +101,6 @@ const addToCart = function (product) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    // console.log(JSON.parse(localStorage.getItem("cart")));
     //localStorage.removeItem('cart')
     Inertia.visit(window.location.href)
 };
@@ -117,11 +116,14 @@ const Products = ({seo, products, sizes,cat}) => {
 
 // size
     const [picked, setPicked] = useState(0);
+    const [sizepicked, setSizePicked] = useState(false);
     const [values, setValues] = useState({
         cat: "",
         price: "",
         size: "",
       })
+      let categoryArray = [];
+
 
       function handleChange(e) {
         const key = e.target.id;
@@ -131,7 +133,6 @@ const Products = ({seo, products, sizes,cat}) => {
             [key]: value,
         }))
 
-        // console.log(values, 'esaa');
       }
 
       function handleSubmit(e) {
@@ -155,45 +156,29 @@ const Products = ({seo, products, sizes,cat}) => {
         <div className="bold xl:mb-6 mb-3">პროდუქცია</div>
         <form onSubmit={handleSubmit}>
         <div className="xl:mb-12 mb-8">
-          {/* {checkboxes.map((check, index) => {
+          {cat.map((check, index) => {
             return (
               <div
                 key={index}
                 className="xl:mb-5 mb-2 flex items-center justify-start"
               >
-                <input type="checkbox" name="cat" value={values.cat} onChange={
-                    handleChange
-                    }
-                     id={`checkbox-${index}`} />
-                <label className="mr-2" htmlFor={`checkbox-${index}`}>
+                <input type="checkbox" name="cat" id={`checkbox-${check.id}`} onChange={(e)=>{
+                    categoryArray.indexOf(check.title) === -1 ? categoryArray.push(check.id): "";
+                    // if(!e.target.checked){
+                    //         categoryArray.splice(categoryArray.indexOf(e.target.id), 1)
+                    //         if(categoryArray.length == 1) categoryArray.splice(categoryArray.indexOf(e.target.id), 0)
+                    // }
+                    values.cat = categoryArray;
+                }
+                }/>
+                <label className="mr-2" htmlFor={`checkbox-${check.id}`}>
                   <div></div>
                 </label>
-                <label htmlFor={`checkbox-${index}`}>{check}</label>
+                <label>{check.title}</label>
               </div>
             );
-          })} */}
-          {
-            cat.map((e,i)=>{
-                return (
-                    <div
-                key={i}
-                className="xl:mb-5 mb-2 flex items-center justify-start"
-              >
-                   <input type="checkbox" name="cat" onChange={
-                    ()=>{
-                        alert(e.title)
-                    }
-                    }
-                     id={`checkbox-${e.title}`} />
-                     {/* <p>{e.title}</p> */}
-                     <label className="mr-2" htmlFor={`checkbox-${i}`}>
-                  <div></div>
-                </label>
-                     <label htmlFor={`checkbox-${i}`}>{e.title}</label>
-                </div>
-                )
-            })
-          }
+          })}
+
         </div>
         <div className="xl:mb-10 mb-6">
           <div className="bold xl:mb-6 mb-3">შეარჩიე საფასო კატეგორია</div>
@@ -246,17 +231,19 @@ const Products = ({seo, products, sizes,cat}) => {
 
         {
             sizes.map((e,i)=>{
+                console.log(e, 'esaa');
                 return(
                     <button type="button" id='size'
-                    onClick={(e) =>
+                    onClick={() =>
                       {
+                        setSizePicked(true)
                           setPicked(i)
-                          values.size = sizes[i].id, 'esaa'
+                          values.size = e.id
                       }
                   }
                     key={i}
                     className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                      picked === i
+                      picked == i && sizepicked
                         ? "bg-black text-white"
                         : "bg-custom-slate-200 text-black"
                     }`}

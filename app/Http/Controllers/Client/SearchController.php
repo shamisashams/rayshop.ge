@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Page;
+use App\Models\Size;
 use App\Models\Product;
 use App\Models\Translations\ProductTranslation;
 use App\Repositories\Eloquent\AttributeRepository;
@@ -36,7 +37,17 @@ class SearchController extends Controller
      */
     public function index(string $locale, Request $request)
     {
-        dd($request->all());
+        $products = $this->productRepository->getAll();
+
+        $query = Product::whereHas('categories', function ($q) {
+            $q->where('id', 1);
+        })->get();
+        dd($query);
+
+
+
+        dd($products);
+
         $page = Page::where('key', 'home')->firstOrFail();
         //        return 1;
 
@@ -46,7 +57,7 @@ class SearchController extends Controller
             ->orderby('updated_at','desc')
             ->paginate(16);*/
 
-        $products = $this->productRepository->getAll();
+
 
 
         foreach ($products as $product) {
@@ -87,6 +98,8 @@ class SearchController extends Controller
         return Inertia::render('Products', [
             'products' => $products,
             'category' => null,
+            "cat" => Category::all(),
+            "sizes" => Size::all(),
             'images' => $images,
             'filter' => $this->getAttributes(),
             "seo" => [
