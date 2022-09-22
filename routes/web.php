@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
@@ -83,6 +84,12 @@ Route::prefix('{locale?}')
 
                 Route::resource('order', \App\Http\Controllers\Admin\OrderController::class);
                 //Route::get('order/{order}/destroy', [\App\Http\Controllers\Admin\OrderController::class, 'destroy'])->name('order.destroy');
+
+                Route::get("colors", [SizeController::class, 'index'])->name('color.index');
+                Route::get("addcolorspage{id?}", [SizeController::class, 'addColorsPage'])->name('size.form');
+                Route::post("addcolors", [SizeController::class, 'addColor'])->name('size.create');
+                Route::post("updateSize", [SizeController::class, 'updateSize'])->name('size.update');
+                Route::get("delSize", [SizeController::class, 'delSize'])->name('size.destroy');
 
                 // Password
                 Route::get('password', [\App\Http\Controllers\Admin\PasswordController::class, 'index'])->name('password.index');

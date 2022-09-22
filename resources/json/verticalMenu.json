@@ -41,6 +41,13 @@
             "slug": "attribute"
         },
         {
+            "url": "color.index",
+            "name": "ზომები",
+            "i18n": "attributes",
+            "icon": "language",
+            "slug": "attribute"
+        },
+        {
             "url": "page.index",
             "name": "გვერდები",
             "i18n": "page",
