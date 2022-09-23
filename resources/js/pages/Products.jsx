@@ -10,12 +10,11 @@ import { Inertia } from '@inertiajs/inertia'
 import "../components/PriceRange/PriceRange.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { indexOf } from "lodash";
 
 function valuetext(value) {
     return `${value}°C`;
   }
-
-
 
 let links = function (links) {
     let rows = [];
@@ -101,14 +100,14 @@ const addToCart = function (product) {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-    //localStorage.removeItem('cart')
     Inertia.visit(window.location.href)
 };
 
-const Products = ({seo, products, sizes,cat}) => {
+const Products = ({seo, products, sizes,cat, maxPricefilter}) => {
+    let arr = [];
+    const { catfilter, sizefilter, pricefilter} = usePage().props
+    const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 100)]);
 
-    // pricerange
-    const [value, setValue] = useState([20, 37]);
     const handleChangee = (event, newValue) => {
         setValue(newValue);
         values.price = newValue
@@ -142,8 +141,6 @@ const Products = ({seo, products, sizes,cat}) => {
   const [showFilter, setShowfilter] = useState(false);
   const wrapperRef = useRef(null);
 
-  const checkboxes = ["მაისური", "ქურთუკი", "შარვალი", "ქუდი"];
-
   return (
     <Layout seo={seo}>
     <div className=" wrapper pb-20">
@@ -155,22 +152,42 @@ const Products = ({seo, products, sizes,cat}) => {
       >
         <div className="bold xl:mb-6 mb-3">პროდუქცია</div>
         <form onSubmit={handleSubmit}>
-        <div className="xl:mb-12 mb-8">
+        <div className="xl:mb-12 mb-8 categories">
           {cat.map((check, index) => {
             return (
               <div
                 key={index}
                 className="xl:mb-5 mb-2 flex items-center justify-start"
               >
-                <input type="checkbox" name="cat" id={`checkbox-${check.id}`} onChange={(e)=>{
-                    categoryArray.indexOf(check.title) === -1 ? categoryArray.push(check.id): "";
+                <input
+                type="checkbox" name="cat" id={`checkbox-${check.id}`}
+                defaultChecked={ catfilter?catfilter.indexOf(check.id.toString()) > -1 : ""}
+                onChange={(e)=>{
+                    let form = document.querySelector(".categories")
+                    // if((e.target.id).split('checkbox-')[1])
                     // if(!e.target.checked){
-                    //         categoryArray.splice(categoryArray.indexOf(e.target.id), 1)
-                    //         if(categoryArray.length == 1) categoryArray.splice(categoryArray.indexOf(e.target.id), 0)
+                    //     let id = (e.target.id).split('checkbox-')[1]
+                    //     catfilter.splice(categoryArray.indexOf(id),1);
+                    //     values.cat = catfilter;
                     // }
+                   if(catfilter != null){
+                    let isEmpty = false;
+                    for (let i = 0; i < form.children.length; i++) {
+                        // console.log(form.children[i].firstElementChild.checked , 'esaa');
+                        if(!form.children[i].firstElementChild.checked){
+                           isEmpty = true;
+                        }
+                    }
+                }
+                values.cat = []
+                // console.log(e.target.checked, 'esaa');
+
+
+                    categoryArray.indexOf(check.title) === -1 && e.target.checked ? categoryArray.push(check.id): null;
                     values.cat = categoryArray;
                 }
-                }/>
+                }
+                />
                 <label className="mr-2" htmlFor={`checkbox-${check.id}`}>
                   <div></div>
                 </label>
@@ -191,7 +208,7 @@ const Products = ({seo, products, sizes,cat}) => {
           {value[1]} ₾
         </div>
       </div>
-      <Box sx={{ width: 300 }}>
+      <Box>
         <Slider
           getAriaLabel={() => "Temperature range"}
           value={value}
@@ -231,7 +248,6 @@ const Products = ({seo, products, sizes,cat}) => {
 
         {
             sizes.map((e,i)=>{
-                console.log(e, 'esaa');
                 return(
                     <button type="button" id='size'
                     onClick={() =>
@@ -243,7 +259,7 @@ const Products = ({seo, products, sizes,cat}) => {
                   }
                     key={i}
                     className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                      picked == i && sizepicked
+                        picked == i && sizepicked || sizefilter == e.id
                         ? "bg-black text-white"
                         : "bg-custom-slate-200 text-black"
                     }`}

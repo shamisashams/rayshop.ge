@@ -37,7 +37,6 @@ class SearchController extends Controller
      */
     public function index(string $locale, Request $request)
     {
-        // dd($request->all());
         $products = $this->productRepository->getAll();
         $query = Product::whereHas('categories', function ($q) {
             $q->where('id', 1);
@@ -94,9 +93,13 @@ class SearchController extends Controller
             'products' => $products,
             'category' => null,
             "cat" => Category::all(),
+            "catfilter" => $request->cat,
+            "pricefilter" => $request->price,
+            "sizefilter" => $request->size,
             "sizes" => Size::all(),
             'images' => $images,
-            'filter' => $this->getAttributes(),
+            'maxPricefilter' => $this->productRepository->getMaxPrice(),
+
             "seo" => [
                 "title" => $page->meta_title,
                 "description" => $page->meta_description,

@@ -15,7 +15,6 @@ import {
 } from "react-parallax-mouse";
 
 const HeroSlider = ({data}) => {
-    console.log(data, 'esaa');
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 

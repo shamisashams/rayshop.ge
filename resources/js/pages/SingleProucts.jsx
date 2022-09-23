@@ -13,7 +13,6 @@ import { identity } from "lodash";
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
     const [picked, setPicked] = useState(0);
-    console.log(sameproduct, 'esaa');
   const [imageIndex, setImageIndex] = useState(0);
 let imgs = new Array();
 product.files.map((e,i)=>{

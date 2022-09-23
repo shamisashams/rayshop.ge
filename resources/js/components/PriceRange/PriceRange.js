@@ -14,7 +14,7 @@ export default function RangeSlider() {
     setValue(newValue);
   };
 
-  console.log(value);
+  console.log(value, 'esaa');
 
   return (
     <>
