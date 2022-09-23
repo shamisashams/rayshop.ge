@@ -64,7 +64,7 @@ class Slider extends Model
     {
         return $this->morphMany(File::class, 'fileable');
     }
-/**
+    /**
      * @return MorphOne
      */
     public function file(): MorphOne

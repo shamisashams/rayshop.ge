@@ -157,7 +157,7 @@ key={index}
               name={e.title}
               sale={e.special_price? true : false}
               oldPrice={e.price}
-              price={e.special_price}
+              price={e.special_price? e.special_price : e.price}
             />
 
 

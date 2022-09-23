@@ -19,10 +19,10 @@ import {
 import Layout from "../Layouts/Layout";
 import { Route } from 'react-router-dom';
 
-const Home = ({seo,gallery, products, productsAll, sliders}) => {
+const Home = ({seo,gallery, products, productsAll, sliders, sizes}) => {
   return (
     <Layout seo={seo}>
-      <HeroSlider data={sliders} />
+      <HeroSlider data={sliders} sizes={sizes} />
       <section className="py-10">
         <div className="text-center mb-10 bold text-xl">
           <Link href="/products">ყველა პროდუქტი</Link>

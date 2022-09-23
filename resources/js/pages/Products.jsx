@@ -10,7 +10,7 @@ import { Inertia } from '@inertiajs/inertia'
 import "../components/PriceRange/PriceRange.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { indexOf } from "lodash";
+import { indexOf, size } from "lodash";
 
 function valuetext(value) {
     return `${value}°C`;
@@ -18,8 +18,6 @@ function valuetext(value) {
 
 let links = function (links) {
     let rows = [];
-    //links.shift();
-    //links.splice(-1);
     {
         links.map(function (item, index) {
             if (index > 0 && index < links.length - 1) {
@@ -103,9 +101,13 @@ const addToCart = function (product) {
     Inertia.visit(window.location.href)
 };
 
-const Products = ({seo, products, sizes,cat, maxPricefilter}) => {
+const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
     let arr = [];
-    const { catfilter, sizefilter, pricefilter} = usePage().props
+    let sizeArray = [];
+    sizes.forEach(e => {
+         sizeArray.push(e.id);
+    });
+    const { catfilter, pricefilter} = usePage().props
     const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 100)]);
 
     const handleChangee = (event, newValue) => {
@@ -114,8 +116,8 @@ const Products = ({seo, products, sizes,cat, maxPricefilter}) => {
       };
 
 // size
-    const [picked, setPicked] = useState(0);
-    const [sizepicked, setSizePicked] = useState(false);
+    const [picked, setPicked] = useState(sizefilter != null ? sizeArray.indexOf(sizefilter*1):0);
+    const [sizepicked, setSizePicked] = useState(sizefilter ? true : false);
     const [values, setValues] = useState({
         cat: "",
         price: "",
@@ -221,45 +223,21 @@ const Products = ({seo, products, sizes,cat, maxPricefilter}) => {
         <div className="xl:mb-10 mb-6">
           <div className="bold mb-5">აირჩიე ზომა:</div>
       <div className="sizeFlex flex flex-wrap">
-        {/* {["s", "m", "l", "xl"].map((size, i) => {
-          return (
-            <button type="button" id='size'
-              onClick={(e) =>
-                {
-                    setPicked(i)
-                    values.size = ["s", "m", "l", "xl"][i]
-                    // values.size = i
-                }
-            }
-              key={i}
-              className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                picked === i
-                  ? "bg-black text-white"
-                  : "bg-custom-slate-200 text-black"
-              }`}
-            >
-              {size}
-            </button>
-
-        //    <input type="button" value="Click me"></input>
-
-          );
-        })} */}
-
         {
             sizes.map((e,i)=>{
                 return(
                     <button type="button" id='size'
                     onClick={() =>
                       {
+                        console.log(sizeArray, 'yleoba');
                         setSizePicked(true)
-                          setPicked(i)
-                          values.size = e.id
+                        setPicked(i)
+                        values.size = e.id
                       }
                   }
                     key={i}
                     className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                        picked == i && sizepicked || sizefilter == e.id
+                        picked == i && sizepicked
                         ? "bg-black text-white"
                         : "bg-custom-slate-200 text-black"
                     }`}
@@ -283,28 +261,45 @@ const Products = ({seo, products, sizes,cat, maxPricefilter}) => {
           ფილტერ
         </button>
         <div className="xl:pl-5  xl:ml-80 2xl:ml-96  grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-8">
-          {products.data.map((data, index) => {
+          {products.data.map((e, i) => {
             return (
-              <ProductBox
-                key={index}
-                image={
-                    data.files != null
-                    ? "/" +
-                      data.files[0].path +
-                      "/" +
-                      data.files[0].title
-                    : null
-                }
-                // link={data.link}
-                link={
-                    route("client.product.show", data.slug)
-                }
-                name={data.title}
-                sale={data.sale}
-                oldPrice={data.oldPrice}
-                price={data.price}
-                handleClick={() => addToCart(data)}
-                />
+            //   <ProductBox
+            //     key={index}
+            //     image={
+            //         data.files != null
+            //         ? "/" +
+            //           data.files[0].path +
+            //           "/" +
+            //           data.files[0].title
+            //         : null
+            //     }
+            //     // link={data.link}
+            //     link={
+            //         route("client.product.show", data.slug)
+            //     }
+            //     name={data.title}
+            //     sale={data.special_price? true : false}
+            //     oldPrice={data.oldPrice}
+            //     price={data.price}
+            //     handleClick={() => addToCart(data)}
+            //     />
+            <ProductBox
+            key={i}
+                          link={route("client.product.show", e.slug)}
+                          image={
+                            e.files != null
+                            ? "/" +
+                              e.files[0].path +
+                              "/" +
+                              e.files[0].title
+                            : null
+
+                          }
+                          name={e.title}
+                          sale={e.special_price? true : false}
+                          oldPrice={e.price}
+                          price={e.special_price ? e.special_price : e.price}
+                        />
 
             );
           })}

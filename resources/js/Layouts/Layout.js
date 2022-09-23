@@ -20,7 +20,6 @@ export default function Layout({ children, seo = null }) {
         Aos.init({ duration: 2000 });
     }, []);
 
-    console.log(usePage().props);
     const { currentLocale } = usePage().props;
 
     // if (currentLocale == "ge") {

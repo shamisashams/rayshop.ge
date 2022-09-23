@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Slider;
+use App\Models\Size;
 use App\Models\Product;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\App;
@@ -73,6 +74,7 @@ class HomeController extends Controller
             'products' => $products,
             'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),
+            "sizes" => Size::all(),
             "gallery" => Gallery::with("file")->get()->take(8),
             "page" => $page, "seo" => [
                 "title" => $page->meta_title,
