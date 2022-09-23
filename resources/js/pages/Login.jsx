@@ -91,10 +91,10 @@ value={data.email} onChange={e => setData('email', e.target.value)}
           </div>
         </div>
         <div className="flex items-center justify-center py-6 pb-10">
-          <a href="#" className="mx-4">
+          <a href={route("google-redirect")} className="mx-4">
             <img src={"/assets/images/icons/sm/google.png"} alt="" />
           </a>
-          <a href="#" className="mx-4">
+          <a href={route("fb-redirect")} className="mx-4">
             <img src={"/assets/images/icons/sm/facebook.png"} alt="" />
           </a>
         </div>
