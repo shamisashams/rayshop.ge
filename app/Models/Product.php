@@ -156,7 +156,7 @@ class Product extends Model implements Searchable
     public function slider()
     {
         // return $this->hasMany(Product::class);
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Slider::class);
     }
     /**
      * Get the product attribute values that owns the product.

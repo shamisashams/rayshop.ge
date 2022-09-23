@@ -108,7 +108,7 @@ const HeroSlider = ({data, sizes}) => {
 
 {
     data.map((item,index)=>{
-        console.log(item.product.title, item, 'esaa');
+        console.log(item, 'esaa');
            return(
             <SwiperSlide key={index}>
             <div className=" w-screen  lg:h-screen h-full  relative bg-white lg:pt-0 pt-24">
