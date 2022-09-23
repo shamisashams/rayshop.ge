@@ -66,6 +66,10 @@ Route::prefix('{locale?}')
                 Route::get('gallery/{gallery}/destroy', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 
 
+                //city
+                Route::resource('city', \App\Http\Controllers\Admin\CityController::class);
+                Route::get('city/{city}/destroy', [\App\Http\Controllers\Admin\CityController::class, 'destroy'])->name('city.destroy');
+
 
                 // Slider
                 Route::resource('slider', SliderController::class);

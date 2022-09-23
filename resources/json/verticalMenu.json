@@ -55,6 +55,13 @@
             "slug": "slider"
         },
         {
+            "url": "city.index",
+            "name": "ქალაქები",
+            "i18n": "slider",
+            "icon": "language",
+            "slug": "slider"
+        },
+        {
             "url": "language.index",
             "name": "ენები",
             "i18n": "language",
