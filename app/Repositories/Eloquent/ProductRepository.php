@@ -68,15 +68,14 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
 
 
-        //dd(request()->post());
         $params = request()->input();
 
         $query =  $this->model->select('products.*')
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
             ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', 'products.id');
 
-        if ($categoryId) {
-            $query->whereIn('product_categories.category_id', explode(',', $categoryId));
+        if (isset($params['cat'])) {
+            $query->whereIn('product_categories.category_id', ($params['cat']));
         }
 
         if ($popular) {
@@ -124,7 +123,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
 
         if ($priceFilter = request('price')) {
-            $priceRange = explode(',', $priceFilter);
+            $priceRange = ($params['price']);
 
             $query->where(function ($pQ) use ($priceRange) {
                 $pQ->where('products.price', '>=', $priceRange[0])

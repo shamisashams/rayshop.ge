@@ -38,15 +38,14 @@ class SearchController extends Controller
     public function index(string $locale, Request $request)
     {
         $products = $this->productRepository->getAll();
-
+        // dd($products);
         $query = Product::whereHas('categories', function ($q) {
             $q->where('id', 1);
         })->get();
-        dd($query);
 
 
 
-        dd($products);
+        // dd($products);
 
         $page = Page::where('key', 'home')->firstOrFail();
         //        return 1;
