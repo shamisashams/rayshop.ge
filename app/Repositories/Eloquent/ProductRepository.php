@@ -42,6 +42,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
             ->orWhere('day_product', 1)
             ->orWhere('day_price', 1)
             ->orWhere('special_price_tag', 1)
+            ->orWhere('sizes')
             ->whereHas('categories', function ($query) {
                 $query->where('status', 1);
             })->with(['latestImage', 'files'])->inRandomOrder()->get();
@@ -66,17 +67,26 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getAll($categoryId = null, $popular = null, $special = null, $new = null)
     {
-
-
         $params = request()->input();
-
         $query =  $this->model->select('products.*')
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
-            ->leftJoin('product_attribute_values', 'product_attribute_values.product_id', 'products.id');
+            ->leftJoin('product_sizes', 'product_sizes.product_id', '=', 'products.id');
 
         if (isset($params['cat'])) {
             $query->whereIn('product_categories.category_id', ($params['cat']));
         }
+
+        if (isset($params['size'])) {
+            $size = $params['size'];
+            $query->with("sizes")->whereHas("sizes", function ($v) use ($size) {
+                $v->whereIn('product_sizes.size_id', [$size]);
+            });
+            // $size = $params['size'];
+            // Product::where("status", 1)->with("sizes")->whereHas("sizes", function ($v) use ($size) {
+            //     $v->whereIn('product_sizes.size_id', [$size]);
+            // });
+        }
+
 
         if ($popular) {
             $query->where('products.popular', 1);
