@@ -1,13 +1,6 @@
 import  React from 'react';
 import { useRef, useState, useEffect } from "react";
 import { Link, usePage } from "@inertiajs/inertia-react";
-// import {  useLocation } from "react-router-dom";
-// import Logo from "/assets/images/logo/1.png";
-// import { ReactComponent as SearchIcon } from "/assets/svg/search.svg";
-// import { ReactComponent as UserIcon } from "/assets/svg/user.svg";
-// import { ReactComponent as CartIcon } from "/assets/svg/cart.svg";
-// import { ReactComponent as SettingIcon } from "/assets/svg/settings.svg";
-// import { ReactComponent as LogoutIcon } from "/assets/svg/logout.svg";
 import { IoCloseOutline } from "react-icons/io5";
 import Cart from "./Cart";
 import { Inertia } from '@inertiajs/inertia'
@@ -232,7 +225,11 @@ const Header = () => {
             </div>
           </div>
           <button
-            onClick={() => setShowCart(true)}
+            onClick={() =>
+                {
+                   setShowCart(!showCart);
+                }
+            }
             className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-custom-slate-200"
             style={{ background: showCart ? "white" : "" }}
           >

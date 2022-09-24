@@ -8,11 +8,7 @@ import { Pagination, FreeMode, Navigation } from "swiper";
 import { Link, Route } from "react-router-dom";
 import { ReactComponent as Arrow } from "/assets/svg/longArrow.svg";
 import ProductBox from "./ProductBox";
-import Product1 from "/assets/images/products/1.png";
-import Product2 from "/assets/images/products/2.png";
-import Product3 from "/assets/images/products/3.png";
-import Product4 from "/assets/images/products/4.png";
-import Product5 from "/assets/images/products/5.png";
+import { Inertia } from '@inertiajs/inertia'
 
 const ProductSlider = ({data}) => {
   const prevRef = useRef(null);
@@ -158,6 +154,12 @@ key={index}
               sale={e.special_price? true : false}
               oldPrice={e.price}
               price={e.special_price? e.special_price : e.price}
+              handleClick={
+                ()=>{
+                 Inertia.visit(route("client.product.show", e.slug))
+                }
+            }
+
             />
 
 

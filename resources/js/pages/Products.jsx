@@ -175,14 +175,12 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
                    if(catfilter != null){
                     let isEmpty = false;
                     for (let i = 0; i < form.children.length; i++) {
-                        // console.log(form.children[i].firstElementChild.checked , 'esaa');
                         if(!form.children[i].firstElementChild.checked){
                            isEmpty = true;
                         }
                     }
                 }
                 values.cat = []
-                // console.log(e.target.checked, 'esaa');
 
 
                     categoryArray.indexOf(check.title) === -1 && e.target.checked ? categoryArray.push(check.id): null;
@@ -229,7 +227,6 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
                     <button type="button" id='size'
                     onClick={() =>
                       {
-                        console.log(sizeArray, 'yleoba');
                         setSizePicked(true)
                         setPicked(i)
                         values.size = e.id
@@ -263,26 +260,6 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
         <div className="xl:pl-5  xl:ml-80 2xl:ml-96  grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 gap-8">
           {products.data.map((e, i) => {
             return (
-            //   <ProductBox
-            //     key={index}
-            //     image={
-            //         data.files != null
-            //         ? "/" +
-            //           data.files[0].path +
-            //           "/" +
-            //           data.files[0].title
-            //         : null
-            //     }
-            //     // link={data.link}
-            //     link={
-            //         route("client.product.show", data.slug)
-            //     }
-            //     name={data.title}
-            //     sale={data.special_price? true : false}
-            //     oldPrice={data.oldPrice}
-            //     price={data.price}
-            //     handleClick={() => addToCart(data)}
-            //     />
             <ProductBox
             key={i}
                           link={route("client.product.show", e.slug)}
@@ -299,6 +276,12 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
                           sale={e.special_price? true : false}
                           oldPrice={e.price}
                           price={e.special_price ? e.special_price : e.price}
+                        //   handleClick={() => addToCart(e)}
+                          handleClick={
+                           ()=>{
+                            Inertia.visit(route("client.product.show", e.slug))
+                           }
+                        }
                         />
 
             );

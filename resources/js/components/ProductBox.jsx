@@ -5,6 +5,8 @@ import { Link } from '@inertiajs/inertia-react'
 // import { ReactComponent as CartIcon } from "/assets/svg/cart.svg";
 
 const ProductBox = (props) => {
+
+
   return (
     <div className=" p-5 bg-custom-slate-100 text-center group">
       <div className="h-72 mb-5 relative" >
@@ -20,12 +22,12 @@ const ProductBox = (props) => {
               <img src="/assets/svg/eye.svg" alt="eye" />
             </div>
           </Link>
-          <Link onClick={() => props.handleClick(props.product)}>
+          <div onClick={() => props.handleClick(props.product)}>
             <div className="flex items-center justify-center w-12 h-12 mx-1 shadow-lg rounded-full bg-white hover:bg-custom-orange translate-y-40 group-hover:translate-y-0 group transition-all duration-500">
               {/* <CartIcon /> */}
               <img src="/assets/svg/cart.svg" alt="cart" />
             </div>
-          </Link>
+          </div>
         </div>
       </div>
       <div className="mb-1">{props.name}</div>

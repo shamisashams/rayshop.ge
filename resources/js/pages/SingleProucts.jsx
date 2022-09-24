@@ -1,17 +1,57 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from '@inertiajs/inertia-react'
-// import Img1 from "../assets/images/products/1.png";
-// import Img2 from "../assets/images/products/2.png";
-// import Img3 from "../assets/images/products/5.png";
 import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
-// import { ReactComponent as ShareIcon } from "/assets/svg/share.svg";
 import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
 import Layout from "../Layouts/Layout";
 import { identity } from "lodash";
+import { Inertia } from '@inertiajs/inertia'
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
+
+    let sizesArr = new Array();
+    sizes.forEach(el => {
+             sizesArr.push(el.name)
+    });
+    const addToCart = function (product,size) {
+        //localStorage.removeItem('cart')
+        let _cart = localStorage.getItem("cart");
+        let cart;
+        if (_cart !== null) {
+            cart = JSON.parse(_cart);
+        } else cart = [];
+
+        let qty = 1;
+
+        if (cart.length > 0) {
+            let exists = false;
+            cart.forEach(function (el, i) {
+                if (el.product.id === product.id && el.size == size) {
+                    el.qty += qty;
+                    exists = true;
+                }
+            });
+            if (!exists) {
+                let obj = {
+                    product: product,
+                    size: size,
+                    qty: qty,
+                };
+                cart.push(obj);
+            }
+        } else {
+            let obj = {
+                product: product,
+                size: size,
+                qty: qty,
+            };
+            cart.push(obj);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        Inertia.visit(window.location.href)
+    };
+
     const [picked, setPicked] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
 let imgs = new Array();
@@ -91,7 +131,14 @@ product.files.map((e,i)=>{
                 <Link href="/" className="sm:mr-6 mr-3 ">
                   <CommonButton text="შეიძინე" />
                 </Link>
-                <CommonButton text="დაამატე კალათში" />
+                <button onClick={()=>{
+                    addToCart(product, sizesArr[picked])
+                }
+                }
+                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}>
+                    დაამატე კალათში
+               </button>
+
               </div>
               <div className="bold mb-5">
                 {/* <ShareIcon className="inline-block mr-2 align-middle" /> */}

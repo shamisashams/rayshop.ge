@@ -58,8 +58,6 @@ const Cart = ({ show, closeCart }) => {
 
     const updateCart = (quantity,index) => {
 
-        console.log(quantity)
-        console.log(index)
         let cart = localStorage.getItem("cart");
         cart = JSON.parse(cart);
         cart[index].qty = quantity;
@@ -77,8 +75,6 @@ const Cart = ({ show, closeCart }) => {
         Inertia.visit(window.location.href);
     };
 
-
-console.log(getCart().items);
   return (
     <div
       className={`absolute h-screen top-0 right-0 bg-custom-slate-300 lg:p-10 p-5  flex flex-col justify-end transition-all duration-500 origin-right sm:w-auto w-full  ${
@@ -99,6 +95,7 @@ console.log(getCart().items);
         {
             getCart().items.map(
                 (item, index) =>{
+                    console.log(item, 'yleo');
                     const [quantity, setquantity] = useState(item.qty);
                     return(
                         <div key={index}
@@ -155,7 +152,7 @@ console.log(getCart().items);
 
            ლარი</div>
           <div>
-            ზომა: <span className="bold uppercase">{item.product.size}</span>
+            ზომა: <span className="bold uppercase">{item.size}</span>
           </div>
         </div>
       </div>

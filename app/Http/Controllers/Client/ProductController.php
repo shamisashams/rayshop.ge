@@ -34,7 +34,7 @@ class ProductController extends Controller
     public function index(string $locale, Request $request)
     {
         $page = Page::where('key', 'products')->firstOrFail();
-        $products = Product::with(['files'])->whereHas('categories', function (Builder $query) {
+        $products = Product::with(['files', 'sizes'])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
         })->paginate(12);
 
