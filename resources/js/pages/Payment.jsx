@@ -257,7 +257,9 @@ value={values.address} onChange={handleChange}
           </div>
           <div className="flex w-full justify-between items-center mb-3">
             <div className="opacity-50">რაოდენობა:</div>
-            <div className="bold">2</div>
+            <div className="bold">
+                {getCart().items.length}
+            </div>
           </div>
           <div className="flex w-full justify-between items-center mb-3 bold">
             {/* <span>პროდუქტის ფასი:</span>

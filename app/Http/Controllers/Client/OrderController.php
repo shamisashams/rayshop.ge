@@ -229,7 +229,11 @@ class OrderController extends Controller
         $data = $request->all();
         $cart = Arr::pull($data, 'cart');
         $data['locale'] = app()->getLocale();
-        $data['grand_total'] = $cart['total'];
+        $int = (int)$request->city;
+        $shipping_price = City::find($int)->ship_price;
+        $data['courier_service'] = $shipping_price;
+        $data['city'] = City::with("translations")->find($int)->title;
+        $data['grand_total'] = $cart['total'] + (int)$shipping_price;
 
 
 

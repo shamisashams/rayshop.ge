@@ -54,6 +54,7 @@ const SingleProucts = ({seo,sizes,product,sameproduct}) => {
 
     const [picked, setPicked] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
+  const [sizepicked, setSizePicked] = useState(false);
 let imgs = new Array();
 product.files.map((e,i)=>{
     imgs.push("/"+e.path+"/"+e.title)
@@ -109,6 +110,7 @@ product.files.map((e,i)=>{
             <button
               onClick={() =>
                 {
+                    setSizePicked(true)
                     setPicked(i)
                     if(!product.sizes.find((e)=> e.id == size.id)){
                        alert('araa maragshi')
@@ -117,7 +119,8 @@ product.files.map((e,i)=>{
             }
               key={i}
               className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                picked === i
+                // picked === i
+                picked == i && sizepicked
                   ? "bg-black text-white"
                   : "bg-custom-slate-200 text-black"
               }`}
@@ -128,11 +131,28 @@ product.files.map((e,i)=>{
         })}
       </div>
               <div className="flex  flex-nowrap mt-10 mb-16 ">
-                <Link href={route("client.checkout.index")} className="sm:mr-6 mr-3 ">
-                  <CommonButton text="შეიძინე" />
-                </Link>
+                  <button onClick={()=>{
+                    if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                        alert('araa maragshi')
+                        return 0;
+                     }else{
+                         addToCart(product, sizesArr[picked])
+                         Inertia.visit(route("client.checkout.index"))
+                     }
+                  }
+                }
+      className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
+    >
+      შეიძინე
+    </button>
+                {/* </Link> */}
                 <button onClick={()=>{
-                    addToCart(product, sizesArr[picked])
+                    // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
+                    // alert(sizes[picked].id)
+                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                        alert('araa maragshi')
+                        return 0;
+                     }else addToCart(product, sizesArr[picked])
                 }
                 }
                     className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}>
