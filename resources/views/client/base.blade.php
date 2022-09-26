@@ -16,6 +16,9 @@
     <meta property="og:url" content="{{ request()->fullUrl() }}">
     <meta property="og:type" content="page">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet"/>
+    <meta property="og:title"         content="Your Website Title" />
+<meta property="og:description"   content="Your description" />
+<meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
 {{--    @if(app()->getLocale()=="ge")--}}
 {{--        <link href="{{ mix('/css/AppGeo.css') }}" rel="stylesheet"/>--}}
 {{--    @elseif(app()->getLocale()=="en")--}}
@@ -71,6 +74,13 @@
     </script>
 </head>
 <body>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 <!-- Messenger Chat Plugin Code -->
 {{--<div id="fb-root"></div>--}}
 
@@ -99,6 +109,10 @@
     }(document, 'script', 'facebook-jssdk'));*/
 </script>
 @inertia
+
+
+
+
 </body>
 
 </html>

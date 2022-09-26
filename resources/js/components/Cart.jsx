@@ -95,7 +95,6 @@ const Cart = ({ show, closeCart }) => {
         {
             getCart().items.map(
                 (item, index) =>{
-                    console.log(item, 'yleo');
                     const [quantity, setquantity] = useState(item.qty);
                     return(
                         <div key={index}

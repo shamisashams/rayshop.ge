@@ -128,7 +128,7 @@ product.files.map((e,i)=>{
         })}
       </div>
               <div className="flex  flex-nowrap mt-10 mb-16 ">
-                <Link href="/" className="sm:mr-6 mr-3 ">
+                <Link href={route("client.checkout.index")} className="sm:mr-6 mr-3 ">
                   <CommonButton text="შეიძინე" />
                 </Link>
                 <button onClick={()=>{
@@ -146,6 +146,7 @@ product.files.map((e,i)=>{
                 {" "}
                 გაუზიარე მეგობრებს{" "}
               </div>
+              {/* <div class="fb-share-button" data-href="http://127.0.0.1:8000/ge/product/test2" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fge%2Fproduct%2Ftest2&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> */}
               <SocialMedia />
             </div>
           </div>

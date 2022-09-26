@@ -7,6 +7,7 @@ use App\BogPay\BogPaymentController;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\City;
 use App\Models\OrderItem;
 use App\Models\Page;
 use App\Models\Product;
@@ -55,9 +56,10 @@ class OrderController extends Controller
             }
         }
 
-        //dd($products);
+        // dd($products);
         return Inertia::render('Payment', [
             'products' => $products,
+            'city' => City::all(),
             'images' => $images,
             'page' => $page,
             "seo" => [
@@ -212,18 +214,17 @@ class OrderController extends Controller
 
     public function order(Request $request)
     {
-        //dd($request->all());
         $request->validate([
             'first_name' => 'required',
-            'last_name' => 'required',
+            // 'last_name' => 'required',
             'phone' => 'required',
             'email' => 'required',
             'city' => 'required',
             'address' => 'required',
-            'payment_method' => 'required',
-            'payment_type' => 'required_if:payment_method,1'
+            // 'payment_method' => 'required',
+            // 'payment_type' => 'required_if:payment_method,1'
+            'cart' => 'required',
         ]);
-
         $data = $request->all();
         $cart = Arr::pull($data, 'cart');
         $data['locale'] = app()->getLocale();
@@ -235,7 +236,6 @@ class OrderController extends Controller
         foreach ($cart['items'] as $item) {
             $product_ids[] = $item['product']['id'];
         }
-
         $products = Product::whereIn('id', $product_ids)->get();
 
         if ($products) {
@@ -251,23 +251,24 @@ class OrderController extends Controller
             foreach ($cart['items'] as $item) {
                 if (isset($prod_data[$item['product']['id']])) {
                     $price = ($prod_data[$item['product']['id']]['special_price'] !== null) ? $prod_data[$item['product']['id']]['special_price'] : $prod_data[$item['product']['id']]['price'];
-                    if ($prod_data[$item['product']['id']]['qty'] >= $item['qty'] && $price == $item['product']['price'] && $prod_data[$item['product']['id']]['status'] == 1) {
-                        $error = false;
-                    }
+                    // if ($prod_data[$item['product']['id']]['qty'] >= $item['qty'] && $price == $item['product']['price'] && $prod_data[$item['product']['id']]['status'] == 1) {
+                    //     $error = false;
+                    // }
                 } else {
                     $error = true;
                     break;
                 }
             }
 
-            //dd($prod_data);
 
-            if ($error) {
-                dd('error cart is not valid');
-            }
+            // if ($error) {
+            //     dd('error cart is not valid');
+            // }
 
             try {
                 DataBase::beginTransaction();
+                $data['payment_type'] = 'bog';
+                $data['payment_method'] = 1;
                 $order = Order::create($data);
 
                 $data = [];
@@ -277,6 +278,7 @@ class OrderController extends Controller
                     $data['product_id'] = $item['product']['id'];
                     $data['name'] = $item['product']['title'];
                     $data['qty_ordered'] = $item['qty'];
+                    $data['size'] = $item['size'];
                     $data['price'] = $item['product']['price'];
                     $data['total'] = $item['product']['price'] * $item['qty'];
                     $insert[] = $data;

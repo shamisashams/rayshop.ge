@@ -1,28 +1,89 @@
-import { CartItem, CommonButton } from "../components/Shared";
-// import Img1 from "../assets/images/products/3.png";
-// import Img2 from "../assets/images/products/4.png";
+import React, {useState} from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-// import Bank1 from "../assets/images/icons/banks/1.png";
-// import Bank2 from "../assets/images/icons/banks/2.png";
-// import Bank3 from "../assets/images/icons/banks/3.png";
-import { useRef } from "react";
+import Layout from "../Layouts/Layout";
+import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
+import { Link, usePage } from '@inertiajs/inertia-react'
+import { Inertia } from '@inertiajs/inertia'
 
-const Payment = () => {
-  const itemsInCart = [
-    {
-      img: "/assets/images/products/3.png",
-      name: "დასახელება",
-      price: "31.90",
-      size: "m",
-    },
-    {
-      img: "/assets/images/products/4.png",
-      name: "დხეასა ხეასა ლეddბა",
-      price: "310",
-      size: "m",
-    },
-  ];
+const getCart = function () {
+    let cart = [];
+    let _cart = localStorage.getItem("cart");
+    if (_cart !== null) cart = JSON.parse(_cart);
+
+    let total = 0;
+    cart.forEach(function (el, i) {
+        total +=
+            el.qty *
+            (el.product.special_price !== null
+                ? el.product.special_price
+                : el.product.price);
+    });
+
+    let obj = {
+        items: cart,
+        total: parseFloat(total),
+    };
+    return obj;
+};
+
+const removeCartItem = function (i) {
+    let cart = [];
+    let _cart = localStorage.getItem("cart");
+    if (_cart !== null) cart = JSON.parse(_cart);
+    cart.splice(i, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    Inertia.visit(window.location.href);
+};
+
+const updateCart = (quantity,index) => {
+    let cart = localStorage.getItem("cart");
+    cart = JSON.parse(cart);
+    cart[index].qty = quantity;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    // Inertia.visit(window.location.href);
+}
+
+
+function findArrayElementByTitle(array, title) {
+    return array.find((e) => {
+      return e.id == title;
+    })
+  }
+
+const Payment = ({seo, city}) => {
+    const{ user } = usePage().props;
+
+
+    const [values, setValues] = useState({
+        first_name: user.name,
+        city: 'tbilisi',
+        address: "",
+        email: user.email,
+        phone: "",
+        cart: getCart(),
+      })
+
+      function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setValues(values => ({
+            ...values,
+            [key]: value,
+        }))
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault()
+        Inertia.post(route("client.checkout.order"), values)
+      }
+
+    const [cityid, setCityId] = useState('');
+    const [remove, setRemove] = useState(false);
+    const [clear, setClear] = useState(false);
+    const [shipping, setShipping] = useState(0);
+
   return (
+    <Layout seo={seo}>
     <div className="relative paymentPage">
       <div className="lg:block hidden absolute bg-custom-slate-300 w-1/5 h-full right-0 top-0"></div>
       <div className="flex items-center justify-between wrapper min-h-screen flex-col-reverse lg:flex-row">
@@ -32,99 +93,204 @@ const Payment = () => {
               <div className="absolute top-1/2 -translate-y-1/2 right-2 z-20">
                 <IoMdArrowDropdown className=" w-5 h-5" />
               </div>
-
-              <select className="relative">
-                <option value="0">აირჩიე ქალაქი</option>
-                <option value="1"> ქალ აი რჩიეაქი</option>
-                <option value="2">იე ქალაქიაირჩ</option>
-                <option value="3">აი ლაიქ</option>
+              <select className="relative" onChange={(e)=>{
+                setCityId(e.target.value);
+              }}
+              >
+                <option value="0" selected="true" disabled="disabled" >აირჩიე ქალაქი</option>
+              {
+                city.map((e,i)=>{
+                    // setShipping(e.ship_price)
+                    return(
+                        <option key={i} value={e.id}> {e.title}</option>
+                    )
+                })
+              }
               </select>
             </div>
-
             <input
+            id="address"
+value={values.address} onChange={handleChange}
               className="mb-3 placeholder:opacity-50"
               type="text"
               placeholder="შეიყვანე მისამართი"
             />
             <input
+            id="phone"
+            value={values.phone} onChange={handleChange}
               className="mb-3 placeholder:opacity-50"
-              type="text"
+              type="number"
               placeholder="საკონტაქტო ტელეფონი"
             />
-            <div className="mt-10">
-              <div className="bold text-lg">ბარათის დეტალები</div>
-              <div className="flex items-center justify-between my-4">
-                <div>შეგიძლია გამოიყენო</div>
-                <div className="flex">
-                  <img className="mr-1" src={"/assets/images/icons/banks/1.png"} alt="" />
-                  <img className="mr-1" src={"/assets/images/icons/banks/2.png"} alt="" />
-                  <img className="mr-1" src={"/assets/images/icons/banks/3.png"} alt="" />
-                </div>
+            <form onSubmit={handleSubmit}>
+                         <div className="text-center mt-10">
+                {/* <CommonButton text="გადახდა" width="245px" /> */}
+                <button type="submit"
+      className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
+    >
+      გადახდა
+    </button>
               </div>
-              <input
-                className="placeholder:opacity-50 mb-3"
-                type="tel"
-                inputmode="numeric"
-                pattern="[0-9\s]{13,19}"
-                autocomplete="cc-number"
-                maxlength="19"
-                placeholder="ბარათის ნომერი"
-              ></input>
-
-              <input
-                type="text"
-                placeholder="სახელი ბარათზე"
-                className="placeholder:opacity-50 mb-3"
-              />
-              <div className="grid grid-cols-2 gap-3">
-                <input
-                  className="placeholder:opacity-50"
-                  maxlength="7"
-                  name="credit-expires"
-                  pattern="\d*"
-                  placeholder="MM / YY"
-                  type="tel"
-                />
-                <input
-                  className="placeholder:opacity-50"
-                  maxlength="4"
-                  name="credit-cvc"
-                  pattern="\d*"
-                  placeholder="CVC"
-                  type="tel"
-                />
-              </div>
-              <div className="text-center mt-10">
-                <CommonButton text="გადახდა" width="245px" />
-              </div>
-            </div>
+            </form>
           </div>
         </div>
         <div className="lg:bg-custom-slate-300  self-stretch pt-32 lg:pl-10 relative flex items-center justify-center flex-col lg:ml-5">
           <div className="mb-20 itemsInCart">
-            {itemsInCart.map((item, index) => {
+            {/* {itemsInCart.map((item, index) => {
               return <CartItem key={index} data={item} index={index} />;
-            })}
+            })} */}
+               {
+            getCart().items.map(
+                (item, index) =>{
+                    const [quantity, setquantity] = useState(item.qty);
+                    return(
+                        <div key={index}
+      className={`flex items-center justify-between mb-4 text-sm transition-all duration-500  ${
+        remove ? "opacity-0" : ""
+      } ${clear ? "hidden" : ""} `}
+    >
+      <div className="flex items-center lg:mr-10 mr-3 ">
+        <input defaultChecked type="checkbox" id={`checkbox_${index}`} />
+        <label htmlFor={`checkbox_${index}`}>
+          <div></div>
+        </label>
+        <div className="lg:w-28 w-20 h-fit shrink-0 sm:mx-5 mx-2">
+          {/* <img className="w-full object-cover" src={item.product.img} alt="" /> */}
+{
+    item.product.latest_image ?
+    <img className="w-full object-cover" alt=""
+                                                        src={
+                                                            item.product.latest_image !=null
+                                                                ? "/" +
+                                                                  item.product
+                                                                      .latest_image.path +"/" +
+                                                                  item.product
+                                                                      .latest_image
+                                                                      .title
+                                                                : null
+                                                        }
+                                                    />
+                                                    :
+                                                    <img className="w-full object-cover" alt=""
+                                                        src={
+                                                            item.product
+                                                                .files !=
+                                                            null
+                                                                ? "/" +
+                                                                  item.product
+                                                                      .files[0]
+                                                                      .path +
+                                                                  "/" +
+                                                                  item.product
+                                                                      .files[0]
+                                                                      .title
+                                                                : null
+                                                        }
+                                                    />
+}
+
+
+        </div>
+        <div className="lg:w-32 w-24">
+          <div>{item.product.name}</div>
+          <div className="bold mb-3 mt-1">
+            { item.product.special_price ? item.product.special_price :item.product.price}
+
+           ლარი</div>
+          <div>
+            ზომა: <span className="bold uppercase">{item.size}</span>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center">
+        {/* <Quantity /> */}
+        <div className="flex items-center ">
+
+
+      <button
+        className="flex items-center justify-center border border-black rounded-full w-6 h-6"
+        // onClick={
+        //     ()=>{
+        //         setquantity(
+        //             quantity > 1 ? quantity - 1 : 1
+        //         )
+        //         updateCart(quantity > 1 ? quantity - 1 : 1,index)
+        //     }
+        // }
+        onClick={() => {
+            setquantity(
+                quantity > 1 ? quantity - 1 : 1
+            )
+            updateCart(quantity > 1 ? quantity - 1 : 1,index)
+        }
+        }
+      >
+        <HiOutlineMinus />
+      </button>
+      <div className="bold mx-3 text-lg">{quantity}</div>
+      <button
+        className="flex items-center justify-center border border-black rounded-full w-6 h-6"
+        onClick={()=>{
+            setquantity(quantity + 1)
+            updateCart(quantity + 1,index)
+        }}
+      >
+        <HiOutlinePlus />
+      </button>
+    </div>
+        <button onClick={
+            ()=>{
+                removeCartItem(index)
+            }
+            } className="sm:ml-10 ml-6 group">
+          {/* <Delete className="fill-black group-hover:fill-custom-orange transition " /> */}
+          <img src="/assets/svg/delete.svg" alt="del" className="fill-black group-hover:fill-custom-orange transition " />
+        </button>
+      </div>
+    </div>
+                    )
+                }
+            )
+        }
           </div>
           <div className="flex w-full justify-between items-center mb-3">
             <div className="opacity-50">რაოდენობა:</div>
             <div className="bold">2</div>
           </div>
           <div className="flex w-full justify-between items-center mb-3 bold">
-            <span>პროდუქტის ფასი:</span>
-            <span>₾ 155.00</span>
+            {/* <span>პროდუქტის ფასი:</span>
+            <span>
+                {getCart().total.toFixed(2)}
+                </span> */}
           </div>
           <div className="flex w-full justify-between items-center mb-6 bold">
             <span>მიწოდება:</span>
-            <span>₾ 23.00</span>
+            <span id="shipping">
+
+
+   {
+    city.map((e,i)=>{
+        if(e.id == cityid){
+            return(
+<p>{e.ship_price}</p>
+            )
+        }
+    })
+   }
+                </span>
           </div>
           <div className="flex w-full justify-between items-center  bold">
             <span>ჯამი:</span>
-            <span className="text-xl text-custom-orange"> ₾ 178.00</span>
+            <span className="text-xl text-custom-orange">
+
+                 {/* ₾ 178.00 */}
+                 {getCart().total.toFixed(2)*1}
+                 </span>
           </div>
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

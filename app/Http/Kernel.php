@@ -4,6 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\AuthenticateClient;
+use App\Http\Middleware\orderCheck;
 
 class Kernel extends HttpKernel
 {
@@ -69,5 +70,6 @@ class Kernel extends HttpKernel
         'setlocale' => \App\Http\Middleware\SetLocale::class,
         'auth_client' => AuthenticateClient::class,
         'active' => \App\Http\Middleware\EnableGlobalScopeMiddleware::class,
+        'orderCheck' => orderCheck::class,
     ];
 }

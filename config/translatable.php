@@ -3,8 +3,6 @@
   'locales' => 
   array (
     'ქართული' => 'ge',
-    'English' => 'en',
-    'Русский' => 'ru',
   ),
   'locale_separator' => '-',
   'locale' => NULL,

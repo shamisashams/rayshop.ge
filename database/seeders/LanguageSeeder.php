@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  database/seeders/LanguageSeeder.php
  *
@@ -6,6 +7,7 @@
  * Time: 10:28
  * @author Insite LLC <hello@insite.international>
  */
+
 namespace Database\Seeders;
 
 use App\Models\Language;
@@ -32,18 +34,18 @@ class LanguageSeeder extends Seeder
                 'status' => true,
                 'default' => true
             ],
-            [
-                'title' => 'English',
-                'locale' => 'en',
-                'status' => true,
-                'default' => false
-            ],
-            [
-                'title' => 'Русский',
-                'locale' => 'ru',
-                'status' => true,
-                'default' => false
-            ]
+            // [
+            //     'title' => 'English',
+            //     'locale' => 'en',
+            //     'status' => true,
+            //     'default' => false
+            // ],
+            // [
+            //     'title' => 'Русский',
+            //     'locale' => 'ru',
+            //     'status' => true,
+            //     'default' => false
+            // ]
         ];
 
         // Insert Languages

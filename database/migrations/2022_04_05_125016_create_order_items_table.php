@@ -20,6 +20,7 @@ class CreateOrderItemsTable extends Migration
             $table->string('name');
             $table->tinyInteger('qty_ordered')->unsigned();
             $table->decimal('price')->unsigned();
+            $table->string('size');
             $table->decimal('total')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamps();

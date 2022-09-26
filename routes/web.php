@@ -131,8 +131,8 @@ Route::prefix('{locale?}')
 
             //checkout
             Route::get('cart', [\App\Http\Controllers\Client\CartController::class, 'index'])->name('client.cart.index');
-            Route::get('checkout', [\App\Http\Controllers\Client\OrderController::class, 'index'])->name('client.checkout.index');
-            Route::post('checkout', [\App\Http\Controllers\Client\OrderController::class, 'order'])->name('client.checkout.order');
+            Route::get('checkout', [\App\Http\Controllers\Client\OrderController::class, 'index'])->name('client.checkout.index')->middleware('orderCheck');
+            Route::post('checkout', [\App\Http\Controllers\Client\OrderController::class, 'order'])->name('client.checkout.order')->middleware('orderCheck');
             Route::get('order/success', [\App\Http\Controllers\Client\OrderController::class, 'statusSuccess'])->name('order.success');
             Route::get('order/failure', [\App\Http\Controllers\Client\OrderController::class, 'statusFail'])->name('order.failure');
 
