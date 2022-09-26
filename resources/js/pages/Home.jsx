@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from "@inertiajs/inertia-react";
 import HeroSlider from '../components/HeroSlider';
 import ProductSlider from "../components/ProductSlider";
 // import MobileBank from "../assets/images/other/1.png";
@@ -20,12 +20,21 @@ import Layout from "../Layouts/Layout";
 import { Route } from 'react-router-dom';
 
 const Home = ({seo,gallery, products, productsAll, sliders, sizes}) => {
+    const renderHTML = (rawHTML) =>
+    React.createElement("div", {
+        dangerouslySetInnerHTML: { __html: rawHTML },
+    });
+const sharedData = usePage().props.localizations;
+
   return (
     <Layout seo={seo}>
       <HeroSlider data={sliders} sizes={sizes} />
       <section className="py-10">
         <div className="text-center mb-10 bold text-xl">
-          <Link href="/products">ყველა პროდუქტი</Link>
+          <Link href="/products">
+            {/* ყველა პროდუქტი */}
+            {__("client.home_all_products", sharedData)}
+            </Link>
         </div>
         <ProductSlider data={productsAll} />
       </section>
@@ -73,30 +82,6 @@ const Home = ({seo,gallery, products, productsAll, sliders, sizes}) => {
       <section className="bg-custom-slate-100 py-10 ">
         <div className="wrapper flex justify-between items-center flex-col xl:flex-row">
           <div className="flex xl:justify-between justify-center xl:w-3/5 flex-wrap xl:flex-nowrap">
-            {/* <ProductBox
-              link="/"
-              image={"/assets/images/products/1.png"}
-              name="პარასკევი"
-              sale={true}
-              oldPrice="32.50"
-              price="25.90"
-            />
-            <ProductBox
-              link="/"
-              image={"/assets/images/products/2.png"}
-              name="პარასკევი"
-              sale={true}
-              oldPrice="32.50"
-              price="25.90"
-            />
-            <ProductBox
-              link="/"
-              image={"/assets/images/products/3.png"}
-              name="პარასკევი"
-              sale={true}
-              oldPrice="32.50"
-              price="25.90"
-            /> */}
             {
                 products.day_price.map(
                     (e,i)=>{
@@ -126,14 +111,15 @@ key={i}
           </div>
           <div className="2xl:max-w-lg xl:max-w-md w-full xl:ml-20 xl:mt-0 mt-10">
             <div className="bold mb-5" style={{ color: "#A7DE5C" }}>
-              სპეციალური ფასი
+              {__("client.home_special_price", sharedData)}
             </div>
             <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl mb-6">
-              მაისურები სპეც ფასით
+              {__("client.home_tshirt_withspecialprice", sharedData)}
             </div>
             <p className="mb-5">
-              ზოგიერთ მაისურზე მოქმედებს ფასდაკლება, თუმცა ეს ფასი მუდმივად არ
-              იქნება, იყიდე სანამ დროა!
+              {/* ზოგიერთ მაისურზე მოქმედებს ფასდაკლება, თუმცა ეს ფასი მუდმივად არ
+              იქნება, იყიდე სანამ დროა! */}
+              {__("client.home_on_some_tshirts_are_on_sale", sharedData)}
             </p>
             <LearnMoreBtn href={route("client.product.index")} />
           </div>

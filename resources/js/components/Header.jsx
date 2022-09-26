@@ -56,23 +56,23 @@ const Header = () => {
   const navLinks = [
     {
       link: route("client.home.index"),
-      text: "მთავარი",
+      text: __("client.nav_home", sharedData),
     },
     {
       link: route("client.product.index"),
-      text: "პროდუქცია",
+      text: __("client.nav_product", sharedData),
     },
     {
       link: route("client.about.index"),
-      text: "ჩვენ შესახებ",
+      text: __("client.nav_about", sharedData),
     },
     {
       link: route("client.conditions.index"),
-      text: "პირობები",
+      text: __("client.nav_conditions", sharedData),
     },
     {
       link: route("client.contact.index"),
-      text: "კონტაქტი",
+      text: __("client.nav_contact", sharedData),
     },
   ];
   return (

@@ -143,6 +143,14 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
   const [showFilter, setShowfilter] = useState(false);
   const wrapperRef = useRef(null);
 
+
+  const renderHTML = (rawHTML) =>
+  React.createElement("div", {
+      dangerouslySetInnerHTML: { __html: rawHTML },
+  });
+const sharedData = usePage().props.localizations;
+
+
   return (
     <Layout seo={seo}>
     <div className=" wrapper pb-20">
@@ -152,7 +160,10 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
           showFilter ? "left-0" : " -left-full"
         }`}
       >
-        <div className="bold xl:mb-6 mb-3">პროდუქცია</div>
+        <div className="bold xl:mb-6 mb-3">
+            {/* პროდუქცია */}
+            {__("client.products_products", sharedData)}
+            </div>
         <form onSubmit={handleSubmit}>
         <div className="xl:mb-12 mb-8 categories">
           {cat.map((check, index) => {
@@ -198,7 +209,10 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
 
         </div>
         <div className="xl:mb-10 mb-6">
-          <div className="bold xl:mb-6 mb-3">შეარჩიე საფასო კატეგორია</div>
+          <div className="bold xl:mb-6 mb-3">
+            {/* შეარჩიე საფასო კატეგორია */}
+            {__("client.products_pricerange", sharedData)}
+            </div>
           {/* <RangeSlider /> */}
           <div className="flex justify-between items-center mb-3">
         <div className="rounded bg-white w-16 text-center py-1">
@@ -219,7 +233,10 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
       </Box>
         </div>
         <div className="xl:mb-10 mb-6">
-          <div className="bold mb-5">აირჩიე ზომა:</div>
+          <div className="bold mb-5">
+            {/* აირჩიე ზომა: */}
+            {__("client.product_choosesize", sharedData)}
+            </div>
       <div className="sizeFlex flex flex-wrap">
         {
             sizes.map((e,i)=>{
@@ -246,7 +263,7 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
         }
       </div>
         </div>
-        <CommonButton width="245px" text="გაფილტრე პროდუქცია" />
+        <CommonButton width="245px" text={__("client.product_filter", sharedData)} />
       </form>
       </div>
       <div className=" xl:pt-44 pt-40">
