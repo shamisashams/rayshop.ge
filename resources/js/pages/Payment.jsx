@@ -52,11 +52,14 @@ function findArrayElementByTitle(array, title) {
 
 const Payment = ({seo, city}) => {
     const{ user } = usePage().props;
-
-
+    const [cityid, setCityId] = useState('');
+    const [remove, setRemove] = useState(false);
+    const [clear, setClear] = useState(false);
+    const [shipping, setShipping] = useState(0);
+    const { errors } = usePage().props
     const [values, setValues] = useState({
         first_name: user.name,
-        city: 'tbilisi',
+        city: null,
         address: "",
         email: user.email,
         phone: "",
@@ -77,11 +80,6 @@ const Payment = ({seo, city}) => {
         Inertia.post(route("client.checkout.order"), values)
       }
 
-    const [cityid, setCityId] = useState('');
-    const [remove, setRemove] = useState(false);
-    const [clear, setClear] = useState(false);
-    const [shipping, setShipping] = useState(0);
-
   return (
     <Layout seo={seo}>
     <div className="relative paymentPage">
@@ -93,11 +91,12 @@ const Payment = ({seo, city}) => {
               <div className="absolute top-1/2 -translate-y-1/2 right-2 z-20">
                 <IoMdArrowDropdown className=" w-5 h-5" />
               </div>
-              <select className="relative" onChange={(e)=>{
+              <select id='shipprice' className="relative" onChange={(e)=>{
                 setCityId(e.target.value);
+                values.city = e.target.value
               }}
               >
-                <option value="0" selected="true" disabled="disabled" >აირჩიე ქალაქი</option>
+                <option selected='true' disabled='true'  >აირჩიე ქალაქი</option>
               {
                 city.map((e,i)=>{
                     // setShipping(e.ship_price)
@@ -107,6 +106,7 @@ const Payment = ({seo, city}) => {
                 })
               }
               </select>
+              {errors.city && <div>{errors.city}</div>}
             </div>
             <input
             id="address"
@@ -115,6 +115,7 @@ value={values.address} onChange={handleChange}
               type="text"
               placeholder="შეიყვანე მისამართი"
             />
+            {errors.address && <div>{errors.address}</div>}
             <input
             id="phone"
             value={values.phone} onChange={handleChange}
@@ -122,6 +123,7 @@ value={values.address} onChange={handleChange}
               type="number"
               placeholder="საკონტაქტო ტელეფონი"
             />
+            {errors.phone && <div>{errors.phone}</div>}
             <form onSubmit={handleSubmit}>
                          <div className="text-center mt-10">
                 {/* <CommonButton text="გადახდა" width="245px" /> */}
@@ -284,7 +286,17 @@ value={values.address} onChange={handleChange}
             <span className="text-xl text-custom-orange">
 
                  {/* ₾ 178.00 */}
-                 {getCart().total.toFixed(2)*1}
+                 {cityid ?
+                 city.map((e,i)=>{
+                    if(e.id == cityid){
+                        return(
+            <p>{e.ship_price*1 + getCart().total.toFixed(2)*1}</p>
+                        )
+                    }
+                })
+                :
+                getCart().total.toFixed(2)*1
+                 }
                  </span>
           </div>
         </div>

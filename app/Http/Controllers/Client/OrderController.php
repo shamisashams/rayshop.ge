@@ -214,6 +214,7 @@ class OrderController extends Controller
 
     public function order(Request $request)
     {
+        // dd($request->post());
         $request->validate([
             'first_name' => 'required',
             // 'last_name' => 'required',
