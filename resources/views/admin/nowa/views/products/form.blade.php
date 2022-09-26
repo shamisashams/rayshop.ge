@@ -55,6 +55,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
     <!--  smart photo master css -->
     <link href="{{asset('assets/plugins/SmartPhoto-master/smartphoto.css')}}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{asset('admin/croppie/croppie.css')}}" />
 @endsection
 
 @section('content')
@@ -72,6 +73,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
     <input name="old-images[]" id="old_images" hidden disabled value="{{$product->files}}">
     <!-- row -->
     {!! Form::model($product,['url' => $url, 'method' => $method,'files' => true]) !!}
+    <input id="inp_crop_img" type="hidden" name="base64_img">
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
@@ -113,6 +115,18 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                                                 <label class="form-label">@lang('admin.title')</label>
                                                 <input type="text" name="{{$locale.'[title]'}}" class="form-control" placeholder="Name" value="{{$product->translate($locale)->title ?? ''}}">
                                                 @error($locale.'.title')
+                                                <small class="text-danger">
+                                                    <div class="error">
+                                                        {{$message}}
+                                                    </div>
+                                                </small>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="form-label">@lang('admin.instock')</label>
+                                                <input type="text" name="{{$locale.'[instock]'}}" class="form-control" placeholder="Name" value="{{$product->translate($locale)->instock ?? ''}}">
+                                                @error($locale.'.instock')
                                                 <small class="text-danger">
                                                     <div class="error">
                                                         {{$message}}
@@ -472,6 +486,27 @@ $sizesArr = [];
     </div>
 
     <!-- /row -->
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h6 class="card-title mb-1">@lang('admin.product_image_crop_upload')</h6>
+                    </div>
+
+                    <div>
+                        <p>Select a image file to crop</p>
+                        <input type="file" id="inputFile" accept="image/png, image/jpeg">
+                    </div>
+                    <div id="actions" style="display: none;">
+                        <button id="cropBtn" type="button">Crop @if($product->created_at)& Upload @endif</button>
+                    </div>
+                    <div id="croppieMount"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- row -->
     <div class="row">
         <div class="col-lg-12 col-md-12">
@@ -606,23 +641,17 @@ $sizesArr = [];
     <script>
         $('[name="categories[]"]').click(function (e){
             let $this = $(this);
-
-
                 let next = $this.closest('li').next('li');
                 //console.log(next);
                 if(next.hasClass('child')){
                     if($this.is(':checked')){
-
                         next.find('input[type=checkbox]').prop('checked',true);
                     } else {
                         next.find('input[type=checkbox]').prop('checked',false);
                     }
                 }
-
                 if($this.parents('li').hasClass('child')){
-
                     if($this.is(':checked')){
-
                         $this.parents('.child').prev('li').find('input[type=checkbox]').prop('checked',true);
                         //$this.parents('.child').find('input[type=checkbox]').prop('checked',true);
                     } else {
@@ -630,19 +659,166 @@ $sizesArr = [];
                         $this.parents('.child').prev('li').find('input[type=checkbox]').prop('checked',false);
                     }
                 }
-
-
         });
-
         $('.bool_ckbox').click(function (e){
             if($(this).is(':checked')){
                 $(this).prev('input[type=hidden]').val(1);
             } else $(this).prev('input[type=hidden]').val(0);
         });
-
         $('[data-rm_img]').click(function (e){
             $(this).parents('.uploaded-image').remove();
         })
+    </script>
+
+
+    <script src="{{asset('admin/croppie/croppie.js')}}"></script>
+    <script>
+        let croppie = null;
+        let croppieMount = document.getElementById('croppieMount');
+        let cropBtn = document.getElementById('cropBtn');
+        let inputFile = document.getElementById('inputFile');
+        let actions = document.getElementById('actions');
+        function cleanUpCroppie() {
+            croppieMount.innerHTML = '';
+            croppieMount.classList.remove('croppie-container');
+            croppie = null;
+        }
+        inputFile.addEventListener('change', () => {
+            cleanUpCroppie();
+            // Our input file
+            let file = inputFile.files[0];
+            let reader = new FileReader();
+            reader.onloadend = function(event) {
+                // Get the data url of the file
+                const data = event.target.result;
+                // ...
+            }
+            reader.readAsDataURL(file);
+            reader.onloadend = function(event) {
+                // Get the data ulr of the file
+                const data = event.target.result;
+                croppie = new Croppie(croppieMount, {
+                    url: data,
+                    viewport: {
+                        width: 800,
+                        height: 500,
+                    },
+                    boundary: {
+                        width: 1000,
+                        height: 700
+                    },
+                    mouseWheelZoom: false,
+                    enableResize: true,
+                });
+                // Binds the image to croppie
+                croppie.bind();
+                // Unhide the `actions` div element
+                actions.style.display = '';
+            }
+        })
+        cropBtn.addEventListener('click', () => {
+            // Get the cropped image result from croppie
+            croppie.result({
+                type: 'base64',
+                circle: false,
+                format: 'png',
+                size: 'original'
+            }).then((imageResult) => {
+                // Initialises a FormData object and appends the base64 image data to it
+                let formData = new FormData();
+                formData.append('base64_img', imageResult);
+                formData.append('_token', '{{csrf_token()}}');
+                document.getElementById('inp_crop_img').value = imageResult;
+                // Sends a POST request to upload_cropped.php
+                @if($product->created_at)
+                fetch('{{route('product.crop-upload',$product)}}', {
+                    method: 'POST',
+                    body: formData
+                }).then(() => {
+                    location.reload()
+                });
+                @else
+                alert('cropped')
+                @endif
+            });
+        });
+        let interval;
+        $('#search_product').keyup(function (e){
+            let val = $(this).val();
+            let attr_size_id = parseInt({{$attr_size_id}})
+            $('#selected_products').find('li').html(`<input type="hidden" name="attribute[${attr_size_id}]" value="">`);
+            clearInterval(interval);
+            interval = setTimeout(function () {
+                console.log(val.length);
+                if (val.length > 0) {
+                    $.ajax({
+                        url: '{{route('size.search.ajax')}}',
+                        type: 'post',
+                        data: {
+                            _token: '{{csrf_token()}}',
+                            term: val
+                        },
+                        beforeSend: function (){
+                        },
+                        success: function (data){
+                            console.log(data);
+                            $('#product_list').html(data);
+                        }
+                    });
+                } else {
+                    $('#product_list').html('');
+                }
+            }, 600);
+        })
+        $(document).on('click','[data-sel_product]',function (e){
+            $('#search_product').val('');
+            $('#product_list').html('');
+            let id = $(this).data('sel_product');
+            let title =  $(this).text();
+            let attr_size_id = parseInt({{$attr_size_id}})
+            let inp = `<li>
+                    <span>${title}</span>
+                        <input type="hidden" name="attribute[${attr_size_id}]" value="${id}">
+<a href="javascript:;" class="delete_product">delete</a>
+                        </li>`;
+            $('#selected_products').html(inp)
+        });
+        $(document).on('click','.delete_product',function (e){
+            let attr_size_id = parseInt({{$attr_size_id}})
+            $(this).parents('li').html(`<input type="hidden" name="attribute[${attr_size_id}]" value="">`);
+        });
+        let size_attr = @json($size_attr);
+        console.log(size_attr);
+        $('#add_size').click(function (e){
+            let opt = '';
+            size_attr.options.forEach(function (el,i){
+                opt += `<option value="${el.id}">${el.value}</option>`;
+            })
+            let row = `<div class="row row-sm row_size">
+                            <div class="col-lg">
+                                <select class="form-control" name="matras_new[option_id][]">
+                                    <option value="">${opt}</option>
+            </select>
+        </div>
+        <div class="col-lg mg-t-10 mg-lg-t-0">
+            <input class="form-control" placeholder="Price" type="number" name="matras_new[price][]" value="">
+                            </div>
+                            <div class="col-lg mg-t-10 mg-lg-t-0">
+                                <input class="form-control" placeholder="Special Price" type="number" name="matras_new[special_price][]" value="">
+                            </div>
+<div class="col-lg mg-t-10 mg-lg-t-0">
+                                <a class="btn delete_size" href="javascript:;">delete</a>
+                            </div>
+                        </div>`;
+            $('#variants').append(row);
+        });
+        $(document).on('click','.delete_size',function (e){
+           $(this).parents('.row_size').remove();
+           let id = $(this).data('id');
+           console.log(id);
+           if(id !== undefined)
+           $('#variants').append(`<input type="hidden" name="del_var[]" value="${id}">`);
+        });
     </script>
 
 @endsection

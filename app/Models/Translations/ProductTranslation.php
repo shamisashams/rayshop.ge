@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Models/Translations/ProductTranslation.php
  *
@@ -6,6 +7,7 @@
  * Time: 10:34
  * @author Insite LLC <hello@insite.international>
  */
+
 namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +24,7 @@ class ProductTranslation extends BaseTranslationModel
         'title',
         'short_description',
         'description',
+        'instock',
         'meta_title',
         'meta_description',
         'meta_keyword',
