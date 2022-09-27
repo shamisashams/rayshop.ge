@@ -52,17 +52,13 @@ const sharedData = usePage().props.localizations;
       <div className="max-w-md mx-auto">
         <form onSubmit={handleSubmit}>
         <div className="text-lg mb-6 bold">{__("client.signup_register", sharedData)}</div>
-        {errors.name && <div>{errors.name}</div>}
-        <input onChange={handleChange} name="name" className="mb-3" type="text" placeholder={__("client.signup_name", sharedData)} />
-        {errors.surname && <div>{errors.surname}</div>}
-        <input onChange={handleChange} name="surname" className="mb-3" type="text" placeholder={__("client.signup_surname", sharedData)} />
-        {errors.email && <div>{errors.email}</div>}
-        <input onChange={handleChange} name="email"  className="mb-3" type="email" placeholder={__("client.signup_email", sharedData)} />
-        <input onChange={handleChange} name="phone" className="mb-3" type="text" placeholder={__("client.signup_phone", sharedData)} />
-        {errors.password && <div>{errors.password}</div>}
-        <input onChange={handleChange} name="password" className="mb-3" type="password" placeholder={__("client.signup_pass", sharedData)} />
-        {errors.password_repeat && <div>{errors.password_repeat}</div>}
-        <input onChange={handleChange} name="password_repeat" className="mb-8" type="password" placeholder={__("client.signup_repeat_pass", sharedData)} />
+        <input onChange={handleChange} name="name" className={errors.name? "mb-3 bg-red-200":"mb-3"} type="text" placeholder={__("client.signup_name", sharedData)} />
+        <input onChange={handleChange} name="surname" className={errors.surname? "mb-3 bg-red-200":"mb-3"} type="text" placeholder={__("client.signup_surname", sharedData)} />
+        <input onChange={handleChange} name="email"  className={errors.email? "mb-3 bg-red-200":"mb-3"} type="email" placeholder={__("client.signup_email", sharedData)} />
+        <input onChange={handleChange} name="phone" className={errors.phone? "mb-3 bg-red-200":"mb-3"} type="text" placeholder={__("client.signup_phone", sharedData)} />
+        <input onChange={handleChange} name="password" className={errors.password? "mb-3 bg-red-200":"mb-3"} type="password" placeholder={__("client.signup_pass", sharedData)} />
+        {/* {errors.password_repeat && <div>{errors.password_repeat}</div>} */}
+        <input onChange={handleChange} name="password_repeat" className={errors.password_repeat? "mb-3 bg-red-200":"mb-3"} type="password" placeholder={__("client.signup_repeat_pass", sharedData)} />
         <CommonButton text={__("client.register", sharedData)} />
 
         </form>

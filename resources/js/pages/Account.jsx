@@ -9,7 +9,11 @@ import React, { useState } from 'react'
 const Account = ({seo}) => {
   const [displayPassword, setDisplayPassword] = useState(false);
   const {user,flash} = usePage().props;
-
+  const renderHTML = (rawHTML) =>
+  React.createElement("div", {
+      dangerouslySetInnerHTML: { __html: rawHTML },
+  });
+const sharedData = usePage().props.localizations;
 
   const [values, setValues] = useState({
     name: user.name,
@@ -42,7 +46,7 @@ const Account = ({seo}) => {
           <div className="w-14 h-14 rounded-full overflow-hidden md:mb-10 mb-5">
             <img src={"/assets/images/icons/user.png"} alt="" />
           </div>
-          <div className="opacity-50 mb-3">პირადი კაბინეტი</div>
+          <div className="opacity-50 mb-3">{__("client.cabinet", sharedData)}</div>
           <div className="bold text-2xl">
             {/* სახელი გვარი */}
 {user.name + " " + user.surname}
@@ -53,18 +57,18 @@ const Account = ({seo}) => {
         <div className="md:w-2/3 mt-10  md:mt-0 pb-20 md:pb-0">
           <div className="max-w-md  m-auto text-center">
             <form onSubmit={handleSubmit}>
-            <div className="bold text-2xl mb-10">პირადი ინფორმაცია</div>
-            <input className="bg-white mb-5" id="name" type="text" placeholder="სახელი" value={values.name} onChange={handleChange} required />
-            <input className="bg-white mb-5" id="surname" type="text" placeholder="გვარი" value={values.surname} onChange={handleChange} required/>
-            <input className="bg-white mb-5" id="email" type="email" placeholder="იმეილი" value={values.email} onChange={handleChange}  required/>
+            <div className="bold text-2xl mb-10">{__("client.cabinet_personal_information", sharedData)}</div>
+            <input className="bg-white mb-5" id="name" type="text" placeholder={__("client.cabinet_name", sharedData)} value={values.name} onChange={handleChange} required />
+            <input className="bg-white mb-5" id="surname" type="text" placeholder={__("client.cabinet_surname", sharedData)} value={values.surname} onChange={handleChange} required/>
+            <input className="bg-white mb-5" id="email" type="email" placeholder={__("client.cabinet_email", sharedData)} value={values.email} onChange={handleChange}  required/>
             <input
             id="phone"
               className="bg-white mb-5"
               type="text"
-              placeholder="მობილურის ნომერი"
+              placeholder={__("client.cabinet_phone", sharedData)}
               value={values.phone} onChange={handleChange}
             />
-            <input id="address" name="address" className="bg-white mb-5" type="text" placeholder="მისამართი" value={values.address} onChange={handleChange}/>
+            <input id="address" name="address" className="bg-white mb-5" type="text" placeholder={__("client.cabinet_address", sharedData)} value={values.address} onChange={handleChange}/>
             <div className="relative w-full h-fit mb-10 ">
               <input
               value={values.password} onChange={handleChange}
@@ -72,7 +76,7 @@ const Account = ({seo}) => {
             //   required
                 className="bg-white"
                 type={displayPassword ? "text" : "password"}
-                placeholder="ახალი პაროლი"
+                placeholder={__("client.cabinet_newpassword", sharedData)}
               />
               <button
                 onClick={() => setDisplayPassword(!displayPassword)}
@@ -83,10 +87,10 @@ const Account = ({seo}) => {
             </div>
             <button className="bold text-custom-blue">
               <BsPlusCircle className="inline-block w-5 h-5 mr-2" />
-              ცვლილებების შენახვა
+              {__("client.cabinet_save", sharedData)}
             </button>
 
-            {flash? <p className="alert alert-success">შეიცვალა!</p>: ""}
+            {flash? <p className="alert alert-success">{__("client.cabinet_savesuccess", sharedData)}</p>: ""}
 
             </form>
           </div>
