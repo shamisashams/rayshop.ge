@@ -44,7 +44,8 @@ export const CommonButton = ({ text, width }) => {
 
 // SIZE PICK COMPONENT
 
-export const SizePick = ({ sizes }) => {
+export const SizePick = ({ sizes, product }) => {
+    const [sizepicked, setSizePicked] = useState(false);
   const [picked, setPicked] = useState(0);
   return (
     <>
@@ -53,10 +54,18 @@ export const SizePick = ({ sizes }) => {
         {sizes.map((size, i) => {
           return (
             <button
-              onClick={() => setPicked(i)}
+              onClick={() =>
+                {
+                    setSizePicked(true)
+                    setPicked(i)
+                    if(!product.sizes.find((e)=> e.id == size.id)){
+                        alert('araa maragshi')
+                     }
+                }
+                }
               key={i}
               className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
-                picked === i
+                picked == i && sizepicked
                   ? "bg-black text-white"
                   : "bg-custom-slate-200 text-black"
               }`}
