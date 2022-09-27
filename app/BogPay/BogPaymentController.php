@@ -10,19 +10,20 @@ use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 
 
-
 class BogPaymentController extends Controller
 {
     //
     private $bog_pay;
 
-    private $client_id = '14722';
+    // private $client_id = '14722';
+    private $client_id = '24842';
 
-    private $secret_key = '4cffd65bc65f529cec4f7fcfb25d4d98';
+    private $secret_key = '0d4fc44921be938fd77b64d30f22ce6a';
 
 
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->bog_pay = new BogPay($this->client_id, $this->secret_key);
 
 
@@ -31,14 +32,15 @@ class BogPaymentController extends Controller
     }
 
 
-    public function make_order($order_id,$total){
+    public function make_order($order_id, $total)
+    {
 
         $locale = 0;
-        if(app()->getLocale() !== 'ge') $locale = 1;
+        if (app()->getLocale() !== 'ge') $locale = 1;
 
         $response = $this->bog_pay->make_order(
             1,
-            'https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id='.$order_id,
+            'https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order_id,
             [['currency_code' => 'GEL', 'value' => $total]],
             0,
             [],
@@ -50,12 +52,10 @@ class BogPaymentController extends Controller
 
         //dd($data);
 
-        $data = json_decode($data,true);
+        $data = json_decode($data, true);
 
-        Order::where('id', '=', $order_id)->update(['transaction_id' => $data['order_id'],'payment_hash'=> $data['payment_hash']]);
+        Order::where('id', '=', $order_id)->update(['transaction_id' => $data['order_id'], 'payment_hash' => $data['payment_hash']]);
         //dd($data);
         return Inertia::location($data['links'][1]['href']);
     }
-
-
 }

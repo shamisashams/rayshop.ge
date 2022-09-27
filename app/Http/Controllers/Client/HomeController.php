@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Slider;
 use App\Models\Size;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
@@ -74,6 +75,7 @@ class HomeController extends Controller
             'products' => $products,
             'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),
+            "category" => Category::with("translations")->get(),
             "sizes" => Size::all(),
             "gallery" => Gallery::with("file")->get()->take(8),
             "page" => $page, "seo" => [

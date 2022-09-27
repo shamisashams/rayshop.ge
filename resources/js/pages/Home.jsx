@@ -19,7 +19,7 @@ import {
 import Layout from "../Layouts/Layout";
 import { Route } from 'react-router-dom';
 
-const Home = ({seo,gallery, products, productsAll, sliders, sizes}) => {
+const Home = ({seo,gallery, products, productsAll, sliders, sizes, category}) => {
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
         dangerouslySetInnerHTML: { __html: rawHTML },
@@ -28,7 +28,7 @@ const sharedData = usePage().props.localizations;
 
   return (
     <Layout seo={seo}>
-      <HeroSlider data={sliders} sizes={sizes} />
+      <HeroSlider data={sliders} sizes={sizes} cat={category} />
       <section className="py-10">
         <div className="text-center mb-10 bold text-xl">
           <Link href="/products">

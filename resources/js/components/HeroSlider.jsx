@@ -50,7 +50,7 @@ const addToCart = function (product,size) {
     Inertia.visit(window.location.href)
 };
 
-const HeroSlider = ({data, sizes}) => {
+const HeroSlider = ({data, sizes,cat}) => {
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
         dangerouslySetInnerHTML: { __html: rawHTML },
@@ -98,7 +98,7 @@ const sharedData = usePage().props.localizations;
     >
 {
     data.map((item,index)=>{
-        // console.log(item, 'esaa');
+        console.log(cat, 'კატეგორიები');
            return(
             <SwiperSlide key={index}>
             <div className=" w-screen  lg:h-screen h-full  relative bg-white lg:pt-0 pt-24">
@@ -106,13 +106,24 @@ const sharedData = usePage().props.localizations;
               <div className="h-full wrapper  lg:pb-0 pb-10 flex items-center lg:justify-between justify-start relative z-20 flex-col lg:flex-row ">
                 <div className="2xl:max-w-lg xl:max-w-md lg:max-w-sm max-w-none w-full shrink">
                   <div className="text-white lg:text-xl bold lg:mb-6 mb-3 ">
-                  {item.product.title}
+                  {/* {item.product.title} */}
+{
+    cat.map((e,i)=>{
+        if(item.id == e.id)
+        {
+            return(
+            e.title
+        )
+        }
+    })
+}
                   </div>
                   <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3">
                     {item.product.title}
                   </div>
                   <p className="mb-7 lg:block hidden">
-                    {item.product.title}
+                    {/* {item.product.title} */}
+                    {__("client.slider_text", sharedData)}
                     </p>
                   <LearnMoreBtn href="/" />
                 </div>

@@ -8,6 +8,7 @@ import { BsArrowRightCircle } from "react-icons/bs";
 import { useEffect } from "react";
 import { Link } from '@inertiajs/inertia-react'
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
+import { Route } from "react-router-dom";
 
 
 const Cart = ({ show, closeCart }) => {
@@ -222,7 +223,7 @@ const Cart = ({ show, closeCart }) => {
         </div>
       </div>
 
-      <Link href="/checkout" className="w-fit mx-auto mt-10">
+      <Link href={route("client.checkout.index")} className="w-fit mx-auto mt-10">
         <CommonButton text="გადახდა" />
       </Link>
     </div>

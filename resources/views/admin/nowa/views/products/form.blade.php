@@ -525,7 +525,6 @@ $sizesArr = [];
                     @endif
 
 
-
                     <div class="image-uploader">
                         <div class="uploaded">
 
@@ -542,7 +541,6 @@ $sizesArr = [];
                                             <button type="button" class="btn" data-rm_img="{{$item->id}}">remove</button>
                                         </div>
                                     </div>
-
 
 
                             @endforeach
