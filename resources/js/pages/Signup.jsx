@@ -10,6 +10,13 @@ import {Inertia} from "@inertiajs/inertia";
 // import Facebook from "../assets/images/icons/sm/facebook.png";
 
 const Signup = ({seo}) => {
+
+    const renderHTML = (rawHTML) =>
+    React.createElement("div", {
+        dangerouslySetInnerHTML: { __html: rawHTML },
+    });
+const sharedData = usePage().props.localizations;
+
     const {errors,localizations} = usePage().props
     const [values, setValues] = useState({
         name: "",
@@ -44,25 +51,25 @@ const Signup = ({seo}) => {
     <div className="py-20 lg:pt-40 pt-32 wrapper relative text-center min-h-screen">
       <div className="max-w-md mx-auto">
         <form onSubmit={handleSubmit}>
-        <div className="text-lg mb-6 bold">რეგისტრაცია</div>
+        <div className="text-lg mb-6 bold">{__("client.signup_register", sharedData)}</div>
         {errors.name && <div>{errors.name}</div>}
-        <input onChange={handleChange} name="name" className="mb-3" type="text" placeholder="სახელი" />
+        <input onChange={handleChange} name="name" className="mb-3" type="text" placeholder={__("client.signup_name", sharedData)} />
         {errors.surname && <div>{errors.surname}</div>}
-        <input onChange={handleChange} name="surname" className="mb-3" type="text" placeholder="გვარი" />
+        <input onChange={handleChange} name="surname" className="mb-3" type="text" placeholder={__("client.signup_surname", sharedData)} />
         {errors.email && <div>{errors.email}</div>}
-        <input onChange={handleChange} name="email"  className="mb-3" type="email" placeholder="ელ. ფოსტა" />
-        <input onChange={handleChange} name="phone" className="mb-3" type="text" placeholder="მობილურის ნომერი" />
+        <input onChange={handleChange} name="email"  className="mb-3" type="email" placeholder={__("client.signup_email", sharedData)} />
+        <input onChange={handleChange} name="phone" className="mb-3" type="text" placeholder={__("client.signup_phone", sharedData)} />
         {errors.password && <div>{errors.password}</div>}
-        <input onChange={handleChange} name="password" className="mb-3" type="password" placeholder="პაროლი" />
+        <input onChange={handleChange} name="password" className="mb-3" type="password" placeholder={__("client.signup_pass", sharedData)} />
         {errors.password_repeat && <div>{errors.password_repeat}</div>}
-        <input onChange={handleChange} name="password_repeat" className="mb-8" type="password" placeholder="პაროლი" />
-        <CommonButton text="რეგისტრაცია" />
+        <input onChange={handleChange} name="password_repeat" className="mb-8" type="password" placeholder={__("client.signup_repeat_pass", sharedData)} />
+        <CommonButton text={__("client.register", sharedData)} />
 
         </form>
         <div className="mt-10">
           <div className="opacity-30 relative text-center ">
             <div className="h-px w-full bg-black absolute left-0 top-1/2 -translate-y-1/2"></div>
-            <span className="bg-white  px-3 relative"> ან გამოიყენე</span>
+            <span className="bg-white  px-3 relative"> {__("client.signup_oruse", sharedData)}</span>
           </div>
         </div>
         <div className="flex items-center justify-center py-6 pb-10">
@@ -75,13 +82,13 @@ const Signup = ({seo}) => {
         </div>
       </div>
       <p>
-        უკვე გაქვს ანგარიში?{" "}
+      {__("client.signup_already_registered", sharedData)}{" "}
         <Link
-          to="/login"
+          href={route("client.login.index")}
           className="underline whitespace-nowrap"
           style={{ color: "#4A7AFF" }}
         >
-          გაიარე ავტორიზაცია
+          {__("client.login", sharedData)}
         </Link>{" "}
       </p>
 

@@ -221,7 +221,7 @@ const sharedData = usePage().props.localizations;
           <div className="bold text-lg">{getCart().items.length}</div>
         </div>
         <div className="flex item-center justify-between">
-          <div className="bold">{__("client.cart.price", sharedData)}</div>
+          <div className="bold">{__("client.cart_price", sharedData)}</div>
           <div className="bold text-lg text-custom-orange">₾
 
           {getCart().total.toFixed(2)}

@@ -229,7 +229,8 @@ const Header = () => {
 
             </div>
           </div>
-          <button
+          { !showCart?
+            <button
             onClick={() =>
                 {
                    setShowCart(!showCart);
@@ -242,6 +243,8 @@ const Header = () => {
             <img src="/assets/svg/cart.svg" alt="cart" />
 
           </button>
+          :"" }
+
         </div>
       </div>
       <div ref={wrapperRef}>

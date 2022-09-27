@@ -3,12 +3,8 @@ import React from 'react';
 import { Link, usePage } from "@inertiajs/inertia-react";
 import HeroSlider from '../components/HeroSlider';
 import ProductSlider from "../components/ProductSlider";
-// import MobileBank from "../assets/images/other/1.png";
 import { galleryGrid } from "../components/Data";
 import ProductBox from "../components/ProductBox";
-// import ProductImg1 from "../assets/images/products/1.png";
-// import ProductImg2 from "../assets/images/products/2.png";
-// import ProductImg3 from "../assets/images/products/3.png";
 import { LearnMoreBtn } from "../components/Shared";
 import Form from "../components/Form";
 import {
