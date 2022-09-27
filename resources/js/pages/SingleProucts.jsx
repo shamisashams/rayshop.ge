@@ -132,7 +132,7 @@ product.files.map((e,i)=>{
         })}
       </div>
               </div>
-              <div className="flex  flex-nowrap mt-10 mb-16 ">
+              <div className="flex flex-nowrap mt-10 mb-16">
                   <button onClick={()=>{
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
                         alert('araa maragshi')
@@ -157,7 +157,7 @@ product.files.map((e,i)=>{
                      }else addToCart(product, sizesArr[picked])
                 }
                 }
-                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}>
+                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm  ml-4`}>
                     დაამატე კალათში
                </button>
 

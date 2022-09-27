@@ -215,7 +215,7 @@ const sharedData = usePage().props.localizations;
                      }else addToCart(product, sizesArr[picked])
                 }
                 }
-                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}>
+                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm ml-4`}>
                     დაამატე კალათში
                </button>
                   </div>
