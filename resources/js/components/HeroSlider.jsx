@@ -177,7 +177,7 @@ const sharedData = usePage().props.localizations;
     })
 }
 
-      <div className="wrapper absolute left-1/2 -translate-x-1/2 lg:bottom-3 bottom-1/2 translate-y-1/2 lg:translate-y-0 z-20 flex justify-between items-center">
+      <div className="h-fit wrapper absolute left-1/2 -translate-x-1/2 lg:bottom-3 bottom-1/2 translate-y-1/2 lg:translate-y-0 z-20 flex justify-between items-center">
         <SocialMedia />
         <div className="flex items-center lg:w-auto w-full justify-between">
           <div

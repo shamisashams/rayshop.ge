@@ -74,7 +74,7 @@ export const SizePick = ({ sizes }) => {
 
 export const SocialMedia = () => {
   return (
-    <div className="socialMedia flex items-center">
+    <div className="socialMedia flex items-center ">
       <a target="_blank" href="#">
         <img src={"/assets/images/icons/sm/yt.svg"} alt="" />
       </a>
