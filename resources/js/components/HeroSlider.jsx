@@ -13,6 +13,7 @@ import {
   MouseParallaxContainer,
   MouseParallaxChild,
 } from "react-parallax-mouse";
+import { Route } from "react-router-dom";
 
 const addToCart = function (product,size) {
     //localStorage.removeItem('cart')
@@ -98,7 +99,6 @@ const sharedData = usePage().props.localizations;
     >
 {
     data.map((item,index)=>{
-        console.log(cat, 'კატეგორიები');
            return(
             <SwiperSlide key={index}>
             <div className=" w-screen  lg:h-screen h-full  relative bg-white lg:pt-0 pt-24">
@@ -125,7 +125,9 @@ const sharedData = usePage().props.localizations;
                     {/* {item.product.title} */}
                     {__("client.slider_text", sharedData)}
                     </p>
-                  <LearnMoreBtn href="/" />
+                    <Link href={route("client.product.index")} style={{zIndex:9999}}>
+                          <LearnMoreBtn />
+                    </Link>
                 </div>
                 <MouseParallaxContainer useWindowMouseEvents>
                   <MouseParallaxChild factorX={0.03} factorY={0.03}>
