@@ -104,13 +104,13 @@ const Header = () => {
             <input
               type="text"
               id="search_inp"
-              placeholder="ძიება საიტზე"
+              placeholder={__("client.nav_search", sharedData)}
               className={` text-sm bg-custom-slate-300 pr-10 pl-5 h-10 w-72 rounded-full transition-all duration-300 origin-right `}
             />
 
             <button className="absolute right-0 top-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 bg-custom-slate-300 z-20 ">
               {/* {search ? <IoCloseOutline /> : <SearchIcon /> } */}
-              {search? <IoCloseOutline /> :   <img src={"/assets/svg/search.svg"} alt="ss" />}
+              { !showCart? (search? <IoCloseOutline /> :   <img src={"/assets/svg/search.svg"} alt="ss" />):"" }
             </button>
           </div>
           {navLinks.map((item, index) => {
@@ -138,7 +138,7 @@ const Header = () => {
                 }
               }}
               type="text"
-              placeholder="ძიება საიტზე"
+              placeholder={__("client.nav_search", sharedData)}
               className={`absolute right-0 top-0 text-sm bg-custom-slate-200 pr-10 pl-5 h-full w-72 rounded-full transition-all duration-300 origin-right ${
                 search ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
               }`}
@@ -147,20 +147,22 @@ const Header = () => {
               onClick={() => setSearch(!search)}
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-custom-slate-200 z-20 relative"
             >
-              {/* {search ? <IoCloseOutline /> : <SearchIcon />} */}
-              {search ? <IoCloseOutline /> : <img src={"/assets/svg/search.svg"} alt="ss" />}
+              { !showCart? (search? <IoCloseOutline /> :   <img src={"/assets/svg/search.svg"} alt="ss" />):"" }
             </button>
           </div>
           <div ref={wrapperRef} className="relative">
-            <button
-              onClick={() => setaAcountDrop(!accountDrop)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-custom-slate-200 mx-1 ${
-                accountDrop ? "bg-custom-slate-200" : ""
-              }`}
-            >
-                <img src="/assets/svg/user.svg" alt="user" />
-              {/* <UserIcon /> */}
-            </button>
+          { !showCart?
+          <button
+          onClick={() => setaAcountDrop(!accountDrop)}
+          className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-custom-slate-200 mx-1 ${
+            accountDrop ? "bg-custom-slate-200" : ""
+          }`}
+        >
+            <img src="/assets/svg/user.svg" alt="user" />
+          {/* <UserIcon /> */}
+        </button>
+          :"" }
+
             <div
               className={`absolute right-0 sm:top-full top-12  transition-all duration-300 overflow-hidden sm:bg-transparent bg-custom-slate-200 sm:p-0 sm:pt-3 p-5 rounded ${
                 accountDrop ? "visible opacity-100" : "invisible opacity-0"
@@ -191,13 +193,16 @@ const Header = () => {
                 {/* <SettingIcon className="mr-2" /> */}
                 <img src="/assets/svg/settings.svg" alt="setting" className="mr-2"/>
                 <Link href={route("client.cabinet")}>
-                <p>პირადი კაბინეტი</p>
+                <p>
+                    {/* პირადი კაბინეტი */}
+                    {__("client.nav_cabinet", sharedData)}
+                    </p>
                 </Link>
               </Link>
               <button className="flex items-center !cursor-pointer whitespace-nowrap justify-end mx-auto mr-0 text-custom-blue">
                 {/* <LogoutIcon className="mr-2" /> */}
                 <img src="/assets/svg/logout.svg" alt="logout" className="mr-2" />
-                <Link href={route("logout")}><p>გასვლა</p></Link>
+                <Link href={route("logout")}><p>{__("client.nav_logout", sharedData)}</p></Link>
 
               </button>
 </>
@@ -209,7 +214,7 @@ const Header = () => {
                   accountDrop ? "translate-x-0" : "translate-x-32"
                 }`}
               >
-                <p>სისტემაში შესვლა</p>
+                <p>{__("client.nav_login", sharedData)}</p>
               </Link>
               <Link
                 href={route("client.registration.index")}
@@ -217,7 +222,7 @@ const Header = () => {
                   accountDrop ? "translate-x-0" : "translate-x-20"
                 }`}
               >
-                <p>შექმენი ექაუნთი</p>
+                <p>{__("client.nav_signup", sharedData)}</p>
               </Link>
                 </>
               }

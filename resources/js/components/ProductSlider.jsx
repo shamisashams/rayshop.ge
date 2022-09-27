@@ -148,7 +148,6 @@ key={index}
                   "/" +
                   e.files[0].title
                 : null
-
               }
               name={e.title}
               sale={e.special_price? true : false}

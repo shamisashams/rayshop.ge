@@ -25,7 +25,6 @@ const Home = ({seo,gallery, products,product, productsAll, sliders, sizes, categ
         dangerouslySetInnerHTML: { __html: rawHTML },
     });
 const sharedData = usePage().props.localizations;
-
   return (
     <Layout seo={seo}>
       <HeroSlider data={sliders} sizes={sizes} cat={category} product={product}/>

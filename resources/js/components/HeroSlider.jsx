@@ -53,12 +53,12 @@ const addToCart = function (product,size) {
 };
 
 const HeroSlider = ({data, sizes,cat, product}) => {
+    // console.log(product);
     let sizesArr = new Array();
     sizes.forEach(el => {
              sizesArr.push(el.name)
     });
     const [sizepicked, setSizePicked] = useState(false);
-    console.log(product, 'პროდუქტი');
   const [picked, setPicked] = useState(0);
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
@@ -68,28 +68,7 @@ const sharedData = usePage().props.localizations;
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
-  const heroData = [
-    {
-      category: "ახალი პროდუქტი",
-      title: "მაისურის დასახელება",
-      paragraph:
-        "ამ მაისურის შექმნის იდეა გაჩნდა შემთხვევის წყალობით, რომელმაც უამრავი ადამიანის ცხოვრება მთლიანად შეცვალა.",
-      link: "/",
-      img: "/assets/images/products/1.png",
-      price: "112",
-      sizes: ["s", "m", "l", "xl"],
-    },
-    {
-      category: "ახალი პროდუქტი",
-      title: "სხვა მაისურის დასახელება",
-      paragraph:
-        "თხვევის წყალობით, რომელმაც ამ მაისურის შექმნის იდეა გაჩნდა შემუამრავი ადამიანისა.",
-      link: "/",
-      img: "/assets/images/products/2.png",
-      price: "57",
-      sizes: ["s", "m", "l", "xl"],
-    },
-  ];
+
 
   return (
     <Swiper
@@ -127,7 +106,7 @@ const sharedData = usePage().props.localizations;
 }
                   </div>
                   <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3">
-                    {item.product.title}
+                    {product.title}
                   </div>
                   <p className="mb-7 lg:block hidden">
                     {/* {item.product.title} */}
@@ -177,7 +156,7 @@ const sharedData = usePage().props.localizations;
                     <span className="2xl:text-8xl lg:text-7xl text-5xl 2xl:pr-6 pr-3">
                       {/* {item.price} */}
                       {/* 213 */}
-                      {item.product.special_price ?item.product.special_price: item.product.price }
+                      {product.special_price ?product.special_price: product.price }
                     </span>
                     ლარი
                   </div>

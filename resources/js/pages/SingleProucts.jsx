@@ -14,7 +14,7 @@ const SingleProucts = ({seo,sizes,product,sameproduct}) => {
              sizesArr.push(el.name)
     });
     const addToCart = function (product,size) {
-        //localStorage.removeItem('cart')
+        // localStorage.removeItem('cart')
         let _cart = localStorage.getItem("cart");
         let cart;
         if (_cart !== null) {

@@ -317,45 +317,6 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                         </label>
                     </div>
 
-                    {{-- <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="popular"
-                                   value="true" {{$product->popular ? 'checked' : ''}}>
-                            <span>{{__('admin.popular')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="new"
-                                   value="true" {{$product->new ? 'checked' : ''}}>
-                            <span>{{__('admin.new_product')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="new_collection"
-                                   value="true" {{$product->new_collection ? 'checked' : ''}}>
-                            <span>{{__('admin.new_collection')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="bunker"
-                                   value="true" {{$product->bunker ? 'checked' : ''}}>
-                            <span>{{__('admin.bunker')}}</span>
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="ckbox">
-                            <input type="checkbox" name="day_product"
-                                   value="true" {{$product->day_product ? 'checked' : ''}}>
-                            <span>{{__('admin.day_product')}}</span>
-                        </label>
-                    </div> --}}
 
                     <div class="form-group">
                         <label class="ckbox">
@@ -487,29 +448,6 @@ $sizesArr = [];
         </div>
     </div>
 
-    <!-- /row -->
-
-    {{-- <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.product_image_crop_upload')</h6>
-                    </div>
-
-                    <div>
-                        <p>Select a image file to crop</p>
-                        <input type="file" id="inputFile" accept="image/png, image/jpeg">
-                    </div>
-                    <div id="actions" style="display: none;">
-                        <button id="cropBtn" type="button">Crop @if($product->created_at)& Upload @endif</button>
-                    </div>
-                    <div id="croppieMount"></div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- row -->
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div class="card">

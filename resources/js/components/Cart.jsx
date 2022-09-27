@@ -6,12 +6,17 @@ import Img3 from "/assets/images/products/5.png";
 import { CartItem, CommonButton } from "./Shared";
 import { BsArrowRightCircle } from "react-icons/bs";
 import { useEffect } from "react";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from "@inertiajs/inertia-react";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 import { Route } from "react-router-dom";
 
 
 const Cart = ({ show, closeCart }) => {
+    const renderHTML = (rawHTML) =>
+    React.createElement("div", {
+        dangerouslySetInnerHTML: { __html: rawHTML },
+    });
+const sharedData = usePage().props.localizations;
     const [quantity, setquantity] = useState(2);
 
     const [number, setNumber] = useState(1);
@@ -88,7 +93,7 @@ const Cart = ({ show, closeCart }) => {
       >
         <BsArrowRightCircle className="w-6 h-6" />
       </button>
-      <div className="overflow-y-scroll scrollbar pr-5 lg:h-1/2 h-60 ">
+      <div className={getCart().items.length?"overflow-y-scroll scrollbar pr-5 lg:h-1/2 h-60 " : ""}>
         {/* {itemsInCart.map((item, index) => {
           return <CartItem key={index} item.product={item} index={index} />;
         })} */}
@@ -149,10 +154,10 @@ const Cart = ({ show, closeCart }) => {
           <div>{item.product.name}</div>
           <div className="bold mb-3 mt-1">
             { item.product.special_price ? item.product.special_price :item.product.price}
-
-           ლარი</div>
+           {__("client.gel", sharedData)}
+           </div>
           <div>
-            ზომა: <span className="bold uppercase">{item.size}</span>
+          {__("client.size", sharedData)} : <span className="bold uppercase">{item.size}</span>
           </div>
         </div>
       </div>
@@ -210,11 +215,13 @@ const Cart = ({ show, closeCart }) => {
 
       <div className="mt-5">
         <div className="flex item-center justify-between mb-3">
-          <div className="opacity-50">რაოდენობა:</div>
+          <div className="opacity-50">
+          {__("client.cart_count", sharedData)}
+          </div>
           <div className="bold text-lg">{getCart().items.length}</div>
         </div>
         <div className="flex item-center justify-between">
-          <div className="bold">პროდუქტის ფასი:</div>
+          <div className="bold">{__("client.cart.price", sharedData)}</div>
           <div className="bold text-lg text-custom-orange">₾
 
           {getCart().total.toFixed(2)}
@@ -224,7 +231,7 @@ const Cart = ({ show, closeCart }) => {
       </div>
 
       <Link href={route("client.checkout.index")} className="w-fit mx-auto mt-10">
-        <CommonButton text="გადახდა" />
+        <CommonButton text={__("client.cart_purchace", sharedData)} />
       </Link>
     </div>
   );
