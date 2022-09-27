@@ -26,6 +26,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use ReflectionException;
 use App\Repositories\Eloquent\AttributeRepository;
@@ -181,6 +182,9 @@ class ProductController extends Controller
             $product = $this->productRepository->saveFiles($product->id, $request);
         }
 
+        if ($request->has('base64_img')) {
+            $product = $this->productRepository->uploadCropped($request, $product->id);
+        }
 
         return redirect(locale_route('product.index', $product->id))->with('success', __('admin.create_successfully'));
     }
@@ -240,6 +244,15 @@ class ProductController extends Controller
      * @return Application|RedirectResponse|Redirector
      * @throws ReflectionException
      */
+
+    // croppie
+    public function uploadCropped(Request $request, $locale, Product $product)
+    {
+        // dd($request->all());
+        $this->productRepository->uploadCropped($request, $product->id);
+    }
+
+
     public function update(ProductRequest $request, string $locale, Product $product)
     {
         //dd($request->all());

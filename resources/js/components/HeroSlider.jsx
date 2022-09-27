@@ -14,6 +14,42 @@ import {
   MouseParallaxChild,
 } from "react-parallax-mouse";
 
+const addToCart = function (product,size) {
+    //localStorage.removeItem('cart')
+    let _cart = localStorage.getItem("cart");
+    let cart;
+    if (_cart !== null) {
+        cart = JSON.parse(_cart);
+    } else cart = [];
+    let qty = 1;
+    if (cart.length > 0) {
+        let exists = false;
+        cart.forEach(function (el, i) {
+            if (el.product.id === product.id && el.size == size) {
+                el.qty += qty;
+                exists = true;
+            }
+        });
+        if (!exists) {
+            let obj = {
+                product: product,
+                size: size,
+                qty: qty,
+            };
+            cart.push(obj);
+        }
+    } else {
+        let obj = {
+            product: product,
+            size: size,
+            qty: qty,
+        };
+        cart.push(obj);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    Inertia.visit(window.location.href)
+};
+
 const HeroSlider = ({data, sizes}) => {
     const renderHTML = (rawHTML) =>
     React.createElement("div", {

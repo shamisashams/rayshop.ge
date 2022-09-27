@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  app/Repositories/Eloquent/Base/BaseRepository.php
  *
@@ -9,6 +10,7 @@
 
 namespace App\Repositories\Eloquent\Base;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use ReflectionClass;
@@ -31,6 +33,41 @@ class BaseRepository implements EloquentRepositoryInterface
         $this->model = $model;
     }
 
+    // croppie
+
+    public function uploadCropped($request, $id)
+    {
+        //dd($product);
+        $this->model = $this->findOrFail($id);
+        $data = explode(',', $request->post('base64_img'));
+        // Decode the base64 data
+        $data = base64_decode($data[1]);
+
+
+
+        if ($request->has('base64_img')) {
+            // Get Name Of model
+            $reflection = new ReflectionClass(get_class($this->model));
+            $modelName = $reflection->getShortName();
+
+
+            $imagename = date('Ymdhis') . 'crop.png';
+            $destination = base_path() . '/storage/app/public/' . $modelName . '/' . $this->model->id;
+
+            Storage::put('public/' . $modelName . '/' . $this->model->id . '/' . $imagename, $data);
+            $this->model->files()->create([
+                'title' => $imagename,
+                'path' => 'storage/' . $modelName . '/' . $this->model->id,
+                'format' => 'png',
+                'type' => File::FILE_DEFAULT,
+                'youtube' =>  null
+            ]);
+        }
+        return $this->model;
+    }
+
+
+
     public function getData($request, array $with = [])
     {
         $data = $this->model->filter($request)->with($with);
@@ -52,7 +89,7 @@ class BaseRepository implements EloquentRepositoryInterface
      *
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all(array $columns = ["*"],array $with = [])
+    public function all(array $columns = ["*"], array $with = [])
     {
         return $this->model->with($with)->get($columns);
     }
@@ -66,12 +103,12 @@ class BaseRepository implements EloquentRepositoryInterface
      */
     public function create(array $attributes = []): Model
     {
-       // try {
-            return $this->model->create($attributes);
+        // try {
+        return $this->model->create($attributes);
 
         //} catch (\Illuminate\Database\QueryException $exception) {
-            //return $exception->errorInfo;
-       // }
+        //return $exception->errorInfo;
+        // }
     }
 
     /**
@@ -175,7 +212,7 @@ class BaseRepository implements EloquentRepositoryInterface
             }
         }
 
-        $this->model->files()->where('id',$request->post('main'))->update(['main'=>1]);
+        $this->model->files()->where('id', $request->post('main'))->update(['main' => 1]);
 
         if ($request->hasFile('images')) {
             // Get Name Of model

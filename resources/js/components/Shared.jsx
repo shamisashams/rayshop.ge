@@ -46,7 +46,6 @@ export const CommonButton = ({ text, width }) => {
 
 export const SizePick = ({ sizes }) => {
   const [picked, setPicked] = useState(0);
-
   return (
     <>
       <div className="bold mb-5">აირჩიე ზომა:</div>

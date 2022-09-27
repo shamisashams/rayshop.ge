@@ -62,6 +62,7 @@ Route::prefix('{locale?}')
                 // Product
                 Route::resource('product', \App\Http\Controllers\Admin\ProductController::class);
                 Route::get('product/{product}/destroy', [\App\Http\Controllers\Admin\ProductController::class, 'destroy'])->name('product.destroy');
+                Route::post('product/{product?}/upload-cropped', [\App\Http\Controllers\Admin\ProductController::class, 'uploadCropped'])->name('product.crop-upload');
                 //                // Gallery
                 Route::resource('gallery', GalleryController::class);
                 Route::get('gallery/{gallery}/destroy', [GalleryController::class, 'destroy'])->name('gallery.destroy');
