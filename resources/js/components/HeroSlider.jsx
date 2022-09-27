@@ -150,6 +150,7 @@ const sharedData = usePage().props.localizations;
                 <div className="lg:text-left text-center">
                   <div className="text-custom-blue bold lg:block hidden">
                     {/* ფასი: */}
+                    {__("client.slider_price",sharedData)}
 
                   </div>
                   <div className="lg:my-7 my-3 2xl:text-5xl lg:text-3xl text-2xl gadzen">
@@ -161,7 +162,8 @@ const sharedData = usePage().props.localizations;
                     ლარი
                   </div>
                   {/* <SizePick sizes={sizes} product={product} /> */}
-                  <div className="bold mb-5">აირჩიე ზომა:</div>
+                  <div className="bold mb-5">{__("client.slider_size",sharedData)} :</div>
+                  <div className="sizeFlex flex flex-wrap">
       <div className="sizeFlex flex flex-wrap">
         {sizes.map((size, i) => {
           return (
@@ -187,6 +189,7 @@ const sharedData = usePage().props.localizations;
           );
         })}
       </div>
+                  </div>
                   <div className="flex  flex-nowrap mt-10">
                   <button onClick={()=>{
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){

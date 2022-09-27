@@ -104,6 +104,7 @@ product.files.map((e,i)=>{
                 ლარი
               </div>
               <div className="bold mb-5">აირჩიე ზომა:</div>
+              <div className="sizeFlex flex flex-wrap">
       <div className="sizeFlex flex flex-wrap">
         {sizes.map((size, i) => {
           return (
@@ -130,6 +131,7 @@ product.files.map((e,i)=>{
           );
         })}
       </div>
+              </div>
               <div className="flex  flex-nowrap mt-10 mb-16 ">
                   <button onClick={()=>{
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
@@ -160,14 +162,16 @@ product.files.map((e,i)=>{
                </button>
 
               </div>
-              <div className="bold mb-5">
+              <div className="bold mb-5 flex justify-between w-3/6">
                 {/* <ShareIcon className="inline-block mr-2 align-middle" /> */}
                 <img src="/assets/svg/share.svg" alt="share" />
-                {" "}
-                გაუზიარე მეგობრებს{" "}
+                {/* {" "} */}
+                გაუზიარე მეგობრებს
               </div>
               {/* <div class="fb-share-button" data-href="http://127.0.0.1:8000/ge/product/test2" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fge%2Fproduct%2Ftest2&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> */}
+              <div className="socialMedia flex items-center">
               <SocialMedia />
+              </div>
             </div>
           </div>
         </div>
