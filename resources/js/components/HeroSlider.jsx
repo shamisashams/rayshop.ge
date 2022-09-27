@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 // import Img1 from "/assets/images/products/1.png";
 // import Img2 from "/assets/images/products/2.png";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import { EffectFade, Navigation } from "swiper";
 import { CommonButton, LearnMoreBtn, SizePick, SocialMedia } from "./Shared";
 import { Link, usePage } from "@inertiajs/inertia-react";
+import { Inertia } from '@inertiajs/inertia'
 // import { ReactComponent as Arrow } from "/assets/svg/longArrow.svg";
 import {
   MouseParallaxContainer,
@@ -51,7 +52,14 @@ const addToCart = function (product,size) {
     Inertia.visit(window.location.href)
 };
 
-const HeroSlider = ({data, sizes,cat}) => {
+const HeroSlider = ({data, sizes,cat, product}) => {
+    let sizesArr = new Array();
+    sizes.forEach(el => {
+             sizesArr.push(el.name)
+    });
+    const [sizepicked, setSizePicked] = useState(false);
+    console.log(product, 'პროდუქტი');
+  const [picked, setPicked] = useState(0);
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
         dangerouslySetInnerHTML: { __html: rawHTML },
@@ -125,9 +133,20 @@ const sharedData = usePage().props.localizations;
                     {/* {item.product.title} */}
                     {__("client.slider_text", sharedData)}
                     </p>
-                    <Link href={route("client.product.index")} style={{zIndex:9999}}>
+                    {/* <Link href={route("client.product.index")} style={{zIndex:9999}}>
                           <LearnMoreBtn />
-                    </Link>
+                    </Link> */}
+
+                <Link
+      href={route("client.product.index")}
+      className="learnMoreBtn flex items-center bold text-xl group"
+    >
+      <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">
+        {/* <Eye className="group-hover:fill-black fill-white transition-all duration-300" /> */}
+        <img src="/assets/svg/eye.svg" alt="eye"  className="group-hover:fill-black fill-white transition-all duration-300"/>
+      </div>
+      <span>სრულად ნახვა</span>
+    </Link>
                 </div>
                 <MouseParallaxContainer useWindowMouseEvents>
                   <MouseParallaxChild factorX={0.03} factorY={0.03}>
@@ -162,12 +181,61 @@ const sharedData = usePage().props.localizations;
                     </span>
                     ლარი
                   </div>
-                  <SizePick sizes={sizes} />
+                  {/* <SizePick sizes={sizes} product={product} /> */}
+                  <div className="bold mb-5">აირჩიე ზომა:</div>
+      <div className="sizeFlex flex flex-wrap">
+        {sizes.map((size, i) => {
+          return (
+            <button
+              onClick={() =>
+                {
+                    setSizePicked(true)
+                    setPicked(i)
+                    if(!product.sizes.find((e)=> e.id == size.id)){
+                        alert('araa maragshi')
+                     }
+                }
+                }
+              key={i}
+              className={`flex items-center justify-center rounded-full w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300 mr-3 uppercase mb-2 ${
+                picked == i && sizepicked
+                  ? "bg-black text-white"
+                  : "bg-custom-slate-200 text-black"
+              }`}
+            >
+              {size.name}
+            </button>
+          );
+        })}
+      </div>
                   <div className="flex  flex-nowrap mt-10">
-                    <Link href="/" className="sm:mr-6 mr-3 ">
-                      <CommonButton text="შეიძინე" />
-                    </Link>
-                    <CommonButton text="დაამატე კალათში" />
+                  <button onClick={()=>{
+                    if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                        alert('araa maragshi')
+                        return 0;
+                     }else{
+                         addToCart(product, sizesArr[picked])
+                         Inertia.visit(route("client.checkout.index"))
+                     }
+                  }
+                }
+      className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
+    >
+      შეიძინე
+    </button>
+                    {/* <CommonButton text="დაამატე კალათში" /> */}
+                    <button onClick={()=>{
+                    // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
+                    // alert(sizes[picked].id)
+                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                        alert('araa maragshi')
+                        return 0;
+                     }else addToCart(product, sizesArr[picked])
+                }
+                }
+                    className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}>
+                    დაამატე კალათში
+               </button>
                   </div>
                 </div>
               </div>

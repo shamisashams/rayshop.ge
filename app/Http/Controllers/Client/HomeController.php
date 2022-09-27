@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Slider;
 use App\Models\Size;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\App;
@@ -70,9 +71,13 @@ class HomeController extends Controller
         }
 
         //dd($products);
+        $product = Product::where(['status' => true])->whereHas('categories', function (Builder $query) {
+            $query->where('status', 1);
+        })->with(['latestImage', 'files', 'sizes'])->firstOrFail();
 
         return Inertia::render('Home', [
             'products' => $products,
+            'product' => $product,
             'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),
             "category" => Category::with("translations")->get(),
