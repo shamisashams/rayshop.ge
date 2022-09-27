@@ -75,6 +75,7 @@ class Product extends Model implements Searchable
         'sale',
         'stock',
         'code',
+        // 'instock',
         'price',
         'quantity',
         'special_price',
@@ -97,6 +98,7 @@ class Product extends Model implements Searchable
         'short_description',
         'description',
         'meta_title',
+        'instock',
         'meta_description',
         'meta_keyword',
     ];

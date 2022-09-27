@@ -255,7 +255,6 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, string $locale, Product $product)
     {
-        //dd($request->all());
         $sizes = [];
         foreach ($request->post() as $key => $value) {
             if (str_contains($key, 'size')) {
@@ -277,8 +276,6 @@ class ProductController extends Controller
         $saveData['day_price'] = isset($saveData['day_price']) && (bool)$saveData['day_price'];
         $saveData['day_product'] = isset($saveData['day_product']) && (bool)$saveData['day_product'];
         $saveData['special_price_tag'] = isset($saveData['special_price_tag']) && (bool)$saveData['special_price_tag'];
-
-        //dd($saveData);
 
         $this->productRepository->update($product->id, $saveData);
 
