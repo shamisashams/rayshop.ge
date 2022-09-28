@@ -6,7 +6,8 @@ import { Link, usePage } from "@inertiajs/inertia-react";
 import { Inertia } from '@inertiajs/inertia'
 import React, { useState } from 'react'
 
-const Account = ({seo}) => {
+const Account = ({seo, city}) => {
+    console.log(city);
   const [displayPassword, setDisplayPassword] = useState(false);
   const {user,flash} = usePage().props;
   const renderHTML = (rawHTML) =>
@@ -68,6 +69,22 @@ const sharedData = usePage().props.localizations;
               placeholder={__("client.cabinet_phone", sharedData)}
               value={values.phone} onChange={handleChange}
             />
+             <select
+             onChange={(e)=>{
+                alert(e.target.value)
+              }}
+             id="countries" className="mb-5 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+  <option selected="true" disabled="true">{__("client.cabinet_choose_city", sharedData)}</option>
+  {
+    city.map((e,i)=>{
+        return(
+            <>
+            <option value={e.title}>{e.title}</option>
+            </>
+        )
+    })
+  }
+</select>
             <input id="address" name="address" className="bg-white mb-5" type="text" placeholder={__("client.cabinet_address", sharedData)} value={values.address} onChange={handleChange}/>
             <div className="relative w-full h-fit mb-10 ">
               <input

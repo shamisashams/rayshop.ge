@@ -8,6 +8,7 @@ use App\Models\Page;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Models\Partner;
 use App\Models\User;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
@@ -155,6 +156,7 @@ class AuthController extends Controller
         //dd($products);
 
         return Inertia::render('Account', [
+            "city" => city::with("translations")->get(),
             "page" => $page, "seo" => [
                 "title" => $page->meta_title,
                 "description" => $page->meta_description,
