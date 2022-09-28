@@ -459,6 +459,7 @@ $sizesArr = [];
                     @if ($errors->has('images'))
                         <span class="help-block">
                                             {{ $errors->first('images') }}
+
                                         </span>
                     @endif
 
@@ -466,6 +467,9 @@ $sizesArr = [];
                     <div class="image-uploader">
                         <div class="uploaded">
 
+                                <div style="uploaded-image">
+                                    <img id='jaba'   alt="">
+                                </div>
                             @foreach($product->files as $item)
 
                                     <div class="uploaded-image">
@@ -484,6 +488,7 @@ $sizesArr = [];
                             @endforeach
                         </div>
                     </div>
+
 
 
                     <div class="row">
@@ -592,7 +597,8 @@ $sizesArr = [];
                 location.reload()
             });
             @else
-            alert('cropped')
+            // alert('cropped')
+            $("#jaba").attr("src",imageResult);
             @endif
         });
     });
@@ -708,7 +714,7 @@ $sizesArr = [];
     </script>
 
 
-    <script src="{{asset('admin/croppie/croppie.js')}}"></script>
+    {{-- <script src="{{asset('admin/croppie/croppie.js')}}"></script>
     <script>
         let croppie = null;
         let croppieMount = document.getElementById('croppieMount');
@@ -779,6 +785,6 @@ $sizesArr = [];
                 @endif
             });
         });
-    </script>
+    </script> --}}
 
 @endsection
