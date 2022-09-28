@@ -73,7 +73,7 @@
                                     @foreach($settings as $setting)
                                         <tr>
                                             <td>{{$setting->id}}</td>
-                                            <td>
+                                            {{-- <td>
                                                 @if($setting->key == 'instagram' || $setting->key == 'facebook')
                                                 <div class="checkbox">
                                                     <div class="custom-checkbox custom-control">
@@ -82,7 +82,7 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>{{$setting->key}}</td>
                                             <td>
                                                 <div class="panel panel-primary tabs-style-2">

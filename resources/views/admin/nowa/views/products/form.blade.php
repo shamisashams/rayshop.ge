@@ -467,7 +467,7 @@ $sizesArr = [];
                     <div class="image-uploader">
                         <div class="uploaded">
 
-                                <div style="uploaded-image">
+                                <div style="uploaded-image" class='jaba'>
                                     <img id='jaba'   alt="">
                                 </div>
                             @foreach($product->files as $item)
@@ -597,8 +597,8 @@ $sizesArr = [];
                 location.reload()
             });
             @else
-            // alert('cropped')
             $("#jaba").attr("src",imageResult);
+            // document.querySelector(".jaba").innerHTML += `<img src='${imageResult}' alt='' />`
             @endif
         });
     });
