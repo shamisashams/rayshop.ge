@@ -1,5 +1,28 @@
 {
     "menu": [
+        {
+            "url": "javascript:void(0)",
+            "name": "1) ენები",
+            "i18n": "user",
+            "icon": "brightness_low",
+            "slug": "user",
+            "submenu": [
+                {
+                    "url": "language.index",
+                    "name": "ენები",
+                    "i18n": "language",
+                    "icon": "language",
+                    "slug": "language"
+                },
+                {
+                    "url": "translation.index",
+                    "name": "თარგმნა",
+                    "i18n": "translation",
+                    "icon": "g_translate",
+                    "slug": "translation"
+                }
+            ]
+        },
 
         {
                 "url": "user.index",
@@ -10,14 +33,7 @@
         }
         ,
         {
-            "url": "category.index",
-            "name": "პროდ. კატეგორიები",
-            "i18n": "category",
-            "icon": "language",
-            "slug": "category"
-        },
-        {
-            "url": "product.index",
+            "url": "javascript:void(0)",
             "name": "პროდუქცია",
             "i18n": "product",
             "icon": "language",
@@ -30,16 +46,33 @@
                     "i18n": "category",
                     "icon": "language",
                     "slug": "category"
+                },
+
+                {
+                    "url": "color.index",
+                    "name": "ზომები",
+                    "i18n": "attributes",
+                    "icon": "language",
+                    "slug": "attribute"
+                },
+                {
+                    "url": "product.index",
+                    "name": "პროდუქცია",
+                    "i18n": "product",
+                    "icon": "language",
+                    "slug": "product"
+                },
+                {
+                    "url": "city.index",
+                    "name": "ქალაქები",
+                    "i18n": "slider",
+                    "icon": "language",
+                    "slug": "slider"
                 }
+
             ]
         },
-        {
-            "url": "color.index",
-            "name": "ზომები",
-            "i18n": "attributes",
-            "icon": "language",
-            "slug": "attribute"
-        },
+
         {
             "url": "page.index",
             "name": "გვერდები",
@@ -54,20 +87,7 @@
             "icon": "language",
             "slug": "slider"
         },
-        {
-            "url": "city.index",
-            "name": "ქალაქები",
-            "i18n": "slider",
-            "icon": "language",
-            "slug": "slider"
-        },
-        {
-            "url": "language.index",
-            "name": "ენები",
-            "i18n": "language",
-            "icon": "language",
-            "slug": "language"
-        },
+
         {
             "url": "setting.index",
             "name": "პარამეტრები",
@@ -75,13 +95,7 @@
             "icon": "language",
             "slug": "setting"
         },
-        {
-            "url": "translation.index",
-            "name": "თარგმნა",
-            "i18n": "translation",
-            "icon": "g_translate",
-            "slug": "translation"
-        },
+
         {
             "url": "password.index",
             "name": "პაროლის შეცვლა",

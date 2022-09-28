@@ -33,7 +33,8 @@ class Slider extends Model
     public $translatedAttributes = [
         'title',
         'title_2',
-        'description'
+        'description',
+        'text'
     ];
 
     public function getFilterScopes(): array

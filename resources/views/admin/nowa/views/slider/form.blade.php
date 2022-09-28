@@ -87,6 +87,19 @@
                                             </div>
 
                                             <div class="form-group">
+                                                {!! Form::label($locale.'[text]',__('admin.text'),['class' => 'form-label']) !!}
+                                                {!! Form::text($locale.'[text]',$slider->translate($locale)->text ?? '',['class' => 'form-control']) !!}
+
+                                                @error($locale.'.text')
+                                                <small class="text-danger">
+                                                    <div class="error">
+                                                        {{$message}}
+                                                    </div>
+                                                </small>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.description')</label>
                                                 <textarea class="form-control" id="description-{{$locale}}"
                                                           name="{{$locale}}[description]'">

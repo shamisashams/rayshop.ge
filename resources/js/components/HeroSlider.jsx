@@ -9,7 +9,7 @@ import { EffectFade, Navigation } from "swiper";
 import { CommonButton, LearnMoreBtn, SizePick, SocialMedia } from "./Shared";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import { Inertia } from '@inertiajs/inertia'
-// import { ReactComponent as Arrow } from "/assets/svg/longArrow.svg";
+import { ReactComponent as Eye } from "/assets/svg/eye.svg";
 import {
   MouseParallaxContainer,
   MouseParallaxChild,
@@ -110,7 +110,8 @@ const sharedData = usePage().props.localizations;
                   </div>
                   <p className="mb-7 lg:block hidden">
                     {/* {item.product.title} */}
-                    {__("client.slider_text", sharedData)}
+                    {/* {__("client.slider_text", sharedData)} */}
+                    {item.text}
                     </p>
                     {/* <Link href={route("client.product.index")} style={{zIndex:9999}}>
                           <LearnMoreBtn />
@@ -121,9 +122,12 @@ const sharedData = usePage().props.localizations;
       className="learnMoreBtn flex items-center bold text-xl group"
     >
       <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">
-        {/* <Eye className="group-hover:fill-black fill-white transition-all duration-300" /> */}
         <img src="/assets/svg/eye.svg" alt="eye"  className="group-hover:fill-black fill-white transition-all duration-300"/>
       </div>
+
+      {/* <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">
+        <Eye  />
+      </div> */}
       <span>სრულად ნახვა</span>
     </Link>
                 </div>

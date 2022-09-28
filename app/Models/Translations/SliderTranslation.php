@@ -11,6 +11,7 @@ class SliderTranslation extends BaseTranslationModel
     protected $fillable = [
         'title',
         'title_2',
-        'description'
+        'description',
+        'text',
     ];
 }

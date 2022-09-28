@@ -42,7 +42,7 @@ Route::prefix('{locale?}')
             Route::middleware('auth')->group(function () {
                 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-                Route::redirect('', 'adminpanel/category');
+                Route::redirect('', 'adminpanel/language');
 
                 // users
                 Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
