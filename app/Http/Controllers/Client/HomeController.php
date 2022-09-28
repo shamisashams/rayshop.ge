@@ -71,13 +71,13 @@ class HomeController extends Controller
         }
 
         //dd($products);
-        $product = Product::where(['status' => true])->whereHas('categories', function (Builder $query) {
+        $productcostum = Product::where(['status' => true])->whereHas('categories', function (Builder $query) {
             $query->where('status', 1);
-        })->with(['latestImage', 'files', 'sizes'])->firstOrFail();
+        })->with(['latestImage', 'files', 'sizes'])->get();
 
         return Inertia::render('Home', [
             'products' => $products,
-            'product' => $product,
+            'product' => $productcostum,
             'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),
             "category" => Category::with("translations")->get(),

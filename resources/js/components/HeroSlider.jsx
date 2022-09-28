@@ -105,7 +105,16 @@ const sharedData = usePage().props.localizations;
 }
                   </div>
                   <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3">
-                    {product.title}
+                    {/* {product.title} */}
+                    {
+                        product.map((e,i)=>{
+                            if(e.id == item.product.id){
+                                return(
+                                    <p>{e.title}</p>
+                                )
+                            }
+                        })
+                    }
                   </div>
                   <p className="mb-7 lg:block hidden">
                     {/* {item.product.title} */}
@@ -167,7 +176,7 @@ const sharedData = usePage().props.localizations;
                     <span className="2xl:text-8xl lg:text-7xl text-5xl 2xl:pr-6 pr-3">
                       {/* {item.price} */}
                       {/* 213 */}
-                      {product.special_price ?product.special_price: product.price }
+                      {item.product.special_price ?item.product.special_price: item.product.price }
                     </span>
                     ლარი
                   </div>
