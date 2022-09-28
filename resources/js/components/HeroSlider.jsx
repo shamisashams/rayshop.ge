@@ -126,7 +126,7 @@ const sharedData = usePage().props.localizations;
                     </Link> */}
 
                 <Link
-      href={route("client.product.index")}
+      href={route("client.product.show", item.product.slug)}
       className="learnMoreBtn flex items-center bold text-xl group"
     >
       <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">

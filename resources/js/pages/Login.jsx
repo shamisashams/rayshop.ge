@@ -64,7 +64,8 @@ value={data.email} onChange={e => setData('email', e.target.value)}
 
         {error &&
                             <h2 className="alert alert-danger">
-                                {error}
+                                {/* {error} */}
+                                {__("client.signin_error", sharedData)}
                             </h2>
                         }
 

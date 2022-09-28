@@ -99,7 +99,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.description')</label>
                                                 <textarea class="form-control" id="description-{{$locale}}"
                                                           name="{{$locale}}[description]'">
@@ -112,7 +112,7 @@
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div>
+                                            </div> --}}
 
 
                                         </div>
@@ -134,7 +134,7 @@
                 <div class="card-body">
 
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         {!! Form::label("youtube_url",__('admin.btn_link'),['class' => 'form-label']) !!}
                         {!! Form::text("youtube_url",$slider->youtube_url ?? '',['class' => 'form-control']) !!}
 
@@ -145,7 +145,7 @@
                             </div>
                         </small>
                         @enderror
-                    </div>
+                    </div> --}}
                     {{-- @dd($slider->product) --}}
                     <div class="form-group">
                         {!! Form::label("product",__('admin.product'),['class' => 'form-label']) !!}

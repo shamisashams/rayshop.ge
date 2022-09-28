@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from '@inertiajs/inertia-react'
+import { Link, usePage } from '@inertiajs/inertia-react'
 import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
 import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
@@ -9,6 +9,7 @@ import { Inertia } from '@inertiajs/inertia'
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
 
+    const {pathname} = usePage().props;
     let sizesArr = new Array();
     sizes.forEach(el => {
              sizesArr.push(el.name)
@@ -162,15 +163,21 @@ product.files.map((e,i)=>{
                </button>
 
               </div>
-              <div className="bold mb-5 flex justify-between w-3/6">
-                {/* <ShareIcon className="inline-block mr-2 align-middle" /> */}
-                <img src="/assets/svg/share.svg" alt="share" />
-                {/* {" "} */}
-                გაუზიარე მეგობრებს
-              </div>
-              {/* <div class="fb-share-button" data-href="http://127.0.0.1:8000/ge/product/test2" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fge%2Fproduct%2Ftest2&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> */}
+
+              {/* <div class="fb-share-button" data-href={pathname} data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fge%2Fproduct%2Ftest2&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div> */}
               <div className="socialMedia flex items-center">
-              <SocialMedia />
+              {/* <SocialMedia /> */}
+              <div className="socialMedia flex items-center ">
+      <a target="_blank" href="#">
+        <img src={"/assets/images/icons/sm/yt.svg"} alt="" />
+      </a>
+      <a target="_blank" href={`https://www.facebook.com/sharer.php?u=${pathname}`} className="sm:mx-8 mx-5">
+        <img src={"/assets/images/icons/sm/fb.svg"} alt="" />
+      </a>
+      <a target="_blank" href={"https://www.instagram.com/create/story"}>
+        <img src={"/assets/images/icons/sm/ig.svg"} alt="" />
+      </a>
+    </div>
               </div>
             </div>
           </div>

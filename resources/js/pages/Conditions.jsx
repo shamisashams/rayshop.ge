@@ -58,13 +58,7 @@ const Conditions = ({seo}) => {
         შემდეგი ტიპის მონაცემებს:
       </p>
       <p className="mb-6">თქვენს მიერ მოწოდებული მონაცემები</p> */}
-      <div className="py-10 text-center bold text-custom-blue text-xl">
-        {/* მაჩვენე მეტი */}
-        {__("client.conditions_showmore", sharedData)}
 
-        <br />
-        <img className="mx-auto mt-4" src={"/assets/images/icons/fastdown.png"} alt="" />
-      </div>
       <div className="mt-10">
         <Form />
       </div>
