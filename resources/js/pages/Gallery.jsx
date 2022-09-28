@@ -9,6 +9,54 @@ import {
   } from "react-parallax-mouse";
 
 
+  let links = function (links) {
+    let rows = [];
+    {
+        links.map(function (item, index) {
+            if (index > 0 && index < links.length - 1) {
+                rows.push(
+                    <Link
+                        href={item.url}
+                        className={item.active ? "num active" : "num"}
+                    >
+                        {item.label}
+                    </Link>
+                );
+            }
+        });
+    }
+    return <div className="nums"> {rows.length > 1 ? rows : null} </div>;
+};
+
+let linksPrev = function (links) {
+    let rowCount = 0;
+    links.map(function (item, index) {
+        if (index > 0 && index < links.length - 1) {
+            rowCount++;
+        }
+    });
+    return rowCount > 1 ? (
+        <Link href={links[0].url}>
+            {/* <Arrow color="#2F3E51" rotate="90" /> */}
+            {/* <Arrow color="#2F3E51" rotate="90" /> */}
+        </Link>
+    ) : null;
+};
+let linksNext = function (links) {
+    let rowCount = 0;
+    links.map(function (item, index) {
+        if (index > 0 && index < links.length - 1) {
+            rowCount++;
+        }
+    });
+    return rowCount > 1 ? (
+        <Link href={links[links.length - 1].url}>
+            {/* <Arrow color="#2F3E51" rotate="-90" /> */}
+            {/* <Arrow color="#2F3E51" rotate="-90" /> */}
+        </Link>
+    ) : null;
+};
+
 const Login = ({seo,gallery}) => {
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
@@ -38,13 +86,13 @@ const sharedData = usePage().props.localizations;
          <section className="wrapper py-5">
       </section>
 <div className="container mx-auto">
-<div className="h-screen">
+<div className="">
    <section className="wrapper py-10">
         <MouseParallaxContainer
           useWindowMouseEvents
           className="flex flex-wrap justify-between lg:-mx-5 -mx-2"
         >
-          {gallery.map((item, index) => {
+          {gallery.data.map((item, index) => {
             return (
               <MouseParallaxChild
                 className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
@@ -78,6 +126,11 @@ const sharedData = usePage().props.localizations;
         </MouseParallaxContainer>
       </section>
    </div>
+   <div className="wrapper flex items-center justify-center pt-20">
+                            {linksPrev(gallery.links)}
+                            <button className="">{links(gallery.links)}</button>
+                            {linksNext(gallery.links)}
+                        </div>
 </div>
 
     </Layout>

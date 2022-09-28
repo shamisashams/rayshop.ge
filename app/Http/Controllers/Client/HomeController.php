@@ -169,7 +169,7 @@ class HomeController extends Controller
             "sliders" => $sliders->get(),
             "category" => Category::with("translations")->get(),
             "sizes" => Size::all(),
-            "gallery" => Gallery::with("file")->get()->take(8),
+            "gallery" => Gallery::with("file")->paginate(8),
             "page" => $page, "seo" => [
                 "title" => $page->meta_title,
                 "description" => $page->meta_description,
