@@ -73,6 +73,13 @@ const sharedData = usePage().props.localizations;
             );
           })}
         </MouseParallaxContainer>
+        <Link
+      href={route("client.gallery.index")}
+      className="learnMoreBtn flex items-center bold text-xl group"
+    >
+
+      <span>სრულად ნახვა</span>
+    </Link>
       </section>
       <section className="bg-custom-slate-100 py-10 ">
         <div className="wrapper flex justify-between items-center flex-col xl:flex-row">

@@ -71,6 +71,10 @@ const Header = () => {
       text: __("client.nav_conditions", sharedData),
     },
     {
+      link: route("client.gallery.index"),
+      text: __("client.nav_gallery", sharedData),
+    },
+    {
       link: route("client.contact.index"),
       text: __("client.nav_contact", sharedData),
     },

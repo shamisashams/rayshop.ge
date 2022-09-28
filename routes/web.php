@@ -115,6 +115,10 @@ Route::prefix('{locale?}')
             Route::post('/contact-us', [ContactController::class, 'mail'])->name('client.contact.mail');
 
 
+            //galery
+            Route::get("gallery", [HomeController::class, "gallery"])->name('client.gallery.index');
+
+
             // About Page
             Route::get('about', [AboutUsController::class, 'index'])->name('client.about.index');
             // conditions
