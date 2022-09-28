@@ -191,7 +191,13 @@ const sharedData = usePage().props.localizations;
                 {
                     setSizePicked(true)
                     setPicked(i)
-                    if(!product.sizes.find((e)=> e.id == size.id)){
+                    let iteration
+                    product.map((e,i)=>{
+                        if(e.id == item.product.id){
+                            iteration = i
+                        }
+                    })
+                    if(!product[iteration].sizes.find((e)=> e.id == size.id)){
                         alert('araa maragshi')
                      }
                 }
@@ -211,7 +217,13 @@ const sharedData = usePage().props.localizations;
                   </div>
                   <div className="flex  flex-nowrap mt-10">
                   <button onClick={()=>{
-                    if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                     let iteration
+                     product.map((e,i)=>{
+                         if(e.id == item.product.id){
+                             iteration = i
+                         }
+                     })
+                    if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
                         alert('araa maragshi')
                         return 0;
                      }else{
@@ -226,12 +238,18 @@ const sharedData = usePage().props.localizations;
     </button>
                     {/* <CommonButton text="დაამატე კალათში" /> */}
                     <button onClick={()=>{
+                         let iteration
+                         product.map((e,i)=>{
+                             if(e.id == item.product.id){
+                                 iteration = i
+                             }
+                         })
                     // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
                     // alert(sizes[picked].id)
-                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
+                     if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
                         alert('araa maragshi')
                         return 0;
-                     }else addToCart(product, sizesArr[picked])
+                     }else addToCart(product[iteration], sizesArr[picked])
                 }
                 }
                     className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm ml-4`}>
