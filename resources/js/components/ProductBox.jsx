@@ -25,6 +25,7 @@ const ProductBox = (props) => {
               {/* <Eye /> */}
               <img src="/assets/svg/eye.svg" alt="eye" />
             </div>
+
           </Link>
         </div>
       </div>
