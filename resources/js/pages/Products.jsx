@@ -108,7 +108,7 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
          sizeArray.push(e.id);
     });
     const { catfilter, pricefilter} = usePage().props
-    const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 100)]);
+    const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 200)]);
 
     const handleChangee = (event, newValue) => {
         setValue(newValue);
@@ -229,6 +229,8 @@ const sharedData = usePage().props.localizations;
           onChange={handleChangee}
           valueLabelDisplay="auto"
           getAriaValueText={valuetext}
+          min={0}
+          max={200}
         />
       </Box>
         </div>

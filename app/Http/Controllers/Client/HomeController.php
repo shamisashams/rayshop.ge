@@ -189,6 +189,7 @@ class HomeController extends Controller
             'og_description' => $page->meta_og_description
         ]);
     }
+<<<<<<< HEAD
     public function jaba(Request $request)
     {
         $page = Page::where('key', 'home')->firstOrFail();
@@ -268,6 +269,30 @@ class HomeController extends Controller
             'meta_description' => $page->meta_description,
             'meta_keyword' => $page->meta_keyword,
             "image" => $page->file,
+=======
+
+    public function show(string $locale, $slug)
+    {
+        $gallery = Gallery::where("id", $slug)->with(['file'])->firstOrFail();
+        // dd($news);
+        // $lastNews = News::where("status", 1)->where('slug', '<>', $slug)->latest()->with(["file", "translations"])->take(3)->get();
+        $page = Page::where('key', 'home')->firstOrFail();
+
+        return Inertia::render('SingleGallery', [
+            'news' => $gallery,
+            'back' => url()->previous(),
+            "seo" => [
+                "og_title" => $page->meta_og_title,
+                "og_description" => $page->meta_og_description,
+                //            "image" => "imgg",
+                //            "locale" => App::getLocale()
+            ]
+        ])->withViewData([
+            'meta_title' => $gallery->meta_title ?? $page->meta_title,
+            'meta_description' => $gallery->meta_description ?? $page->meta_description,
+            'meta_keyword' => $gallery->meta_keyword ?? $page->meta_keyword,
+            "image" => $gallery->file,
+>>>>>>> 48cf26336757cc47a8cdd0f84bd5eb07f875e879
             'og_title' => $page->meta_og_title,
             'og_description' => $page->meta_og_description
         ]);

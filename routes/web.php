@@ -117,7 +117,11 @@ Route::prefix('{locale?}')
 
             //galery
             Route::get("gallery", [HomeController::class, "gallery"])->name('client.gallery.index');
+<<<<<<< HEAD
             Route::get("jaba", [HomeController::class, "jaba"])->name('client.gallery.index');
+=======
+            Route::get("gallery/{gallery}", [HomeController::class, "show"])->name('client.galleryshow.index');
+>>>>>>> 48cf26336757cc47a8cdd0f84bd5eb07f875e879
 
 
             // About Page
