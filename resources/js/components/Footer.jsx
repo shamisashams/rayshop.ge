@@ -22,9 +22,9 @@ const Footer = () => {
         hideFooter ? "hidden" : "flex"
       }`}
     >
-      <div className="opacity-50 bold text-sm">
+      <div className="opacity-50 bold text-sm flex items-between">
         2022. All rights reserved <br />
-        <p className="bold pt-2">
+        <p className="bold pt-2 mx-2">
           {" "}
           Made by{" "}
           <a target="_blank" href="https://insite.ge/">

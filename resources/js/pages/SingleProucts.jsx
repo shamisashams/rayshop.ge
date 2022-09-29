@@ -176,15 +176,15 @@ product.files.map((e,i)=>{
               <div className="socialMedia flex items-center">
               {/* <SocialMedia /> */}
               <div className="socialMedia flex items-center ">
-      <a target="_blank" href="#">
+      {/* <a target="_blank" href="#">
         <img src={"/assets/images/icons/sm/yt.svg"} alt="" />
-      </a>
+      </a> */}
       <a target="_blank" href={`https://www.facebook.com/sharer.php?u=${pathname}`} className="sm:mx-8 mx-5">
         <img src={"/assets/images/icons/sm/fb.svg"} alt="" />
       </a>
-      <a target="_blank" href={"https://www.instagram.com/create/story"}>
+      {/* <a target="_blank" href={"https://www.instagram.com/create/story"}>
         <img src={"/assets/images/icons/sm/ig.svg"} alt="" />
-      </a>
+      </a> */}
     </div>
               </div>
             </div>
