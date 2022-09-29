@@ -85,7 +85,7 @@ const sharedData = usePage().props.localizations;
       </section>
          <section className="wrapper py-5">
       </section>
-<div className="container mx-auto">
+<div className="mx-auto align-content: center;">
 <div className="">
    <section className="wrapper py-10">
         <MouseParallaxContainer

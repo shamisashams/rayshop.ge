@@ -59,10 +59,10 @@ const Payment = ({seo, city}) => {
     const { errors } = usePage().props
     const [values, setValues] = useState({
         first_name: user.name,
-        city: null,
-        address: "",
+        city: user.city,
+        address: user.address,
         email: user.email,
-        phone: "",
+        phone: user.phone,
         cart: getCart(),
       })
 
@@ -100,9 +100,14 @@ const Payment = ({seo, city}) => {
               {
                 city.map((e,i)=>{
                     // setShipping(e.ship_price)
-                    return(
-                        <option key={i} value={e.id}> {e.title}</option>
-                    )
+                    // return(
+                    //     <option key={i} value={e.id}> {e.title}</option>
+                    // )
+                    let isCity = false;
+                    if(user.city == e.id)isCity== true
+                        return(
+                            <option selected={isCity? 'true':'false'} value={e.id}>{e.title}</option>
+                        )
                 })
               }
               </select>

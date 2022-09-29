@@ -7,9 +7,9 @@ import { Inertia } from '@inertiajs/inertia'
 import React, { useState } from 'react'
 
 const Account = ({seo, city}) => {
-    console.log(city);
   const [displayPassword, setDisplayPassword] = useState(false);
   const {user,flash} = usePage().props;
+  console.log(user , 'esaaa');
   const renderHTML = (rawHTML) =>
   React.createElement("div", {
       dangerouslySetInnerHTML: { __html: rawHTML },
@@ -83,16 +83,9 @@ const sharedData = usePage().props.localizations;
     city.map((e,i)=>{
         let isCity = false;
         if(user.city == e.id)isCity== true
-        if(isCity){
             return(
-                <option selected='true' value={e.id}>{e.title}</option>
+                <option selected={isCity? 'true':'false'} value={e.id}>{e.title}</option>
             )
-        }else
-        return(
-            <>
-            <option value={e.id}>{e.title}</option>
-            </>
-        )
     })
   }
 </select>

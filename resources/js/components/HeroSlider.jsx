@@ -224,11 +224,19 @@ const sharedData = usePage().props.localizations;
                          }
                      })
                     if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
-                        alert('araa maragshi')
-                        return 0;
+                        if(!sizepicked){
+                            alert('choose_size')
+                        }else{
+                            alert('araa maragshi')
+                            return 0;
+                        }
                      }else{
-                         addToCart(product, sizesArr[picked])
-                         Inertia.visit(route("client.checkout.index"))
+                        if(sizepicked){
+                            addToCart(product, sizesArr[picked])
+                            Inertia.visit(route("client.checkout.index"))
+                        }else{
+                            alert('choose_size')
+                        }
                      }
                   }
                 }
@@ -247,8 +255,12 @@ const sharedData = usePage().props.localizations;
                     // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
                     // alert(sizes[picked].id)
                      if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
-                        alert('araa maragshi')
-                        return 0;
+                        if(!sizepicked){
+                            alert('choose_size')
+                        }else{
+                            alert('araa maragshi')
+                            return 0;
+                        }
                      }else addToCart(product[iteration], sizesArr[picked])
                 }
                 }
