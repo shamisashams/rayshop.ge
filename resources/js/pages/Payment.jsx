@@ -110,17 +110,11 @@ const Payment = ({ seo, city }) => {
                                         აირჩიე ქალაქი
                                     </option>
                                     {city.map((e, i) => {
-                                        // setShipping(e.ship_price)
-                                        // return(
-                                        //     <option key={i} value={e.id}> {e.title}</option>
-                                        // )
-                                        let isCity = false;
-                                        if (user.city == e.id) isCity == true;
                                         return (
                                             <option
+                                            key={i}
                                                 selected={
-                                                    isCity ? "true" : "false"
-                                                }
+                                                    user.city == e.id}
                                                 value={e.id}
                                             >
                                                 {e.title}

@@ -25,6 +25,7 @@ use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\AboutUsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->name('upload');
 
 Route::any('bog/callback/status', [\App\BogPay\BogCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
@@ -117,11 +118,7 @@ Route::prefix('{locale?}')
 
             //galery
             Route::get("gallery", [HomeController::class, "gallery"])->name('client.gallery.index');
-<<<<<<< HEAD
-            Route::get("jaba", [HomeController::class, "jaba"])->name('client.gallery.index');
-=======
             Route::get("gallery/{gallery}", [HomeController::class, "show"])->name('client.galleryshow.index');
->>>>>>> 48cf26336757cc47a8cdd0f84bd5eb07f875e879
 
 
             // About Page

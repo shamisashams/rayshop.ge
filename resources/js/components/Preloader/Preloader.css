@@ -32,6 +32,7 @@
 .preloader.hide {
     opacity: 0;
     visibility: hidden;
+    display: none;
 }
 .preloader .container {
     width: 300px;

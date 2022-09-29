@@ -97,7 +97,7 @@ value={data.email} onChange={e => setData('email', e.target.value)}
       </p>
 
       <img
-        className="absolute bottom-0 left   -0 2xl:w-auto w-1/3 md:block hidden"
+        className="absolute bottom-0 left   -0 2xl:w-auto w-1/3 md:block hidden -z-10"
         src={"/assets/images/abs/2.png"}
         alt=""
       />

@@ -13,6 +13,7 @@ import Aos from "aos";
 import { usePage } from "@inertiajs/inertia-react";
 import LinearWithValueLabel from "../components/Preloader/Preloader";
 import { useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function Layout({ children, seo = null }) {
     const [loading, setLoading] = useState(true);
@@ -20,8 +21,17 @@ export default function Layout({ children, seo = null }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, []);
+        }, [1000]);
     }, []);
+
+    // Inertia.on('finish', (event) => {
+    //          setLoading(false);
+    //   })
+
+    // window.addEventListener("load", ()=>{
+    //              setLoading(false);
+    //  })
+
 
     if (seo) {
         setSeoData(seo);

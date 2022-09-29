@@ -79,10 +79,12 @@ const sharedData = usePage().props.localizations;
   <option selected="true" disabled="true">{__("client.cabinet_choose_city", sharedData)}</option>
   {
     city.map((e,i)=>{
-        let isCity = false;
-        if(user.city == e.id)isCity== true
+        // let isCity = false;
+        // if(user.city == e.id)isCity== true
             return(
-                <option selected={isCity? 'true':'false'} value={e.id}>{e.title}</option>
+                <option
+                key={i}
+                selected={user.city == e.id} value={e.id}>{e.title}</option>
             )
     })
   }
