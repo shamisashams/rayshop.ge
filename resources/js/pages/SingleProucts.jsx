@@ -136,8 +136,12 @@ product.files.map((e,i)=>{
               <div className="flex flex-nowrap mt-10 mb-16">
                   <button onClick={()=>{
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
-                        alert('araa maragshi')
-                        return 0;
+                        if(!sizepicked){
+                            alert('choose_size')
+                        }else{
+                            alert('araa maragshi')
+                            return 0;
+                        }
                      }else{
                          addToCart(product, sizesArr[picked])
                          Inertia.visit(route("client.checkout.index"))
@@ -153,8 +157,12 @@ product.files.map((e,i)=>{
                     // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
                     // alert(sizes[picked].id)
                      if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
-                        alert('araa maragshi')
-                        return 0;
+                        if(!sizepicked){
+                            alert('choose_size')
+                        }else{
+                            alert('araa maragshi')
+                            return 0;
+                        }
                      }else addToCart(product, sizesArr[picked])
                 }
                 }
