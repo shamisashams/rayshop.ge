@@ -117,6 +117,7 @@ Route::prefix('{locale?}')
 
             //galery
             Route::get("gallery", [HomeController::class, "gallery"])->name('client.gallery.index');
+            Route::get("gallery/{gallery}", [HomeController::class, "show"])->name('client.galleryshow.index');
 
 
             // About Page

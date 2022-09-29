@@ -101,7 +101,7 @@ const sharedData = usePage().props.localizations;
                 factorY={Math.random() * (0.1 - 0.01) + 0.01}
               >
                 <Link
-                  href={item.link}
+                  href={route("client.galleryshow.index", item.id)}
                   className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
                 >
                   <div className="w-full h-full relative after:left-0 after:top-0 after:w-full after:h-full hover:after:bg-white/[0.5] after:transition-all">
