@@ -4,38 +4,42 @@ import { SocialMedia } from "./Shared";
 import { useLocation } from "react-router-dom";
 import { Link, usePage } from "@inertiajs/inertia-react";
 const Footer = () => {
-  const { pathname } = usePage().props;
+    const { pathname } = usePage().props;
 
-  let hideFooter = false;
+    let hideFooter = false;
 
-  if (
-    pathname === "/signup" ||
-    pathname === "/login" ||
-    pathname === "/contact"
-  ) {
-    hideFooter = true;
-  }
+    if (
+        pathname === "/signup" ||
+        pathname === "/login" ||
+        pathname === "/contact"
+    ) {
+        hideFooter = true;
+    }
 
-  return (
-    <footer
-      className={`wrapper flex justify-between items-end py-5 ${
-        hideFooter ? "hidden" : "flex"
-      }`}
-    >
-      <div className="opacity-50 bold text-sm">
-        2022. All rights reserved <br />
-        <p className="bold pt-2">
-          {" "}
-          Made by{" "}
-          <a target="_blank" href="https://insite.ge/">
-            {/* <Insite className="inline-block align-middle  ml-1 mb-1" /> */}
-            <img src="/assets/images/logo/insite/1.svg" alt="insite" />
-          </a>
-        </p>
-      </div>
-      <SocialMedia />
-    </footer>
-  );
+    return (
+        <footer
+            className={`wrapper flex justify-between items-end py-5 ${
+                hideFooter ? "hidden" : "flex"
+            }`}
+        >
+            <div className="opacity-50 bold text-sm">
+                2022. All rights reserved <br />
+                <p className="bold pt-2">
+                    {" "}
+                    Made by{" "}
+                    <a target="_blank" href="https://insite.ge/">
+                        {/* <Insite className="inline-block align-middle  ml-1 mb-1" /> */}
+                        <img
+                            className="inline-block align-middle  ml-1 mb-1"
+                            src="/assets/images/logo/insite/1.svg"
+                            alt="insite"
+                        />
+                    </a>
+                </p>
+            </div>
+            <SocialMedia />
+        </footer>
+    );
 };
 
 export default Footer;

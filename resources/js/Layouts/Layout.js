@@ -11,8 +11,18 @@ import setSeoData from "./SetSeoData";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Aos from "aos";
 import { usePage } from "@inertiajs/inertia-react";
+import LinearWithValueLabel from "../components/Preloader/Preloader";
+import { useState } from "react";
 
 export default function Layout({ children, seo = null }) {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, [6000]);
+    }, []);
+
     if (seo) {
         setSeoData(seo);
     }
@@ -30,7 +40,9 @@ export default function Layout({ children, seo = null }) {
 
     return (
         <>
-        <CursorFollower/>
+            <LinearWithValueLabel loading={loading} />
+
+            <CursorFollower />
             {/*<Router>*/}
             {/*<Fragment>*/}
             <Header />

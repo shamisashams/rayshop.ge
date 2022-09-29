@@ -1,0 +1,73 @@
+@font-face {
+    font-family: "GAdzen";
+    src: url("/assets/fonts/GAdzen-Regular.ttf");
+}
+
+.preloader {
+    font-family: "GAdzen";
+    position: fixed;
+    background: url(/assets/images/abs/bg.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    cursor: none;
+    transition: 0.6s;
+    opacity: 1;
+    visibility: visible;
+    text-align: center;
+    overflow: hidden;
+}
+.preloader * {
+    font-family: "GAdzen" !important;
+    color: #fff !important;
+    font-size: 35px !important;
+}
+.preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+.preloader .container {
+    width: 300px;
+}
+.preloader .progress {
+    text-align: center;
+}
+.preloader .imgSlide {
+    width: 264px;
+    height: 264px;
+    border-radius: 50%;
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    margin-bottom: 30px;
+}
+.preloader .imgSlide .imgSlideRail {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    transition: 15s;
+    height: 100%;
+}
+.css-r40f8v-MuiTypography-root {
+    font-family: "GAdzen" !important;
+    color: #fff !important;
+    font-size: 35px !important;
+}
+.css-eglki6-MuiLinearProgress-root {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    height: 1px !important;
+    margin-top: 40px;
+}
+.css-5xe99f-MuiLinearProgress-bar1 {
+    background-color: #fff !important;
+}
