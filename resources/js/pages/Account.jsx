@@ -22,6 +22,7 @@ const sharedData = usePage().props.localizations;
     email: user.email,
     phone: user.phone,
     address: user.address,
+    city: user.city,
     password: "",
   })
 
@@ -70,16 +71,26 @@ const sharedData = usePage().props.localizations;
               value={values.phone} onChange={handleChange}
             />
              <select
-             onChange={(e)=>{
-                alert(e.target.value)
-              }}
-             id="countries" className="mb-5 bg-white border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             onChange={
+                (e)=>{
+                    values.city = e.target.value
+                    console.log(values, 'esaa')
+                }
+             }
+             id="city" className="bg-white mb-5">
   <option selected="true" disabled="true">{__("client.cabinet_choose_city", sharedData)}</option>
   {
     city.map((e,i)=>{
+        let isCity = false;
+        if(user.city == e.id)isCity== true
+        if(isCity){
+            return(
+                <option selected='true' value={e.id}>{e.title}</option>
+            )
+        }else
         return(
             <>
-            <option value={e.title}>{e.title}</option>
+            <option value={e.id}>{e.title}</option>
             </>
         )
     })
