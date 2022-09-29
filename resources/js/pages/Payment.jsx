@@ -51,8 +51,15 @@ function findArrayElementByTitle(array, title) {
   }
 
 const Payment = ({seo, city}) => {
+
+    const renderHTML = (rawHTML) =>
+  React.createElement("div", {
+      dangerouslySetInnerHTML: { __html: rawHTML },
+  });
+const sharedData = usePage().props.localizations;
+
     const{ user } = usePage().props;
-    const [cityid, setCityId] = useState('');
+    const [cityid, setCityId] = useState(user.city?user.city: "");
     const [remove, setRemove] = useState(false);
     const [clear, setClear] = useState(false);
     const [shipping, setShipping] = useState(0);

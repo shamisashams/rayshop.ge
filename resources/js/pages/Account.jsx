@@ -9,7 +9,6 @@ import React, { useState } from 'react'
 const Account = ({seo, city}) => {
   const [displayPassword, setDisplayPassword] = useState(false);
   const {user,flash} = usePage().props;
-  console.log(user , 'esaaa');
   const renderHTML = (rawHTML) =>
   React.createElement("div", {
       dangerouslySetInnerHTML: { __html: rawHTML },
@@ -74,7 +73,6 @@ const sharedData = usePage().props.localizations;
              onChange={
                 (e)=>{
                     values.city = e.target.value
-                    console.log(values, 'esaa')
                 }
              }
              id="city" className="bg-white mb-5">
