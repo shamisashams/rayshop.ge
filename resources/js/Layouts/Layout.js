@@ -20,7 +20,7 @@ export default function Layout({ children, seo = null }) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, [6000]);
+        }, []);
     }, []);
 
     if (seo) {

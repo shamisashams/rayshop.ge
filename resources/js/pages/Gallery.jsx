@@ -1,15 +1,15 @@
-import React, {useState} from "react";
-import { Inertia } from '@inertiajs/inertia'
+import React, { useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
 import { CommonButton } from "../components/Shared";
 import Layout from "../Layouts/Layout";
-import { Link, usePage,useForm } from "@inertiajs/inertia-react";
+import { Link, usePage, useForm } from "@inertiajs/inertia-react";
 import {
     MouseParallaxContainer,
     MouseParallaxChild,
-  } from "react-parallax-mouse";
+} from "react-parallax-mouse";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
-
-  let links = function (links) {
+let links = function (links) {
     let rows = [];
     {
         links.map(function (item, index) {
@@ -57,84 +57,119 @@ let linksNext = function (links) {
     ) : null;
 };
 
-const Login = ({seo,gallery}) => {
+const Login = ({ seo, gallery }) => {
     const renderHTML = (rawHTML) =>
-    React.createElement("div", {
-        dangerouslySetInnerHTML: { __html: rawHTML },
-    });
-const sharedData = usePage().props.localizations;
+        React.createElement("div", {
+            dangerouslySetInnerHTML: { __html: rawHTML },
+        });
+    const sharedData = usePage().props.localizations;
     const { data, setData, post, processing, errors } = useForm({
-
-        email: '',
+        email: "",
         password: null,
         remember: false,
-    })
+    });
 
     function submit(e) {
         // alert('asdas')
-        e.preventDefault()
-        post(route("client.login"))
+        e.preventDefault();
+        post(route("client.login"));
     }
 
+    const [imgIndex, setImgIndex] = useState(0);
+    const [showPopup, setShowPopup] = useState(false);
 
-  return (
-    <Layout seo={seo}>
-         <section className="wrapper py-5">
-      </section>
-         <section className="wrapper py-5">
-      </section>
-         <section className="wrapper py-5">
-      </section>
-<div className="mx-auto align-content: center;">
-<div className="">
-   <section className="wrapper py-10">
-        <MouseParallaxContainer
-          useWindowMouseEvents
-          className="flex flex-wrap justify-between lg:-mx-5 -mx-2"
-        >
-          {gallery.data.map((item, index) => {
-            return (
-              <MouseParallaxChild
-                className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
-                key={index}
-                factorX={Math.random() * (0.1 - 0.01) + 0.01}
-                factorY={Math.random() * (0.1 - 0.01) + 0.01}
-              >
-                <Link
-                  href={item.link}
-                  className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
-                >
-                  <div className="w-full h-full relative after:left-0 after:top-0 after:w-full after:h-full hover:after:bg-white/[0.5] after:transition-all">
-                    <img
-                      className="w-full h-full object-cover"
-                    //   src={item.img}
-                    src={
-                        item.file != null
-                        ? "/" +
-                          item.file.path +
-                          "/" +
-                          item.file.title
-                        : null
-                    }
-                      alt=""
-                    />
-                  </div>
-                </Link>
-              </MouseParallaxChild>
-            );
-          })}
-        </MouseParallaxContainer>
-      </section>
-   </div>
-   <div className="wrapper flex items-center justify-center pt-20">
-                            {linksPrev(gallery.links)}
-                            <button className="">{links(gallery.links)}</button>
-                            {linksNext(gallery.links)}
-                        </div>
-</div>
+    const handleImgClick = (index) => {
+        setShowPopup(true);
+        setImgIndex(index);
+    };
 
-    </Layout>
-  );
+    return (
+        <Layout seo={seo}>
+            <div className="mx-auto ">
+                <div className="">
+                    <section className="wrapper py-10">
+                        <MouseParallaxContainer
+                            useWindowMouseEvents
+                            className="flex flex-wrap justify-between lg:-mx-5 -mx-2"
+                        >
+                            {gallery.data.map((item, index) => {
+                                return (
+                                    <MouseParallaxChild
+                                        className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
+                                        key={index}
+                                        factorX={
+                                            Math.random() * (0.1 - 0.01) + 0.01
+                                        }
+                                        factorY={
+                                            Math.random() * (0.1 - 0.01) + 0.01
+                                        }
+                                    >
+                                        <div
+                                            className=" flex-grow lg:h-96 h-72 lg:m-5 m-2"
+                                            onClick={() =>
+                                                handleImgClick(index)
+                                            }
+                                        >
+                                            <div className="w-full h-full relative after:left-0 after:top-0 after:w-full after:h-full hover:after:bg-white/[0.5] after:transition-all">
+                                                <img
+                                                    className="w-full h-full object-cover"
+                                                    src={
+                                                        item.file != null
+                                                            ? "/" +
+                                                              item.file.path +
+                                                              "/" +
+                                                              item.file.title
+                                                            : null
+                                                    }
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+                                    </MouseParallaxChild>
+                                );
+                            })}
+                        </MouseParallaxContainer>
+                    </section>
+                </div>
+                <div className="wrapper flex items-center justify-center pt-20">
+                    {linksPrev(gallery.links)}
+                    <button className="">{links(gallery.links)}</button>
+                    {linksNext(gallery.links)}
+                </div>
+            </div>
+            <div
+                className={`z-50 fixed w-screen h-screen left-0 top-0 bg-black/[0.9] flex items-center justify-center transition-all duration-500  p-10 ${
+                    showPopup ? "" : "opacity-0 invisible"
+                }`}
+            >
+                <div className="w-fit h-fit relative">
+                    <button
+                        onClick={() => setShowPopup(false)}
+                        className="absolute -top-7 -right-7 text-white"
+                    >
+                        <AiOutlineCloseCircle className="w-8 h-8" />
+                    </button>
+                    <div
+                        className="overflow-hidden w-fit h-fit"
+                        style={{ maxHeight: "80vh" }}
+                    >
+                        <img
+                            className="w-full h-full object-contain"
+                            src={
+                                gallery.data[imgIndex].file != null
+                                    ? "/" +
+                                      gallery.data[imgIndex].file.path +
+                                      "/" +
+                                      gallery.data[imgIndex].file.title
+                                    : null
+                            }
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </div>
+        </Layout>
+    );
 };
 
 export default Login;

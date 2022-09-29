@@ -124,7 +124,7 @@ const Header = () => {
                         return (
                             <li key={index} className="bold inline text-sm">
                                 <Link
-                                    className={`navLink relative 2xl:px-5 px-3 py-2 ${
+                                    className={`navLink relative 2xl:px-4 px-3 py-2 ${
                                         pathname === item.link ? "active" : ""
                                     }`}
                                     href={item.link}
@@ -185,7 +185,7 @@ const Header = () => {
                         </button>
 
                         <div
-                            className={`absolute right-0 sm:top-full top-12  transition-all duration-300 overflow-hidden sm:bg-transparent bg-custom-slate-200 sm:p-0 sm:pt-3 p-5 rounded ${
+                            className={`absolute right-0 sm:top-full top-12  transition-all duration-300  sm:bg-transparent bg-custom-slate-200 sm:p-0 sm:pt-3 p-5 rounded ${
                                 accountDrop
                                     ? "visible opacity-100"
                                     : "invisible opacity-0"
@@ -197,7 +197,8 @@ const Header = () => {
 
                             {user ? (
                                 <>
-                                    <div
+                                    <Link
+                                        href="/"
                                         className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end transition-all duration-300 ${
                                             accountDrop
                                                 ? "translate-x-0"
@@ -211,7 +212,7 @@ const Header = () => {
                                             className="mr-2"
                                         />
                                         <p>{`${user.name}`}</p>
-                                    </div>
+                                    </Link>
                                     <Link
                                         href="/"
                                         className={`flex items-center !cursor-pointer mb-3 whitespace-nowrap justify-end  transition-all duration-300 ${

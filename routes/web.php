@@ -24,7 +24,7 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\AboutUsController;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
 Route::post('ckeditor/image_upload', [CKEditorController::class, 'upload'])->name('upload');
 
 Route::any('bog/callback/status', [\App\BogPay\BogCallbackController::class, 'status'])->withoutMiddleware('web')->name('bogCallbackStatus');
@@ -117,6 +117,7 @@ Route::prefix('{locale?}')
 
             //galery
             Route::get("gallery", [HomeController::class, "gallery"])->name('client.gallery.index');
+            Route::get("jaba", [HomeController::class, "jaba"])->name('client.gallery.index');
 
 
             // About Page
@@ -147,6 +148,7 @@ Route::prefix('{locale?}')
 
             Route::get('cabinet', [\App\Http\Controllers\Client\AuthController::class, 'cabinet'])->name('client.cabinet');
             Route::post('updateuser', [\App\Http\Controllers\Client\AuthController::class, 'updateuser'])->name('client.updateuser');
+
 
             Route::middleware(['guest'])->group(function () {
                 Route::get('login', [\App\Http\Controllers\Client\AuthController::class, 'loginView'])->name('client.login.index')->middleware('guest');
