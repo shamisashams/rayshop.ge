@@ -120,7 +120,7 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
     const [picked, setPicked] = useState(sizefilter != null ? sizeArray.indexOf(sizefilter*1):0);
     const [sizepicked, setSizePicked] = useState(sizefilter ? true : false);
     const [values, setValues] = useState({
-        cat:  '',
+        cat:  catfilter ?? [],
         price: pricefilter,
         size: sizefilter,
       })
