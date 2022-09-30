@@ -56,6 +56,12 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
     <link href="{{asset('assets/plugins/SmartPhoto-master/smartphoto.css')}}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('admin/croppie/croppie.css')}}" />
+    <style>
+        #jaba img{
+            height: 200px;
+            width: auto;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -65,13 +71,13 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{$product->created_at ? __('admin.product-update') : __('admin.product-create')}}</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$product->files}}">
     <!-- row -->
     {!! Form::model($product,['url' => $url, 'method' => $method,'files' => true]) !!}
-    <input id="inp_crop_img" type="hidden" name="base64_img">
+
     <div class="row">
         <div class="col-lg-6 col-md-12">
             <div class="card">
@@ -146,7 +152,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                                                 @enderror
                                             </div>--}}
 
-                                            <div class="form-group">
+                                            {{--<div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.description')</label>
                                                 <textarea class="form-control" id="description-{{$locale}}"
                                                           name="{{$locale}}[description]'">
@@ -159,7 +165,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div>
+                                            </div>--}}
 
 
 
@@ -465,8 +471,8 @@ $sizesArr = [];
                     <div class="image-uploader">
                         <div class="uploaded">
 
-                                <div style="uploaded-image" class='jaba'>
-                                    <img id='jaba'   alt="">
+                                <div id="jaba">
+
                                 </div>
                             @foreach($product->files as $item)
 
@@ -585,7 +591,7 @@ $sizesArr = [];
             let formData = new FormData();
             formData.append('base64_img', imageResult);
             formData.append('_token', '{{csrf_token()}}');
-            document.getElementById('inp_crop_img').value = imageResult;
+            //document.getElementById('inp_crop_img').value = imageResult;
             // Sends a POST request to upload_cropped.php
             @if($product->created_at)
             fetch('{{route('product.crop-upload',$product)}}', {
@@ -595,13 +601,16 @@ $sizesArr = [];
                 location.reload()
             });
             @else
-            $("#jaba").attr("src",imageResult);
+            $("#jaba").append('<span class="img_cropped"><img src="'+ imageResult +'"/><input type="hidden" name="base64_img[]" value="' + imageResult + '"><a href="javascript:;" class="remove_img">remove</a></span>');
             // document.querySelector(".jaba").innerHTML += `<img src='${imageResult}' alt='' />`
             @endif
         });
     });
     let interval;
 
+    $(document).on('click','.remove_img',function (e){
+       $(this).parents('.img_cropped').remove();
+    });
 </script>
 
 

@@ -126,6 +126,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        //dd($request->all());
         $sizes = [];
         foreach ($request->post() as $key => $value) {
             if (str_contains($key, 'size')) {
@@ -182,8 +183,8 @@ class ProductController extends Controller
             $product = $this->productRepository->saveFiles($product->id, $request);
         }
 
-        if ($request->has('base64_img')) {
-            $product = $this->productRepository->uploadCropped($request, $product->id);
+        if ($request->post('base64_img')) {
+            $product = $this->productRepository->uploadCroppedMultiple($request, $product->id);
         }
 
         return redirect(locale_route('product.index', $product->id))->with('success', __('admin.create_successfully'));

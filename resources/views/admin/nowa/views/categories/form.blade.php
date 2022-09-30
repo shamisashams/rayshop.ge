@@ -61,7 +61,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{$category->created_at ? __('admin.category-update') : __('admin.category-create')}}</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$category->files}}">
@@ -74,7 +74,8 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                     <div>
                         <h6 class="card-title mb-1">@lang('admin.productcatergories')</h6>
                     </div>
-                    <div class="mb-4">
+                    <input type="radio" name="parent_id" data-checkboxes="mygroup" class="custom-control-input" <?=$_checked;?> value="0">
+                    {{--<div class="mb-4">
                         <p class="mg-b-10">@lang('admin.catparent')</p>
 
                         <ul>
@@ -93,7 +94,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
                             </li>
                         </ul>
 
-                    </div>
+                    </div>--}}
                     <div class="mb-4">
                         <p class="mg-b-10">@lang('admin.title')</p>
                         <div class="panel panel-primary tabs-style-2">

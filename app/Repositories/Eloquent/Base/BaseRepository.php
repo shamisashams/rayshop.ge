@@ -66,6 +66,41 @@ class BaseRepository implements EloquentRepositoryInterface
         return $this->model;
     }
 
+    public function uploadCroppedMultiple($request, $id)
+    {
+        //dd($product);
+        $this->model = $this->findOrFail($id);
+
+        $reflection = new ReflectionClass(get_class($this->model));
+        $modelName = $reflection->getShortName();
+
+        if ($request->post('base64_img')) {
+            foreach ($request->post('base64_img') as $key => $item){
+                $data = explode(',', $item);
+                // Decode the base64 data
+                $data = base64_decode($data[1]);
+                // Get Name Of model
+
+
+
+
+                $imagename = date('Ymdhis'). $key . 'crop.png';
+                $destination = base_path() . '/storage/app/public/' . $modelName . '/' . $this->model->id;
+
+                Storage::put('public/' . $modelName . '/' . $this->model->id . '/' . $imagename, $data);
+                $this->model->files()->create([
+                    'title' => $imagename,
+                    'path' => 'storage/' . $modelName . '/' . $this->model->id,
+                    'format' => 'png',
+                    'type' => File::FILE_DEFAULT,
+                    'youtube' =>  null
+                ]);
+            }
+
+        }
+        return $this->model;
+    }
+
 
 
     public function getData($request, array $with = [])

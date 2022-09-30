@@ -29,7 +29,7 @@
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.page-update')}}</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$page->files}}">
@@ -88,7 +88,7 @@
                                                 </small>
                                                 @enderror
                                             </div>
-                                            <div class="form-group">
+                                            {{--<div class="form-group">
                                                 {!! Form::label($locale.'[title_2]',__('admin.title_2'),['class' => 'form-label']) !!}
                                                 {!! Form::text($locale.'[title_2]',$page->translate($locale)->title_2 ?? '',['class' => 'form-control']) !!}
 
@@ -99,8 +99,8 @@
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div>
-                                            <div class="form-group">
+                                            </div>--}}
+                                            {{--<div class="form-group">
                                                 <label class="form-label" for="description">@lang('admin.description')</label>
                                                 <textarea class="form-control" id="description-{{$locale}}"
                                                           name="{{$locale}}[description]'">
@@ -113,8 +113,8 @@
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div>
-                                            <div class="form-group">
+                                            </div>--}}
+                                            {{--<div class="form-group">
                                                 <label class="form-label" for="description_2">@lang('admin.description_2')</label>
                                                 <textarea class="form-control" id="description_2-{{$locale}}"
                                                           name="{{$locale}}[description_2]'">
@@ -127,7 +127,7 @@
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div>
+                                            </div>--}}
 
                                             <div class="main-content-label mg-b-5 text-danger">
                                                 @lang('admin.page_seo')

@@ -20,12 +20,6 @@ class SettingSeeder extends Seeder
                 'key' => 'phone'
             ],
             [
-                'key' => 'city'
-            ],
-            [
-                'key' => 'country'
-            ],
-            [
                 'key' => 'email'
             ],
             [
