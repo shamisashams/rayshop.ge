@@ -65,7 +65,7 @@ export default function LinearWithValueLabel({ loading }) {
             setProgress((prevProgress) =>
                 prevProgress >= 100 ? 0 : prevProgress + 1
             );
-        }, 50);
+        }, 10);
         return () => {
             clearInterval(timer);
         };

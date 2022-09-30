@@ -15,13 +15,15 @@ import LinearWithValueLabel from "../components/Preloader/Preloader";
 import { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 
+
+
 export default function Layout({ children, seo = null }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, [1000]);
+        }, [1500]);
     }, []);
 
     // Inertia.on('finish', (event) => {
@@ -48,8 +50,10 @@ export default function Layout({ children, seo = null }) {
     //     import("./AppRus.css");
     // }
 
+
     return (
         <>
+
             <LinearWithValueLabel loading={loading} />
 
             <CursorFollower />
