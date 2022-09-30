@@ -110,6 +110,7 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
     const { catfilter, pricefilter} = usePage().props
     const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 200)]);
 
+    console.log(catfilter);
     const handleChangee = (event, newValue) => {
         setValue(newValue);
         values.price = newValue
@@ -119,11 +120,11 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
     const [picked, setPicked] = useState(sizefilter != null ? sizeArray.indexOf(sizefilter*1):0);
     const [sizepicked, setSizePicked] = useState(sizefilter ? true : false);
     const [values, setValues] = useState({
-        cat: "",
-        price: "",
-        size: "",
+        cat:  '',
+        price: pricefilter,
+        size: sizefilter,
       })
-      let categoryArray = [];
+      let categoryArray = catfilter ?? [];
 
 
       function handleChange(e) {
@@ -177,6 +178,7 @@ const sharedData = usePage().props.localizations;
                 defaultChecked={ catfilter?catfilter.indexOf(check.id.toString()) > -1 : ""}
                 onChange={(e)=>{
                     let form = document.querySelector(".categories")
+
                     // if((e.target.id).split('checkbox-')[1])
                     // if(!e.target.checked){
                     //     let id = (e.target.id).split('checkbox-')[1]
@@ -194,8 +196,9 @@ const sharedData = usePage().props.localizations;
                 values.cat = []
 
 
-                    categoryArray.indexOf(check.title) === -1 && e.target.checked ? categoryArray.push(check.id): null;
+                    categoryArray.indexOf(check.id) === -1 && e.target.checked ? categoryArray.push(check.id): categoryArray.splice(categoryArray.indexOf(check.id),1);
                     values.cat = categoryArray;
+                    console.log(categoryArray);
                 }
                 }
                 />
@@ -230,7 +233,7 @@ const sharedData = usePage().props.localizations;
           valueLabelDisplay="auto"
           getAriaValueText={valuetext}
           min={0}
-          max={200}
+          max={maxPricefilter}
         />
       </Box>
         </div>

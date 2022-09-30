@@ -68,6 +68,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     public function getAll($categoryId = null, $popular = null, $special = null, $new = null)
     {
         $params = request()->input();
+        //dd($params);
         $query =  $this->model->select('products.*')
             ->leftJoin('product_categories', 'product_categories.product_id', '=', 'products.id')
             ->leftJoin('product_sizes', 'product_sizes.product_id', '=', 'products.id');
