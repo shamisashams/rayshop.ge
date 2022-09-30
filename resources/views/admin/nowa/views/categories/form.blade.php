@@ -61,9 +61,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{$category->created_at ? __('admin.category-update') : __('admin.category-create')}}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$category->files}}">
@@ -176,22 +174,6 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$category) {
     </div>
 
     <!-- /row -->
-    <!-- row -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="input-images"></div>
-                    @if ($errors->has('images'))
-                        <span class="help-block">
-                                            {{ $errors->first('images') }}
-                                        </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- row closed -->
 
     <!-- /row -->
 

@@ -9,10 +9,10 @@ const Footer = () => {
     let hideFooter = false;
 
     if (
-        pathname === "/signup" ||
-        pathname === "/login" ||
-        pathname === "/contact"
-    ) {
+        pathname === route("client.login.index") ||
+        pathname === route("client.registration.index") ||
+        pathname === route("client.contact.index")
+    ) { 
         hideFooter = true;
     }
 

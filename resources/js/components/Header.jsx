@@ -230,10 +230,7 @@ const Header = () => {
                                         <Link href={route("client.cabinet")}>
                                             <p>
                                                 {/* პირადი კაბინეტი */}
-                                                {__(
-                                                    "client.nav_cabinet",
-                                                    sharedData
-                                                )}
+                                                {__("client.nav_cabinet", sharedData)}
                                             </p>
                                         </Link>
                                     </Link>
@@ -246,10 +243,7 @@ const Header = () => {
                                         />
                                         <Link href={route("logout")}>
                                             <p>
-                                                {__(
-                                                    "client.nav_logout",
-                                                    sharedData
-                                                )}
+                                                {__("client.nav_logout", sharedData)}
                                             </p>
                                         </Link>
                                     </button>
@@ -279,10 +273,7 @@ const Header = () => {
                                         }`}
                                     >
                                         <p>
-                                            {__(
-                                                "client.nav_signup",
-                                                sharedData
-                                            )}
+                                            {__("client.nav_signup", sharedData)}
                                         </p>
                                     </Link>
                                 </>

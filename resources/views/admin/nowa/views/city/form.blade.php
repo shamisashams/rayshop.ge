@@ -26,11 +26,9 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$model->created_at ? __('admin.slider-update') : __('admin.slider-create')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$model->created_at ? __('admin.city-update') : __('admin.city-create')}}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$model->files}}">
@@ -150,25 +148,6 @@
     </div>
 
     <!-- /row -->
-    <!-- row -->
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.images')</h6>
-                    </div>
-                    <div class="input-images"></div>
-                    @if ($errors->has('images'))
-                        <span class="help-block">
-                                            {{ $errors->first('images') }}
-                                        </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- row closed -->
 
     <!-- /row -->
 

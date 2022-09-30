@@ -26,11 +26,9 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">Language - {{$language->title ? 'Update' : 'Create'}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{$language->title ? __('admin.language-update') : __('admin.language-create')}}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
 
@@ -41,7 +39,6 @@
             <div class="card">
                 <div class="card-body">
                     <div>
-                        <h6 class="card-title mb-1">Language - {{$language->title ? 'Update' : 'Create'}}</h6>
                     </div>
 
                     <div class="form-group">
@@ -75,7 +72,7 @@
                             <label class="ckbox">
                                 <input type="checkbox" name="status" {{$language->default ? 'disabled' : ''}}
                                 value="true" {{$language->status ? 'checked' : ''}}>
-                                <span>Status</span>
+                                <span>{{__('admin.status')}}</span>
                             </label>
 
                     </div>

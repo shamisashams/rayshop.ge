@@ -49,19 +49,13 @@ const ForgotPassword = ({ seo, email, status }) => {
                             type="text"
                             id="email"
                             name="email"
-                            placeholder={__(
-                                "client.forgotpass_email",
-                                sharedData
-                            )}
+                            placeholder={__("client.forgotpass_email", sharedData)}
                             value={values.email}
                             onChange={handleChange}
                         />
 
                         <CommonButton
-                            text={__(
-                                "client.forgotpass_resetpassbtn",
-                                sharedData
-                            )}
+                            text={__("client.forgotpass_resetpassbtn", sharedData)}
                         />
                         {status ? <p>success</p> : ""}
                         {email ? <p>error</p> : ""}

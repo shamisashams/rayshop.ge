@@ -27,11 +27,9 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.page-update')}}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.create-new-size')}}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
     {{-- <input name="old-images[]" id="old_images" hidden disabled value="{{$page->files}}">    --}}
@@ -65,7 +63,7 @@
     @endif
                             {{-- {!! Form::submit(__('admin.create'),['class' => 'btn btn-primary mt-2']) !!} --}}
 
-                            <button type="submit" class="btn btn-primary mt-2">admin.create</button>
+                            <button type="submit" class="btn btn-primary mt-2">{{ __('admin.create-button')}}</button>
                         </form>
                         </div>
                     </div>

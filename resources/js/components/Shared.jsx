@@ -16,7 +16,7 @@ export const LearnMoreBtn = ({ href }) => {
     return (
         <Link
             href={href}
-            className="learnMoreBtn flex items-center justify-start bold text-xl group"
+            className="learnMoreBtn flex items-center justify-start bold text-xl group w-fit"
         >
             <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">
                 <svg

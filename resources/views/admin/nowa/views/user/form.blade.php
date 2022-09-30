@@ -26,11 +26,9 @@
     <!-- breadcrumb -->
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
-            <span class="main-content-title mg-b-0 mg-b-lg-1">T{{ __('admin.user-update') }}</span>
+            <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.user-update') }}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
 
@@ -130,54 +128,6 @@
             </div>
         </div>
 
-    </div>
-
-
-
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6 class="card-title mb-1">@lang('admin.prouctimages')</h6>
-                    </div>
-                    <div class="input-images"></div>
-                    @if ($errors->has('images'))
-                        <span class="help-block">
-                                            {{ $errors->first('images') }}
-                                        </span>
-                    @endif
-
-
-
-                    <div class="image-uploader">
-                        <div class="uploaded">
-
-                            {{-- @foreach($partner->files as $item)
-
-                                <div class="uploaded-image">
-
-                                    <img src="{{asset($item->getFileUrlAttribute())}}" alt="" />
-
-                                    <div style="position: absolute;z-index: 10;background-color: #fff">
-                                        <input type="hidden" name="old_images[]"  value="{{$item->id}}">
-                                        <label class="rdiobox"><input name="main" value="{{$item->id}}" name="rdio" type="radio" {{$item->main ? 'checked':''}}> <span>Main</span></label>
-
-                                        <button type="button" class="btn" data-rm_img="{{$item->id}}">remove</button>
-                                    </div>
-                                </div>
-
-
-
-                            @endforeach --}}
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
     </div>
 
 

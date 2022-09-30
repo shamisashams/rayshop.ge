@@ -65,9 +65,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{$product->created_at ? __('admin.product-update') : __('admin.product-create')}}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$product->files}}">
@@ -478,9 +476,9 @@ $sizesArr = [];
 
                                         <div style="position: absolute;z-index: 10;background-color: #fff">
                                             <input type="hidden" name="old_images[]"  value="{{$item->id}}">
-                                            <label class="rdiobox"><input name="main" value="{{$item->id}}" name="rdio" type="radio" {{$item->main ? 'checked':''}}> <span>Main</span></label>
+                                            <label class="rdiobox"><input name="main" value="{{$item->id}}" name="rdio" type="radio" {{$item->main ? 'checked':''}}> <span>@lang('admin.product_select_main')</span></label>
 
-                                            <button type="button" class="btn" data-rm_img="{{$item->id}}">remove</button>
+                                            <button type="button" class="btn" data-rm_img="{{$item->id}}">@lang('admin.product_remove')</button>
                                         </div>
                                     </div>
 
@@ -500,7 +498,7 @@ $sizesArr = [];
                                     </div>
 
                                     <div>
-                                        <p>Select a image file to crop</p>
+                                        <p>@lang('admin.product_select_image_crop_upload')</p>
                                         <button id="cropBtn" type="button">Crop @if($product->created_at)& Upload @endif</button>
                                         <input type="file" id="inputFile" accept="image/png, image/jpeg">
                                     </div>

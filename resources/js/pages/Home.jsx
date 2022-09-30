@@ -73,13 +73,10 @@ const sharedData = usePage().props.localizations;
             );
           })}
         </MouseParallaxContainer>
-        <Link
-      href={route("client.gallery.index")}
-      className="learnMoreBtn flex items-center bold text-xl group"
-    >
-
-      <span>სრულად ნახვა</span>
-    </Link>
+     
+     <div className="text-center w-fit mx-auto my-10">
+      <LearnMoreBtn href={route("client.gallery.index")} />
+     </div>
       </section>
       <section className="bg-custom-slate-100 py-10 ">
         <div className="wrapper flex justify-between items-center flex-col xl:flex-row">
@@ -123,7 +120,8 @@ key={i}
               იქნება, იყიდე სანამ დროა! */}
               {__("client.home_on_some_tshirts_are_on_sale", sharedData)}
             </p>
-            <LearnMoreBtn href={route("client.product.index")} />
+              <LearnMoreBtn href={route("client.product.index")} />
+       
           </div>
         </div>
       </section>

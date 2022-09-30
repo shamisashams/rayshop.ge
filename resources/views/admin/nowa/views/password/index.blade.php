@@ -28,9 +28,7 @@
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.password-update') }}</span>
         </div>
-        <div class="justify-content-center mt-2">
-            @include('admin.nowa.views.layouts.components.breadcrump')
-        </div>
+         
     </div>
     <!-- /breadcrumb -->
 
@@ -41,7 +39,6 @@
             <div class="col-lg-6 col-xl-6 col-md-12 col-sm-12">
                 <div class="card  box-shadow-0 ">
                     <div class="card-header">
-                        <h4 class="card-title mb-1">{{ __('admin.password-update') }}</h4>
                         {{--<p class="mb-2">It is Very Easy to Customize and it uses in your website apllication.</p>--}}
                     </div>
                     <div class="card-body pt-0">
