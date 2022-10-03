@@ -32,31 +32,31 @@ const imgs = [
     "/assets/images/preloader/4.png",
 ];
 
-function LinearProgressWithLabel(props) {
-    return (
-        <Box className="progress">
-            <Box sx={{ minWidth: 35 }}>
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                >{`${Math.round(props.value)}%`}</Typography>
-            </Box>
-            <Box sx={{ width: "100%", mr: 1 }}>
-                <LinearProgress variant="determinate" {...props} />
-            </Box>
-        </Box>
-    );
-}
-
-LinearProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and buffer variants.
-     * Value between 0 and 100.
-     */
-    value: PropTypes.number.isRequired,
-};
 
 export default function LinearWithValueLabel({ loading }) {
+    function LinearProgressWithLabel(props) {
+        return (
+            <Box className="progress">
+                <Box sx={{ minWidth: 35 }}>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                    >{`${Math.round(props.value)}%`}</Typography>
+                </Box>
+                <Box sx={{ width: "100%", mr: 1 }}>
+                    <LinearProgress variant="determinate" {...props} />
+                </Box>
+            </Box>
+        );
+    }
+
+    LinearProgressWithLabel.propTypes = {
+        /**
+         * The value of the progress indicator for the determinate and buffer variants.
+         * Value between 0 and 100.
+         */
+        value: PropTypes.number.isRequired,
+    };
     const [progress, setProgress] = useState(0);
     const [progressRail, setProgressRail] = useState("0");
 
@@ -65,7 +65,7 @@ export default function LinearWithValueLabel({ loading }) {
             setProgress((prevProgress) =>
                 prevProgress >= 100 ? 0 : prevProgress + 1
             );
-        }, 10);
+        }, 20);
         return () => {
             clearInterval(timer);
         };
