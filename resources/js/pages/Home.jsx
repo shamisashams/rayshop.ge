@@ -73,7 +73,7 @@ const sharedData = usePage().props.localizations;
             );
           })}
         </MouseParallaxContainer>
-     
+
      <div className="text-center w-fit mx-auto my-10">
       <LearnMoreBtn href={route("client.gallery.index")} />
      </div>
@@ -121,7 +121,7 @@ key={i}
               {__("client.home_on_some_tshirts_are_on_sale", sharedData)}
             </p>
               <LearnMoreBtn href={route("client.product.index")} />
-       
+
           </div>
         </div>
       </section>

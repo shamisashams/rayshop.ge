@@ -1,5 +1,4 @@
-// import AbsImage1 from "../assets/images/abs/3.png";
-// import AbsImage2 from "../assets/images/abs/4.png";
+
 import React from "react";
 import Form from "../components/Form";
 import Layout from "../Layouts/Layout";

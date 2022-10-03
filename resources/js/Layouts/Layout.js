@@ -13,31 +13,38 @@ import Aos from "aos";
 import { usePage } from "@inertiajs/inertia-react";
 import LinearWithValueLabel from "../components/Preloader/Preloader";
 import { useState } from "react";
-import { Inertia } from "@inertiajs/inertia";
+// import { InertiaProgress } from '@inertiajs/progress'
+// import { Inertia } from "@inertiajs/inertia";
+import NProgress from 'nprogress'
+import { Inertia } from '@inertiajs/inertia'
+import { Route } from "react-router-dom";
 
 
 
 export default function Layout({ children, seo = null }) {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(window.location == route("client.home.index")?true:false);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, [1500]);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //     }, [1500]);
+    // }, []);
 
-    // Inertia.on('finish', (event) => {
-    //          setLoading(false);
-    //   })
+    // Inertia.on('finish', () => {
+    //     alert('asdsd');
+    //     NProgress.done()
+    // })
 
-    // window.addEventListener("load", ()=>{
-    //              setLoading(false);
-    //  })
+
+    window.addEventListener("load", ()=>{
+                 setLoading(false);
+     })
 
 
     if (seo) {
         setSeoData(seo);
     }
+
     useEffect(() => {
         Aos.init({ duration: 2000 });
     }, []);

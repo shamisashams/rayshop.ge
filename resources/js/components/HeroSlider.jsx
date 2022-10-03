@@ -109,9 +109,9 @@ const sharedData = usePage().props.localizations;
                     {
                         product.map((e,i)=>{
                             if(e.id == item.product.id){
-                                return( <> {e.title}
-                                </>
-                                   
+                                return( <div key={i}> {e.title}
+                                </div>
+
                                 )
                             }
                         })
