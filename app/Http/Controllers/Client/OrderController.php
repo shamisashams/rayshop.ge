@@ -320,7 +320,7 @@ class OrderController extends Controller
         else if ($order->status == 'error') return redirect(route('order.failure'));
         else {
             sleep(3);
-            return redirect('https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order->id);
+            return redirect('https://rayshop.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order->id);
         }
     }
 
