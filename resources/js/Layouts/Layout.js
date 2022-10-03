@@ -25,25 +25,20 @@ export default function Layout({ children, seo = null }) {
     // const [loading, setLoading] = useState(window.location == route("client.home.index")?true:false);
     const [loading, setLoading] = useState(window.location != route("client.product.index")?true:false);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, [1500]);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setLoading(false);
+    //     }, [1500]);
+    // }, []);
 
-    // Inertia.on('finish', () => {
-    //     console.log('chaitvirta');
-    //     // setLoading(false);
-    // })
+    Inertia.on('finish', () => {
+        setLoading(false);
+    })
 
 
-//     window.addEventListener("load", ()=>{
-// let time = true;
-// if(time){
-//     console.log(time);
-// }
-// console.log(time);
-//      })
+    window.addEventListener("load", ()=>{
+      setLoading(false)
+     })
 
 
     if (seo) {
