@@ -1,14 +1,8 @@
 import React from "react";
 
 import { useState } from "react";
-// import { Link } from "react-router-dom";
-import { Link } from "@inertiajs/inertia-react";
-// import { ReactComponent as Eye } from "/assets/svg/eye.svg";
-// import YT from "/assets/images/icons/sm/yt.svg";
-// import FB from "/assets/images/icons/sm/fb.svg";
-// import IG from "/assets/images/icons/sm/ig.svg";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
-// import { ReactComponent as Delete } from "/assets/svg/delete.svg";
+import { Link, usePage } from "@inertiajs/inertia-react";
 
 // LEARN MORE BUTTON
 
@@ -149,15 +143,16 @@ export const SizePick = ({ sizes, product }) => {
 // SOCIAL MEDIA
 
 export const SocialMedia = () => {
+    const { errors, gphone, gemail, gaddress, gfacebook, ginstagram, gyoutube } = usePage().props;
     return (
         <div className="socialMedia flex items-center ">
-            <a target="_blank" href="#">
+            <a target="_blank" href={gyoutube.value ? gyoutube.value : '#'}>
                 <img src={"/assets/images/icons/sm/yt.svg"} alt="" />
             </a>
-            <a target="_blank" href="#" className="sm:mx-8 mx-5">
+            <a target="_blank" href={gfacebook.value ? gfacebook.value : '#'} className="sm:mx-8 mx-5">
                 <img src={"/assets/images/icons/sm/fb.svg"} alt="" />
             </a>
-            <a target="_blank" href="#">
+            <a target="_blank" href={ginstagram.value ? ginstagram.value : '#'}>
                 <img src={"/assets/images/icons/sm/ig.svg"} alt="" />
             </a>
         </div>

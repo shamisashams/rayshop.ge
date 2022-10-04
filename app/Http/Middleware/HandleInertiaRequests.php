@@ -139,6 +139,7 @@ class HandleInertiaRequests extends Middleware
         $gcountry = "";
         $ginstagram = "";
         $gfacebook = "";
+        $gyoutube = "";
 
         $settings = Setting::with(['translations'])->get();
         foreach ($settings as $setting) {
@@ -161,6 +162,9 @@ class HandleInertiaRequests extends Middleware
                 case "city":
                     $gcity = $setting;
                     break;
+                case "youtube":
+                    $gyoutube = $setting;
+                    break;
                 case "country":
                     $gcountry = $setting;
                     break;
@@ -174,7 +178,8 @@ class HandleInertiaRequests extends Middleware
             "ginstagram" => $ginstagram,
             "gfacebook" => $gfacebook,
             "gcity" => $gcity,
-            "gcountry" => $gcountry
+            "gcountry" => $gcountry,
+            "gyoutube" => $gyoutube,
         ]);
     }
 }

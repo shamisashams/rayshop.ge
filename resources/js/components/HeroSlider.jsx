@@ -232,7 +232,7 @@ const sharedData = usePage().props.localizations;
                         }
                      }else{
                         if(sizepicked){
-                            addToCart(product, sizesArr[picked])
+                            addToCart(product[iteration], sizesArr[picked])
                             Inertia.visit(route("client.checkout.index"))
                         }else{
                             alert('choose_size')

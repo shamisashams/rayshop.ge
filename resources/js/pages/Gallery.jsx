@@ -17,9 +17,11 @@ let links = function (links) {
                 rows.push(
                     <Link
                         href={item.url}
-                        className={item.active ? "num active" : "num"}
+                        className={item.active ? "text-blue-600" : "num"}
                     >
+                        <span style={{padding: "5px"}}>
                         {item.label}
+                        </span>
                     </Link>
                 );
             }
