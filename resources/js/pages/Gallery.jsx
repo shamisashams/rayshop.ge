@@ -131,9 +131,9 @@ const Login = ({ seo, gallery }) => {
                         </MouseParallaxContainer>
                     </section>
                 </div>
-                <div className="wrapper flex items-center justify-center pt-20">
+                <div className="wrapper flex flex-around justify-center pt-20">
                     {linksPrev(gallery.links)}
-                    <button className="">{links(gallery.links)}</button>
+                    <button className=""><p style={{margin:'10px'}}>{links(gallery.links)}</p></button>
                     {linksNext(gallery.links)}
                 </div>
             </div>

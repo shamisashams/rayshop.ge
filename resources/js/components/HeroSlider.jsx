@@ -109,9 +109,8 @@ const sharedData = usePage().props.localizations;
                     {
                         product.map((e,i)=>{
                             if(e.id == item.product.id){
-                                return( <div key={i}> {e.title}
-                                </div>
-
+                                return(
+                                    <p>{e.title}</p>
                                 )
                             }
                         })
@@ -128,7 +127,7 @@ const sharedData = usePage().props.localizations;
 
                 <Link
       href={route("client.product.show", item.product.slug)}
-      className="learnMoreBtn flex items-center justify-start bold text-xl group"
+      className="learnMoreBtn flex items-center bold text-xl group"
     >
       <div className="flex items-center justify-center rounded-full bg-black w-12 h-12 mr-2 group-hover:bg-white transition-all duration-300">
         <svg className="group-hover:fill-black fill-white transition-all duration-300" xmlns="http://www.w3.org/2000/svg" width="24.952" height="19.282" viewBox="0 0 24.952 19.282">

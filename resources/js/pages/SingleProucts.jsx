@@ -135,13 +135,13 @@ product.files.map((e,i)=>{
               </div>
               <div className="flex flex-nowrap mt-10 mb-16">
                   <button onClick={()=>{
+                    if(!sizepicked){
+                        alert('choose_size')
+                        return 0;
+                    }
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
-                        if(!sizepicked){
-                            alert('choose_size')
-                        }else{
                             alert('araa maragshi')
                             return 0;
-                        }
                      }else{
                          addToCart(product, sizesArr[picked])
                          Inertia.visit(route("client.checkout.index"))
@@ -152,18 +152,18 @@ product.files.map((e,i)=>{
     >
       შეიძინე
     </button>
-                {/* </Link> */}
-                <button onClick={()=>{
-                    // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
-                    // alert(sizes[picked].id)
+                <button onClick={(e)=>{
+                     if(!sizepicked){
+                        alert('choose_size')
+                        return 0;
+                    }
                      if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
-                        if(!sizepicked){
-                            alert('choose_size')
-                        }else{
                             alert('araa maragshi')
                             return 0;
-                        }
-                     }else addToCart(product, sizesArr[picked])
+                     }else
+                     {
+                        addToCart(product, sizesArr[picked])
+                     }
                 }
                 }
                     className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm  ml-4`}>

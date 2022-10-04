@@ -6,6 +6,26 @@ import Cart from "./Cart";
 import { Inertia } from "@inertiajs/inertia";
 
 const Header = () => {
+    const getCart = function () {
+        let cart = [];
+        let _cart = localStorage.getItem("cart");
+        if (_cart !== null) cart = JSON.parse(_cart);
+
+        let total = 0;
+        cart.forEach(function (el, i) {
+            total +=
+                el.qty *
+                (el.product.special_price !== null
+                    ? el.product.special_price
+                    : el.product.price);
+        });
+
+        let obj = {
+            items: cart,
+            total: parseFloat(total),
+        };
+        return obj;
+    };
     const sharedData = usePage().props.localizations;
 
     // const searchProduct = function () {
@@ -189,8 +209,8 @@ const Header = () => {
                                 accountDrop
                                     ? "visible opacity-100"
                                     : "invisible opacity-0"
-                            } 
-                          
+                            }
+
                             `}
                         >
                             {/* if logged in 👇  */}
@@ -288,7 +308,23 @@ const Header = () => {
                         style={{ background: showCart ? "white" : "" }}
                     >
                         {/* <CartIcon /> */}
+                        <div>
                         <img src="/assets/svg/cart.svg" alt="cart" />
+                        {
+                           getCart().items.length > 0 &&
+                            <span style={{
+                             position:"absolute",
+                             left:"18px",top:"20px",
+                             background:'red',
+                             color:'white',
+                             padding: '1px 5px 1px',
+                             fontWeight: 'bold',
+                            }}
+                            className="text-xs rounded-full">{getCart().items.length}
+                            </span>
+                        }
+
+                        </div>
                     </button>
                 </div>
             </div>
