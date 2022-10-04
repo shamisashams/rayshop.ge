@@ -107,7 +107,7 @@ product.files.map((e,i)=>{
               <div className="bold mb-5">აირჩიე ზომა:</div>
               <div className="sizeFlex flex flex-wrap">
       <div className="sizeFlex flex flex-wrap">
-        {sizes.map((size, i) => {
+        {product.sizes.map((size, i) => {
           return (
             <button
               onClick={() =>

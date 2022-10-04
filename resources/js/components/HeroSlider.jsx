@@ -52,7 +52,6 @@ const addToCart = function (product,size) {
 };
 
 const HeroSlider = ({data, sizes,cat, product}) => {
-    // console.log(product);
     let sizesArr = new Array();
     sizes.forEach(el => {
              sizesArr.push(el.name)
@@ -184,7 +183,15 @@ const sharedData = usePage().props.localizations;
                   <div className="bold mb-5">{__("client.slider_size",sharedData)} :</div>
                   <div className="sizeFlex flex flex-wrap">
       <div className="sizeFlex flex flex-wrap">
-        {sizes.map((size, i) => {
+        {product.map((e)=>{
+            if(e.id == item.product.id){
+                console.log('yleo');
+            }
+        })}
+        {
+        // sizes
+product[index].sizes
+        .map((size, i) => {
           return (
             <button
               onClick={() =>
