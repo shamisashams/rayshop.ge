@@ -6,9 +6,9 @@ import Form from "../components/Form";
 import Layout from "../Layouts/Layout";
 import { identity } from "lodash";
 import { Inertia } from '@inertiajs/inertia'
+import { useForkRef } from "@mui/material";
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
-
     const {pathname} = usePage().props;
     let sizesArr = new Array();
     sizes.forEach(el => {
@@ -54,12 +54,24 @@ const SingleProucts = ({seo,sizes,product,sameproduct}) => {
     };
 
     const [picked, setPicked] = useState(0);
-  const [imageIndex, setImageIndex] = useState(0);
+  const [imageIndex, setImageIndex] = useState(() => {
+    let iteration = null;
+    product.files.map((e,i)=>{
+        if(e.main) iteration = i
+    })
+    if (iteration != null) {
+      return iteration;
+    }
+
+    return 0;
+  });
   const [sizepicked, setSizePicked] = useState(false);
 let imgs = new Array();
 product.files.map((e,i)=>{
+    // if(e.main){setImageIndex(i)}
     imgs.push("/"+e.path+"/"+e.title)
 })
+
   return (
     <Layout seo={seo}>
       <section className="h-fit min-h-screen relative">
