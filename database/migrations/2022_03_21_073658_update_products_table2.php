@@ -16,7 +16,7 @@ class UpdateProductsTable2 extends Migration
         //
         Schema::table('products', function (Blueprint $table) {
             $table->string('code');
-            $table->boolean('stock');
+            $table->string('stock')->nullable();
             $table->float('sale')->nullable()->change();
         });
     }

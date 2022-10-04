@@ -183,11 +183,10 @@ const sharedData = usePage().props.localizations;
                   <div className="bold mb-5">{__("client.slider_size",sharedData)} :</div>
                   <div className="sizeFlex flex flex-wrap">
       <div className="sizeFlex flex flex-wrap">
-        {product.map((e)=>{
+        {/* {product.map((e)=>{
             if(e.id == item.product.id){
-                console.log('yleo');
             }
-        })}
+        })} */}
         {
         // sizes
 product[index].sizes
@@ -259,16 +258,27 @@ product[index].sizes
                                  iteration = i
                              }
                          })
-                    // console.log(sizes[picked].id, 'esaa zoma', product.sizes);
-                    // alert(sizes[picked].id)
-                     if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
+
+                    if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
+                        console.log(product , 'esaa');
+                        if(product[iteration].quantity == 0){
+                            alert('არაა მარაგში')
+                            return 0;
+                        }
                         if(!sizepicked){
                             alert('choose_size')
                         }else{
                             alert('araa maragshi')
                             return 0;
                         }
-                     }else addToCart(product[iteration], sizesArr[picked])
+                     }else{
+                        if(sizepicked){
+                            addToCart(product[iteration], sizesArr[picked])
+                        }else{
+                            alert('choose_size')
+                        }
+
+                  }
                 }
                 }
                     className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm ml-4`}>

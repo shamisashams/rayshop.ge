@@ -4,11 +4,12 @@ import { CommonButton, SizePick, SocialMedia } from "../components/Shared";
 import ProductSlider from "../components/ProductSlider";
 import Form from "../components/Form";
 import Layout from "../Layouts/Layout";
-import { identity } from "lodash";
+import { identity, indexOf } from "lodash";
 import { Inertia } from '@inertiajs/inertia'
 import { useForkRef } from "@mui/material";
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
+    console.log(product, 'esaa');
     const {pathname} = usePage().props;
     let sizesArr = new Array();
     sizes.forEach(el => {
@@ -145,8 +146,16 @@ product.files.map((e,i)=>{
         })}
       </div>
               </div>
+      {product.quantity == 0 &&
+
+        <p className="text-red-200">{product.instock}</p>
+      }
               <div className="flex flex-nowrap mt-10 mb-16">
                   <button onClick={()=>{
+                     if(product.quantity == 0){
+                        alert('არაა მარაგში')
+                        return 0;
+                    }
                     if(!sizepicked){
                         alert('choose_size')
                         return 0;
@@ -165,6 +174,10 @@ product.files.map((e,i)=>{
       შეიძინე
     </button>
                 <button onClick={(e)=>{
+                    if(product.quantity == 0){
+                        alert('არაა მარაგში')
+                        return 0;
+                    }
                      if(!sizepicked){
                         alert('choose_size')
                         return 0;
