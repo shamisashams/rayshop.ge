@@ -159,19 +159,11 @@ class ProductController extends Controller
             }
             $_product['attributes'] = $_result;
         }
-        //dd($category);
-        //$result = [];
-        //$result['id'] = $category[0]['id'];
-        //$result['title'] = $category[0]['title'];
-        //dd(\Illuminate\Support\Facades\DB::getQueryLog());
-
-        /*return view('client.pages.product.show', [
-            'product' => $product
-        ]);*/
+        // dd(Product::with('latestImage', 'sizes', 'files', 'categories')->where('categories.id', '=', 1)->get());
         return Inertia::render('SingleProucts', [
             'sizes' => Size::all(),
             'product' => $product,
-            "sameproduct" => Product::where('slug', '!=', $slug)->with('latestImage', 'sizes', 'files')->latest()->limit(8)->get(),
+            "sameproduct" => Product::where('slug', '!=', $slug)->with('latestImage', 'sizes', 'files', 'categories')->latest()->limit(8)->get(),
             'category_path' => $path,
             'similar_products' => $similar_products,
             'product_images' => $productImages,

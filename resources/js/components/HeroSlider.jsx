@@ -223,6 +223,10 @@ product[index].sizes
                   </div>
                   <div className="flex  flex-nowrap mt-10">
                   <button onClick={()=>{
+                      if(item.product.quantity == 0){
+                        alert("არაა მარაგში");
+                        return 0;
+                    }
                      let iteration
                      product.map((e,i)=>{
                          if(e.id == item.product.id){
@@ -232,9 +236,6 @@ product[index].sizes
                     if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
                         if(!sizepicked){
                             alert('choose_size')
-                        }else{
-                            alert('araa maragshi')
-                            return 0;
                         }
                      }else{
                         if(sizepicked){
@@ -252,6 +253,10 @@ product[index].sizes
     </button>
                     {/* <CommonButton text="დაამატე კალათში" /> */}
                     <button onClick={()=>{
+                         if(item.product.quantity == 0){
+                            alert("არაა მარაგში");
+                            return 0;
+                        }
                          let iteration
                          product.map((e,i)=>{
                              if(e.id == item.product.id){
@@ -260,11 +265,6 @@ product[index].sizes
                          })
 
                     if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
-                        console.log(product , 'esaa');
-                        if(product[iteration].quantity == 0){
-                            alert('არაა მარაგში')
-                            return 0;
-                        }
                         if(!sizepicked){
                             alert('choose_size')
                         }else{

@@ -40,7 +40,7 @@ class BogPaymentController extends Controller
 
         $response = $this->bog_pay->make_order(
             1,
-            'https://bunkeri1.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order_id,
+            'https://rayshop.ge/' . app()->getLocale() . '/payments/bog/status?order_id=' . $order_id,
             [['currency_code' => 'GEL', 'value' => $total]],
             0,
             [],
