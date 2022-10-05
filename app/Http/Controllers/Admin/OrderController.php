@@ -22,8 +22,7 @@ class OrderController extends Controller
 
     public function __construct(
         OrderRepository $orderRepository
-    )
-    {
+    ) {
         $this->orderRepository = $orderRepository;
     }
 
@@ -39,7 +38,7 @@ class OrderController extends Controller
         ]);*/
 
         return view('admin.nowa.views.order.index', [
-            'orders' => $this->orderRepository->getData($request,['items'])
+            'orders' => $this->orderRepository->getData($request, ['items'])
         ]);
     }
 
@@ -87,18 +86,30 @@ class OrderController extends Controller
      * @param Setting $setting
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request,string $locale, Setting $setting)
+    public function update(Request $request, string $locale, Setting $setting)
     {
         $saveData = Arr::except($request->except('_token'), []);
-        $this->orderRepository->update($setting->id,$saveData);
+        $this->orderRepository->update($setting->id, $saveData);
 
 
         return redirect(locale_route('setting.index', $setting->id))->with('success', __('admin.update_successfully'));
     }
 
+    public function updateFinishedOrder(Request $request, $locale, $id)
+    {
+        $done = Order::where('id', $id)->first()->done;
+        Order::where('id', $id)->update(
+            [
+                'done' => !$done
+            ]
+        );
+        return redirect()->back();
+    }
 
-    public function setActive(Request $request){
+
+    public function setActive(Request $request)
+    {
         //dd($request->all());
-        Setting::where('id',$request->get('id'))->update(['active' => $request->get('active')]);
+        Setting::where('id', $request->get('id'))->update(['active' => $request->get('active')]);
     }
 }

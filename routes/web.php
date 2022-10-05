@@ -91,6 +91,7 @@ Route::prefix('{locale?}')
 
                 Route::resource('order', \App\Http\Controllers\Admin\OrderController::class);
                 //Route::get('order/{order}/destroy', [\App\Http\Controllers\Admin\OrderController::class, 'destroy'])->name('order.destroy');
+                Route::get("updateorderfinish{id?}", [\App\Http\Controllers\Admin\OrderController::class, 'updateFinishedOrder'])->name('order.updateFinishedOrder');
 
                 Route::get("colors", [SizeController::class, 'index'])->name('color.index');
                 Route::get("addcolorspage{id?}", [SizeController::class, 'addColorsPage'])->name('size.form');

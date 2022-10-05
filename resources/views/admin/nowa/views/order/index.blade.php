@@ -15,7 +15,7 @@
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">@lang('admin.orders')</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
 
@@ -38,6 +38,7 @@
                                 <thead>
                                 <tr>
                                     <th>@lang('admin.id')</th>
+                                    <th>@lang('admin.finished')</th>
                                     <th>@lang('admin.status')</th>
                                     <th>@lang('admin.grand_total')</th>
                                     <th>@lang('admin.name')</th>
@@ -54,6 +55,7 @@
                                                value="{{Request::get('id')}}"
                                                class="validate {{$errors->has('id') ? '' : 'valid'}}">
                                     </th>
+                                    <th><p></p></th>
 
                                     <th>
                                         <select class="form-control" name="status" onchange="this.form.submit()">
@@ -88,9 +90,22 @@
                                 </tr>
 
                                 @if($orders)
-                                    @foreach($orders as $order)
+                                    @foreach($orders as $k=>$order)
+                                    {{-- @dd($order->done) --}}
                                         <tr>
                                             <td>{{$order->id}}</td>
+                                            <td class='d-flex justify-content-center'>
+                                                <form id='isdone' action="{{route('order.updateFinishedOrder')}}" method="get">
+                                                    @csrf
+                                                    <input
+                                                    @if ($order->done == 1)
+                                                       checked
+                                                    @endif
+                                                    type="checkbox" id='done{{$k}}' name="done" value=true
+                                                    onchange="location.href='{{route('order.updateFinishedOrder',$order->id)}}'"
+                                                    >
+                                                </form>
+                                            </td>
 
                                                 <?php
                                                     switch ($order->status){
