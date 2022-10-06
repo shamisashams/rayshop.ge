@@ -47,7 +47,6 @@ class SizeController extends Controller
 
     public function delSize(Request $request, $locale, $id)
     {
-        dd($id);
         $delSize = Size::where("id", $id)->delete();
         if ($delSize) {
             return redirect()->route("color.index");
