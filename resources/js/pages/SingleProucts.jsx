@@ -9,7 +9,6 @@ import { Inertia } from '@inertiajs/inertia'
 import { useForkRef } from "@mui/material";
 
 const SingleProucts = ({seo,sizes,product,sameproduct}) => {
-    console.log(product, 'esaa');
     const {pathname} = usePage().props;
     let sizesArr = new Array();
     sizes.forEach(el => {
