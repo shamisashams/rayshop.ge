@@ -59,10 +59,8 @@ export default function Layout({ children, seo = null }) {
 
 
     return (
-        <>
-
+    <>
             <LinearWithValueLabel loading={loading} />
-
             <CursorFollower />
             {/*<Router>*/}
             {/*<Fragment>*/}

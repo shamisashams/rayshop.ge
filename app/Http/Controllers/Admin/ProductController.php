@@ -126,7 +126,6 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        //dd($request->all());
         $sizes = [];
         foreach ($request->post() as $key => $value) {
             if (str_contains($key, 'size')) {
@@ -170,6 +169,8 @@ class ProductController extends Controller
 
         // dd($sizesId);
         $product->sizes()->sync($sizesId);
+
+        $product->categories()->sync($saveData['categories'] ?? []);
         // foreach ($sizesId as $key => $value) {
         //     # code...
 
