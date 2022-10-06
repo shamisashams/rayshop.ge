@@ -20,7 +20,7 @@ const SingleGallery = ({ seo, news,back }) => {
         >
  <section className="py-32 relative wrapper">
                 <img
-                    style={{ width: "60%" }}
+                    style={{ width: "50%" }}
                     src={news.file != null
                         ? "/" +
                         news.file.path +

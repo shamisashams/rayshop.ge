@@ -312,12 +312,10 @@ const sharedData = usePage().props.localizations;
             );
           })}
         </div>
-        <div className="justify-self-auto">
-        <div className="wrapper flex flex-around justify-center pt-20">
+        <div className="wrapper flex flex-around justify-center  pt-20">
                     {linksPrev(products.links)}
                     <button className=""><p style={{margin:'10px'}}>{links(products.links)}</p></button>
                     {linksNext(products.links)}
-                </div>
         </div>
       </div>
     </div>

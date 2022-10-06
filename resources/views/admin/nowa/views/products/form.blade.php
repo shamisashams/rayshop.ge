@@ -169,7 +169,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
 
 
 
-                                            {{-- <div class="main-content-label mg-b-5 text-danger">
+                                            <div class="main-content-label mg-b-5 text-danger">
                                             @lang('admin.product_seo')
                                             </div>
                                             <div class="form-group">
@@ -207,7 +207,7 @@ $traverse = function ($categories, $prefix = '-') use (&$traverse,$ids) {
                                                     </div>
                                                 </small>
                                                 @enderror
-                                            </div> --}}
+                                            </div>
 
 
 
