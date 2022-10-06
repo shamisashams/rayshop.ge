@@ -97,7 +97,7 @@ Route::prefix('{locale?}')
                 Route::get("addcolorspage{id?}", [SizeController::class, 'addColorsPage'])->name('size.form');
                 Route::post("addcolors", [SizeController::class, 'addColor'])->name('size.create');
                 Route::post("updateSize", [SizeController::class, 'updateSize'])->name('size.update');
-                Route::get("delSize", [SizeController::class, 'delSize'])->name('size.destroy');
+                Route::get("delSize{id?}", [SizeController::class, 'delSize'])->name('size.destroy');
 
                 // Password
                 Route::get('password', [\App\Http\Controllers\Admin\PasswordController::class, 'index'])->name('password.index');

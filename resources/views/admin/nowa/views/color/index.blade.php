@@ -15,7 +15,7 @@
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">@lang('admin.sizes')</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
 
@@ -76,7 +76,7 @@
                                                     <i class="fa fa-edit">შეცვლა</i>
                                                 </a>
 
-                                                <a href="{{locale_route('size.destroy',"?id=".$item->id)}}"
+                                                <a href="{{locale_route('size.destroy',$item->id)}}"
                                                    onclick="return confirm('Are you sure?')" class="pl-3">
                                                     <i class="fa fa-edit">წაშლა</i>
                                                 </a>

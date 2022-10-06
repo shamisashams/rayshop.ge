@@ -45,12 +45,12 @@ class SizeController extends Controller
         return redirect()->route("color.index");
     }
 
-    public function delSize(Request $request)
+    public function delSize(Request $request, $locale, $id)
     {
-        dd($request->post());
-        // $delSize = Size::where("id", $request->id)->delete();
-        // if ($delSize) {
-        //     return redirect()->route("color.index");
-        // }
+        dd($id);
+        $delSize = Size::where("id", $id)->delete();
+        if ($delSize) {
+            return redirect()->route("color.index");
+        }
     }
 }
