@@ -142,7 +142,7 @@ const ProductSlider = ({data}) => {
 key={index}
               link={route("client.product.show", e.slug)}
               image={
-                e.files != null
+                e.files != null && e.files[0]
                 ? "/" +
                   e.files[0].path +
                   "/" +
