@@ -261,6 +261,7 @@ class AuthController extends Controller
         if (isset($request->q)) {
             $saveData = $request->except('q');
         }
+        dd($request->q, $saveData);
         $saveData = $request->except('_token');
         $saveData['password'] = Hash::make($request->post('password'));
         $userid = User::where('id', Auth::user()->id)->update($saveData);
