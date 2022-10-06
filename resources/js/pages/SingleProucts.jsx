@@ -91,6 +91,7 @@ product.files.map((e,i)=>{
                   <div
                     onClick={() => setImageIndex(index)}
                     key={index}
+                    style={{overflow:'hidden'}}
                     className={`flex justify-center item-center md:w-32 md:h-36 w-24 h-24 md:mx-2 mx-1 mb-1 bg-white transition-all duration-300 md:p-3 p-1 cursor-pointer border border-white hover:border-slate-300 ${
                       index === imageIndex ? "!border-custom-orange" : ""
                     } `}
