@@ -16,7 +16,7 @@ function valuetext(value) {
     return `${value}°C`;
   }
 
-let links = function (links) {
+  let links = function (links) {
     let rows = [];
     {
         links.map(function (item, index) {
@@ -24,9 +24,11 @@ let links = function (links) {
                 rows.push(
                     <Link
                         href={item.url}
-                        className={item.active ? "num active" : "num"}
+                        className={item.active ? "text-blue-600" : "num"}
                     >
+                        <span style={{padding: "5px"}}>
                         {item.label}
+                        </span>
                     </Link>
                 );
             }
@@ -44,8 +46,8 @@ let linksPrev = function (links) {
     });
     return rowCount > 1 ? (
         <Link href={links[0].url}>
-            <Arrow color="#2F3E51" rotate="90" />
-            <Arrow color="#2F3E51" rotate="90" />
+            {/* <Arrow color="#2F3E51" rotate="90" /> */}
+            {/* <Arrow color="#2F3E51" rotate="90" /> */}
         </Link>
     ) : null;
 };
@@ -58,11 +60,12 @@ let linksNext = function (links) {
     });
     return rowCount > 1 ? (
         <Link href={links[links.length - 1].url}>
-            <Arrow color="#2F3E51" rotate="-90" />
-            <Arrow color="#2F3E51" rotate="-90" />
+            {/* <Arrow color="#2F3E51" rotate="-90" /> */}
+            {/* <Arrow color="#2F3E51" rotate="-90" /> */}
         </Link>
     ) : null;
 };
+
 
 const addToCart = function (product) {
     //localStorage.removeItem('cart')
@@ -286,7 +289,7 @@ const sharedData = usePage().props.localizations;
             key={i}
                           link={route("client.product.show", e.slug)}
                           image={
-                            e.files != null
+                            e.files != null && e.files[0]
                             ? "/" +
                               e.files[0].path +
                               "/" +
@@ -308,6 +311,13 @@ const sharedData = usePage().props.localizations;
 
             );
           })}
+        </div>
+        <div className="justify-self-auto">
+        <div className="wrapper flex flex-around justify-center pt-20">
+                    {linksPrev(products.links)}
+                    <button className=""><p style={{margin:'10px'}}>{links(products.links)}</p></button>
+                    {linksNext(products.links)}
+                </div>
         </div>
       </div>
     </div>
