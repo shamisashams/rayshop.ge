@@ -263,7 +263,6 @@ class AuthController extends Controller
         } else {
             $saveData = $request->except('_token');
         }
-        dd($request->q, $saveData);
         $saveData['password'] = Hash::make($request->post('password'));
         $userid = User::where('id', Auth::user()->id)->update($saveData);
         return back()->with('success', 'success');
