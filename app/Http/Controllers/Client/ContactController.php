@@ -9,6 +9,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
+use Monolog\Handler\RedisHandler;
 
 class ContactController extends Controller
 {
@@ -49,7 +50,7 @@ class ContactController extends Controller
 
         if ($request->method() == 'POST') {
 
-            //dd($request->all());
+            // dd($request->all());
             $request->validate([
                 'name' => 'required|string|max:55',
                 'surname' => 'required|string|max:55',
@@ -67,11 +68,11 @@ class ContactController extends Controller
                 "subject" => "subject",
                 'message' => $request->message
             ];
-
             // $mailTo = Setting::where(['key' => 'email'])->first();
             $mailTo = 'xizanishvili.99@gmail.com';
+            return redirect()->back();
             // if (($mailTo !== null) && $mailTo->value) {
-            Mail::to($mailTo)->send(new ContactEmail($data));
+            // dd($status, $data);
             // }
         }
 

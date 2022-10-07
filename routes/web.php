@@ -19,10 +19,12 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Admin\TranslationController;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Client\AboutUsController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -166,14 +168,16 @@ Route::prefix('{locale?}')
 
             Route::post('/forgot-password', function (Request $request) {
                 $request->validate(['email' => 'required|email']);
-
-                $status = Password::sendResetLink(
-                    $request->only('email')
-                );
-
-                return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+                if (User::where('email', $request->email)->first() == null) {
+                    return redirect()->back()->with('err', 'მომხმარებელი ამ მეილით არ არსებობს');
+                } else {
+                    $status = Password::sendResetLink(
+                        $request->only('email')
+                    );
+                    return $status === Password::RESET_LINK_SENT
+                        ? back()->with(['status' => __($status)])
+                        : back()->withErrors(['email' => __($status)]);
+                }
             })->middleware('guest')->name('password.email');
 
 

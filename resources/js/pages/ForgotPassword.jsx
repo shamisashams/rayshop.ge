@@ -6,7 +6,7 @@ import Layout from "../Layouts/Layout";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import { IoCloseOutline } from "react-icons/io5";
 
-const ForgotPassword = ({ seo, email, status }) => {
+const ForgotPassword = ({ seo, email, status, err }) => {
     const renderHTML = (rawHTML) =>
         React.createElement("div", {
             dangerouslySetInnerHTML: { __html: rawHTML },
@@ -26,11 +26,11 @@ const ForgotPassword = ({ seo, email, status }) => {
     function handleSubmit(e) {
         e.preventDefault();
         Inertia.post(route("password.email"), values);
-        setSuccess(true);
+        // setSuccess(true);
     }
 
-    const [success, setSuccess] = useState(false);
-
+    const [success, setSuccess] = useState(status? true : false);
+    const { errors } = usePage().props
     return (
         <Layout seo={seo}>
             <div className="py-20 lg:pt-40 pt-32 wrapper relative text-center min-h-screen">
@@ -52,23 +52,24 @@ const ForgotPassword = ({ seo, email, status }) => {
                             placeholder={__("client.forgotpass_email", sharedData)}
                             value={values.email}
                             onChange={handleChange}
+                            required
                         />
 
                         <CommonButton
                             text={__("client.forgotpass_resetpassbtn", sharedData)}
                         />
-                        {status ? <p>success</p> : ""}
-                        {email ? <p>error</p> : ""}
+                        {/* {status ? <p>success</p> : ""} */}
+                        {/* {email ? <p>error</p> : ""} */}
                     </form>
                     <div
                         className={`absolute left-0 top-0 w-full text-center py-20 px-10 bg-custom-slate-300 transition-all duration-500  ${
-                            success
+                            status
                                 ? "translate-y-0 opacity-100 visible"
                                 : "translate-y-full opacity-0 invisible"
                         }`}
                     >
                         <button
-                            onClick={() => setSuccess(false)}
+                            onClick={() => setSuccess(!success)}
                             className="absolute top-3 right-3"
                         >
                             <IoCloseOutline className="w-6 h-6" />
@@ -82,6 +83,7 @@ const ForgotPassword = ({ seo, email, status }) => {
                             alt=""
                         />
                     </div>
+                    {err != null ? <p className="mt-4 text-red-200">მომხმარებელი ამ მეილით არ არსებობს !</p> : ""}
                 </div>
             </div>
         </Layout>

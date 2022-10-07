@@ -358,6 +358,7 @@ class AuthController extends Controller
         //dd($files);
 
         return Inertia::render('ForgotPassword', [
+            "err" => $request->session()->get('err'),
             "page" => $page,
             "status" =>  $request->session()->get('status'),
             "email" =>  $request->session()->get('email'),

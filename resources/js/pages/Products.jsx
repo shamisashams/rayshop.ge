@@ -24,7 +24,7 @@ function valuetext(value) {
                 rows.push(
                     <Link
                         href={item.url}
-                        className={item.active ? "text-blue-600" : "num"}
+                        className={item.active ? "text-decoration-line: underline text-blue-500" : "num"}
                     >
                         <span style={{padding: "5px"}}>
                         {item.label}
