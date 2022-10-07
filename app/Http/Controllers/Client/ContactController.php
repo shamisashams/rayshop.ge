@@ -68,10 +68,11 @@ class ContactController extends Controller
                 'message' => $request->message
             ];
 
-            $mailTo = Setting::where(['key' => 'email'])->first();
-            if (($mailTo !== null) && $mailTo->value) {
-                Mail::to($mailTo->value)->send(new ContactEmail($data));
-            }
+            // $mailTo = Setting::where(['key' => 'email'])->first();
+            $mailTo = 'xizanishvili.99@gmail.com';
+            // if (($mailTo !== null) && $mailTo->value) {
+            Mail::to($mailTo)->send(new ContactEmail($data));
+            // }
         }
 
 
