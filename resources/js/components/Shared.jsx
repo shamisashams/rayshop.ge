@@ -146,9 +146,9 @@ export const SocialMedia = () => {
     const { errors, gphone, gemail, gaddress, gfacebook, ginstagram, gyoutube } = usePage().props;
     return (
         <div className="socialMedia flex items-center ">
-            <a target="_blank" href={gyoutube.value ? gyoutube.value : '#'}>
+            {/* <a target="_blank" href={gyoutube.value ? gyoutube.value : '#'}>
                 <img src={"/assets/images/icons/sm/yt.svg"} alt="" />
-            </a>
+            </a> */}
             <a target="_blank" href={gfacebook.value ? gfacebook.value : '#'} className="sm:mx-8 mx-5">
                 <img src={"/assets/images/icons/sm/fb.svg"} alt="" />
             </a>
