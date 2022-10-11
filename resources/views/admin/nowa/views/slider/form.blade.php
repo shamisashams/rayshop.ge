@@ -29,7 +29,7 @@
         <div class="left-content">
             {{-- <span class="main-content-title mg-b-0 mg-b-lg-1">{{$slider->id ? __('admin.slider-update') : __('admin.slider-create')}}</span> --}}
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
     <input name="old-images[]" id="old_images" hidden disabled value="{{$slider->files}}">
@@ -147,7 +147,7 @@
                     {{-- @dd($slider->product) --}}
                     <div class="form-group">
                         {!! Form::label("product",__('admin.product'),['class' => 'form-label']) !!}
-                        <select class="form-control" name="product">
+                        <select class="form-control" name="product" required>
                             <option value="">product id</option>
                         @foreach($product as $item)
                             <label class="form-label">{{$item->title}}</label>
@@ -159,7 +159,6 @@
                                      selected
                                      @endif
                                      @endif
-
                                      >{{$item->title}}</option>
 
 
