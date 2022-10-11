@@ -148,19 +148,20 @@ const sharedData = usePage().props.localizations;
                 <MouseParallaxContainer useWindowMouseEvents>
                   <MouseParallaxChild factorX={0.03} factorY={0.03}>
                     <div className="heroImage transition-all duration-700 ">
-                      <img
-                        className="w-full h-full object-contain"
-                        // src={item.img}
-                        src={
-                            item.file != null
-                            ? "/" +
-                              item.file.path +
-                              "/" +
-                              item.file.title
-                            : null
-                        }
-                        alt=""
-                      />
+                        <Link href={route("client.product.show", item.product.slug)}>
+                            <img
+                                    className="w-full h-full object-contain"
+                                    src={
+                                        item.file != null
+                                        ? "/" +
+                                        item.file.path +
+                                        "/" +
+                                        item.file.title
+                                        : null
+                                    }
+                                    alt=""
+                            />
+                        </Link>
                     </div>
                   </MouseParallaxChild>
                 </MouseParallaxContainer>
@@ -187,7 +188,7 @@ const sharedData = usePage().props.localizations;
             if(e.id == item.product.id){
             }
         })} */}
-        {
+             {
         // sizes
 product[index].sizes
         .map((size, i) => {
