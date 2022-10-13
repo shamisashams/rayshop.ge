@@ -240,6 +240,7 @@ product[index].sizes
                         }
                      }else{
                         if(sizepicked){
+                            return 0;
                             addToCart(product[iteration], sizesArr[picked])
                             Inertia.visit(route("client.checkout.index"))
                         }else{

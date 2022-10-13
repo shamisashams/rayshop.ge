@@ -113,7 +113,7 @@ const Products = ({seo, products, sizes,cat, maxPricefilter, sizefilter}) => {
     const { catfilter, pricefilter} = usePage().props
     const [value, setValue] = useState([ pricefilter != null ? pricefilter[0] : 0,pricefilter != null ? pricefilter[1]: (maxPricefilter ? maxPricefilter : 200)]);
 
-    console.log(catfilter);
+    // console.log(catfilter);
     const handleChangee = (event, newValue) => {
         setValue(newValue);
         values.price = newValue
