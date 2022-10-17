@@ -92,14 +92,19 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                   <div className="2xl:max-w-lg xl:max-w-md lg:max-w-sm max-w-none w-full shrink">
                     <div className="text-white lg:text-xl bold lg:mb-6 mb-3 gadzen">
                       {/* {item.product.title} */}
+
                       {
-                        cat.map((e, i) => {
-                          if (productCat.category_id == e.id) {
-                            return (
-                             <p>{e.title}</p>
-                            )
-                          }
-                        })
+                          productCat.map((el, it) => {
+                            if(el.product_id == item.product.id){
+                                let category = cat.find((e)=>e.id == el.category_id)
+                                // console.log(category.title , 'esaaa');
+                                 return category.title
+                                // cat.map((e,i)=>{
+                                //     return e.title
+                                // })
+                                // return 'asdasdsd'
+                            }
+                          })
                       }
                     </div>
                     <div className="2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3 gadzen">
