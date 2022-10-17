@@ -51,7 +51,7 @@ const addToCart = function (product, size) {
   Inertia.visit(window.location.href)
 };
 
-const HeroSlider = ({ data, sizes, cat, product }) => {
+const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
   let sizesArr = new Array();
   sizes.forEach(el => {
     sizesArr.push(el.name)
@@ -90,25 +90,25 @@ const HeroSlider = ({ data, sizes, cat, product }) => {
                 <div className="absolute left-0 top-0 w-1/2 h-full bg-custom-orange"></div>
                 <div className="h-full wrapper  lg:pb-0 pb-10 flex items-center lg:justify-between justify-start relative z-20 flex-col lg:flex-row ">
                   <div className="2xl:max-w-lg xl:max-w-md lg:max-w-sm max-w-none w-full shrink">
-                    <div className="text-white lg:text-xl bold lg:mb-6 mb-3 ">
+                    <div className="text-white lg:text-xl bold lg:mb-6 mb-3 gadzen">
                       {/* {item.product.title} */}
                       {
                         cat.map((e, i) => {
-                          if (item.id == e.id) {
+                          if (productCat.category_id == e.id) {
                             return (
-                              e.title
+                             <p>{e.title}</p>
                             )
                           }
                         })
                       }
                     </div>
-                    <div className="gadzen 2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3">
+                    <div className="2xl:text-7xl lg:text-5xl sm:text-4xl text-3xl lg:mb-10 mb-3 gadzen">
                       {/* {product.title} */}
                       {
                         product.map((e, i) => {
                           if (e.id == item.product.id) {
                             return (
-                              <p>{e.title}</p>
+                              e.title
                             )
                           }
                         })
@@ -223,7 +223,7 @@ const HeroSlider = ({ data, sizes, cat, product }) => {
                       <button onClick={() => {
                         if (item.product.quantity == 0) {
                           alert("არაა მარაგში");
-                          return 0;
+                        //   return 0;
                         }
                         let iteration
                         product.map((e, i) => {
@@ -237,7 +237,7 @@ const HeroSlider = ({ data, sizes, cat, product }) => {
                           }
                         } else {
                           if (sizepicked) {
-                            return 0;
+                            // return 0;
                             addToCart(product[iteration], sizesArr[picked])
                             Inertia.visit(route("client.checkout.index"))
                           } else {

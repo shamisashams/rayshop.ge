@@ -13,6 +13,7 @@ use App\Models\Category;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
+use App\Models\ProductCategory;
 use App\Repositories\Eloquent\ProductRepository;
 
 
@@ -78,6 +79,7 @@ class HomeController extends Controller
 
         return Inertia::render('Home', [
             'products' => $products,
+            'productsCat' => ProductCategory::all(),
             'product' => $productcostum,
             'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
             "sliders" => $sliders->get(),

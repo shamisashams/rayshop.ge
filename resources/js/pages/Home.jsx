@@ -16,7 +16,7 @@ import {
 import Layout from "../Layouts/Layout";
 import { Route } from 'react-router-dom';
 
-const Home = ({seo,gallery, products,product, productsAll, sliders, sizes, category}) => {
+const Home = ({seo,gallery, products,product, productsAll, sliders, sizes, category, productsCat}) => {
     const renderHTML = (rawHTML) =>
     React.createElement("div", {
         dangerouslySetInnerHTML: { __html: rawHTML },
@@ -31,7 +31,7 @@ const [imgIndex, setImgIndex] = useState(0);
     };
   return (
     <Layout seo={seo}>
-      <HeroSlider data={sliders} sizes={sizes} cat={category} product={product}/>
+      <HeroSlider data={sliders} sizes={sizes} cat={category} productCat={productsCat} product={product}/>
       <section className="py-10">
         <div className="text-center mb-10 bold text-xl">
           <Link href="/products">
