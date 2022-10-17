@@ -28,7 +28,7 @@
         <div class="left-content">
             <span class="main-content-title mg-b-0 mg-b-lg-1">{{ __('admin.order-view') }}</span>
         </div>
-         
+
     </div>
     <!-- /breadcrumb -->
 
@@ -79,6 +79,7 @@
                             <tr>
                                 <th class="wd-20p">Product</th>
 
+                                <th class="tx-center">Size</th>
                                 <th class="tx-center">QNTY</th>
                                 <th class="tx-right">Unit</th>
                                 <th class="tx-right">Amount</th>
@@ -88,7 +89,7 @@
                             @foreach($order->items as $item)
                             <tr>
                                 <td>{{$item->name}}</td>
-
+                                <td class="tx-center">{{$item->size}}</td>
                                 <td class="tx-center">{{$item->qty_ordered}}</td>
                                 <td class="tx-right">{{$item->price}}₾</td>
                                 <td class="tx-right">{{$item->total}}₾</td>
@@ -99,9 +100,11 @@
                                 <td class="valign-middle" colspan="2" rowspan="4">
                                     <div class="invoice-notes">
                                         <label class="main-content-label tx-13">Notes</label>
-                                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+
                                     </div><!-- invoice-notes -->
+                                    {{-- @dd($item) --}}
                                 </td>
+                                {{-- @dd($item->size) --}}
                                 <td class="tx-right">Sub-Total</td>
                                 <td class="tx-right" colspan="2">{{$order->grand_total}}₾</td>
                             </tr>
@@ -113,6 +116,7 @@
                                 <td class="tx-right">Discount</td>
                                 <td class="tx-right" colspan="2">0%</td>
                             </tr>
+
                             <tr>
                                 <td class="tx-right tx-uppercase tx-bold tx-inverse">Total Due</td>
                                 <td class="tx-right" colspan="2">
