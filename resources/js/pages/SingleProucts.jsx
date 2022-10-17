@@ -164,7 +164,7 @@ product.files.map((e,i)=>{
                             alert('araa maragshi')
                             return 0;
                      }else{
-                        return 0;
+                        // return 0;
                          addToCart(product, sizesArr[picked])
                          Inertia.visit(route("client.checkout.index"))
                      }

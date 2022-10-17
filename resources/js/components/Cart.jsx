@@ -245,8 +245,7 @@ const Cart = ({ show, closeCart }) => {
             </div>
 
             <Link
-                // href={route("client.checkout.index")}
-                href='/'
+                href={route("client.checkout.index")}
                 className="w-fit mx-auto mt-10"
             >
                 <CommonButton text={__("client.cart_purchace", sharedData)} />

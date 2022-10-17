@@ -220,36 +220,35 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                       </div>
                     </div>
                     <div className="flex  flex-nowrap mt-10">
-                      <button onClick={() => {
-                        if (item.product.quantity == 0) {
-                          alert("არაა მარაგში");
-                        //   return 0;
+                    <button onClick={()=>{
+                      if(item.product.quantity == 0){
+                        alert("არაა მარაგში");
+                        return 0;
+                    }
+                     let iteration
+                     product.map((e,i)=>{
+                         if(e.id == item.product.id){
+                             iteration = i
+                         }
+                     })
+                    if(!product[iteration].sizes.find((e)=> e.id == sizes[picked].id)){
+                        if(!sizepicked){
+                            alert('აირჩიეთ ზომა')
                         }
-                        let iteration
-                        product.map((e, i) => {
-                          if (e.id == item.product.id) {
-                            iteration = i
-                          }
-                        })
-                        if (!product[iteration].sizes.find((e) => e.id == sizes[picked].id)) {
-                          if (!sizepicked) {
-                            alert('აირჩიეთ ზომა!')
-                          }
-                        } else {
-                          if (sizepicked) {
-                            // return 0;
+                     }else{
+                        if(sizepicked){
                             addToCart(product[iteration], sizesArr[picked])
                             Inertia.visit(route("client.checkout.index"))
-                          } else {
-                            alert('აირჩიეთ ზომა!')
-                          }
+                        }else{
+                            alert('აირჩიეთ ზომა')
                         }
-                      }
-                      }
-                        className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
-                      >
-                        შეიძინე
-                      </button>
+                     }
+                  }
+                }
+      className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
+    >
+      შეიძინე
+    </button>
                       {/* <CommonButton text="დაამატე კალათში" /> */}
                       <button onClick={() => {
                         if (item.product.quantity == 0) {
@@ -266,6 +265,7 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                         if (!product[iteration].sizes.find((e) => e.id == sizes[picked].id)) {
                           if (!sizepicked) {
                             alert('აირჩიეთ ზომა!')
+                            return 0;
                           } else {
                             alert('არაა მარაგში')
                             return 0;
