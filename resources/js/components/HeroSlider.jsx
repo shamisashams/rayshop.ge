@@ -203,7 +203,7 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                                       }
                                     })
                                     if (!product[iteration].sizes.find((e) => e.id == size.id)) {
-                                      alert('araa maragshi')
+                                      alert('არაა მარაგში')
                                     }
                                   }
                                   }
@@ -233,7 +233,7 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                         })
                         if (!product[iteration].sizes.find((e) => e.id == sizes[picked].id)) {
                           if (!sizepicked) {
-                            alert('choose_size')
+                            alert('აირჩიეთ ზომა!')
                           }
                         } else {
                           if (sizepicked) {
@@ -241,7 +241,7 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
                             addToCart(product[iteration], sizesArr[picked])
                             Inertia.visit(route("client.checkout.index"))
                           } else {
-                            alert('choose_size')
+                            alert('აირჩიეთ ზომა!')
                           }
                         }
                       }
@@ -265,16 +265,16 @@ const HeroSlider = ({ data, sizes, cat, product,productCat }) => {
 
                         if (!product[iteration].sizes.find((e) => e.id == sizes[picked].id)) {
                           if (!sizepicked) {
-                            alert('choose_size')
+                            alert('აირჩიეთ ზომა!')
                           } else {
-                            alert('araa maragshi')
+                            alert('არაა მარაგში')
                             return 0;
                           }
                         } else {
                           if (sizepicked) {
                             addToCart(product[iteration], sizesArr[picked])
                           } else {
-                            alert('choose_size')
+                            alert('აირჩიეთ ზომა!')
                           }
 
                         }

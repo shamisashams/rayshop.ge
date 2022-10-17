@@ -157,7 +157,7 @@ product.files.map((e,i)=>{
                         return 0;
                     }
                     if(!sizepicked){
-                        alert('choose_size')
+                        alert('აირჩიეთ ზომა!')
                         return 0;
                     }
                     if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
@@ -180,7 +180,7 @@ product.files.map((e,i)=>{
                         return 0;
                     }
                      if(!sizepicked){
-                        alert('choose_size')
+                        alert('აირჩიეთ ზომა!')
                         return 0;
                     }
                      if(!product.sizes.find((e)=> e.id == sizes[picked].id)){
