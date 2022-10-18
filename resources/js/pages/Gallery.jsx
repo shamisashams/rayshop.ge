@@ -19,9 +19,7 @@ let links = function (links) {
                         href={item.url}
                         className={item.active ? "text-blue-600" : "num"}
                     >
-                        <span style={{padding: "5px"}}>
-                        {item.label}
-                        </span>
+                        <span style={{ padding: "5px" }}>{item.label}</span>
                     </Link>
                 );
             }
@@ -87,7 +85,7 @@ const Login = ({ seo, gallery }) => {
 
     return (
         <Layout seo={seo}>
-            <div className="mx-auto ">
+            <div className="mx-auto py-20 ">
                 <div className="">
                     <section className="wrapper py-10">
                         <MouseParallaxContainer
@@ -135,7 +133,9 @@ const Login = ({ seo, gallery }) => {
                 </div>
                 <div className="wrapper flex flex-around justify-center pt-20">
                     {linksPrev(gallery.links)}
-                    <button className=""><p style={{margin:'10px'}}>{links(gallery.links)}</p></button>
+                    <button className="">
+                        <p style={{ margin: "10px" }}>{links(gallery.links)}</p>
+                    </button>
                     {linksNext(gallery.links)}
                 </div>
             </div>

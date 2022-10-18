@@ -8,13 +8,13 @@ const CursorFollower = () => {
             innerSize={10}
             outerSize={45}
             innerScale={7}
-        outerScale={0}
+            outerScale={0}
             hasBlendMode={true}
             innerStyle={{
                 mixBlendMode: "difference",
             }}
             clickables={[
-                // "a",
+                "a",
                 'input[type="text"]',
                 'input[type="email"]',
                 'input[type="number"]',
