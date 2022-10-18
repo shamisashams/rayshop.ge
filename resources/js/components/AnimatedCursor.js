@@ -13,6 +13,9 @@ const CursorFollower = () => {
             innerStyle={{
                 mixBlendMode: "difference",
             }}
+            outerStyle={{
+                border: "0.5px solid rgb(237,92,47)",
+            }}
             clickables={[
                 "a",
                 'input[type="text"]',
