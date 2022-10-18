@@ -4,7 +4,7 @@ import { CommonButton } from "../components/Shared";
 
 const PaymentSuccess = ({ seo }) => {
     localStorage.clear();
-    
+
     return (
         <Layout seo={seo}>
             <div className="py-20 lg:pt-52 pt-32 wrapper relative text-center min-h-screen ">

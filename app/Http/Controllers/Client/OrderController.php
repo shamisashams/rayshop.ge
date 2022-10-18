@@ -312,6 +312,8 @@ class OrderController extends Controller
 
     public function bogResponse(Request $request)
     {
+
+        
         //dump($request->order_id);
         $order = Order::query()->where('id', $request->get('order_id'))->first();
 
