@@ -28,7 +28,6 @@ class UpdateOrdersTableAddisfinished extends Migration
     {
         //
         Schema::table('orders', function (Blueprint $table) {
-
             $table->dropColumn('done');
         });
     }

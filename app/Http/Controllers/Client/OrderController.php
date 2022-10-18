@@ -10,6 +10,9 @@ use App\Models\Order;
 use App\Models\City;
 use App\Models\OrderItem;
 use App\Models\Page;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\SendOrder;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Contracts\Foundation\Application;
@@ -274,6 +277,7 @@ class OrderController extends Controller
                 DataBase::beginTransaction();
                 $data['payment_type'] = 'bog';
                 $data['payment_method'] = 1;
+                $data['user_id'] = Auth::user()->id;
                 $order = Order::create($data);
 
                 $data = [];
@@ -296,7 +300,6 @@ class OrderController extends Controller
                 DataBase::commit();
 
 
-
                 if ($order->payment_method == 1 && $order->payment_type == 'bog') {
                     return app(BogPaymentController::class)->make_order($order->id, $order->grand_total);
                 } elseif ($order->payment_method == 1 && $order->payment_type == 'tbc') {
@@ -313,7 +316,6 @@ class OrderController extends Controller
     public function bogResponse(Request $request)
     {
 
-        
         //dump($request->order_id);
         $order = Order::query()->where('id', $request->get('order_id'))->first();
 
@@ -329,6 +331,8 @@ class OrderController extends Controller
     public function statusSuccess($order_id)
     {
         $order = Order::query()->where('id', $order_id)->with('items')->first();
+        //send mail
+        // Mail::to("info@rayshop.ge")->send(new SendOrder($order));
         return Inertia::render('PaymentSuccess', ['order' => $order])->withViewData([
             'meta_title' => 'success',
             'meta_description' => 'success',

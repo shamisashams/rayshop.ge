@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Slider;
+use App\Models\Order;
+use App\Models\OrderItems;
 use App\Models\Size;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
 use App\Models\Gallery;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
 use App\Models\ProductCategory;
@@ -218,9 +221,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function orderDetails()
+    public function orderDetails(string $locale, string $slug)
     {
-
 
         $page = Page::where('key', 'home')->firstOrFail();
 
@@ -277,14 +279,10 @@ class HomeController extends Controller
         })->with(['latestImage', 'files', 'sizes'])->get();
 
         return Inertia::render('OrderDetails', [
-            'products' => $products,
-            'productsCat' => ProductCategory::all(),
-            'product' => $productcostum,
-            'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
-            "sliders" => $sliders->get(),
+
+            "order" => order::where('id', $slug)->first(),
+            "orderitems" => OrderItem::where("order_id", $slug)->get(),
             "category" => Category::with("translations")->get(),
-            "sizes" => Size::all(),
-            "gallery" => Gallery::with("file")->get()->take(8),
             "page" => $page, "seo" => [
                 "title" => $page->meta_title,
                 "description" => $page->meta_description,
@@ -365,14 +363,10 @@ class HomeController extends Controller
         })->with(['latestImage', 'files', 'sizes'])->get();
 
         return Inertia::render('OrderHistory', [
-            'products' => $products,
-            'productsCat' => ProductCategory::all(),
-            'product' => $productcostum,
-            'productsAll' => Product::with(["translations", 'files'])->take(8)->get(),
-            "sliders" => $sliders->get(),
-            "category" => Category::with("translations")->get(),
-            "sizes" => Size::all(),
-            "gallery" => Gallery::with("file")->get()->take(8),
+            "orders" => order::where([
+                ['user_id', auth()->user()->id],
+                ['status', 'success']
+            ])->paginate(5),
             "page" => $page, "seo" => [
                 "title" => $page->meta_title,
                 "description" => $page->meta_description,
@@ -392,10 +386,4 @@ class HomeController extends Controller
             'og_description' => $page->meta_og_description
         ]);
     }
-
 }
-
-
-
-
-

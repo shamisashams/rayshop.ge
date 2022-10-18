@@ -11,6 +11,7 @@ class SendOrder extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $order;
     /**
      * Create a new message instance.
      *
@@ -28,6 +29,6 @@ class SendOrder extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('client.email.order');
     }
 }

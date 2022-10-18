@@ -152,7 +152,7 @@ Route::prefix('{locale?}')
 
             Route::get('cabinet', [\App\Http\Controllers\Client\AuthController::class, 'cabinet'])->name('client.cabinet');
             Route::get('orderhistory', [\App\Http\Controllers\Client\HomeController::class, 'orderhistory'])->name('client.orderhistory');
-            Route::get('orderDetails', [\App\Http\Controllers\Client\HomeController::class, 'orderDetails'])->name('client.orderDetails');
+            Route::get('orderDetails/{id?}', [\App\Http\Controllers\Client\HomeController::class, 'orderDetails'])->name('client.orderDetails');
             Route::post('updateuser', [\App\Http\Controllers\Client\AuthController::class, 'updateuser'])->name('client.updateuser');
 
 

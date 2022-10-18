@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import AccountTabs from "../components/AccountTabs";
 import { Link, usePage } from "@inertiajs/inertia-react";
 
-const OrderDetails = ({ seo }) => {
+const OrderDetails = ({ seo, order,orderitems }) => {
+    console.log(order , orderitems, 'esaaa');
     const rows = [
         {
             name: "პროდუქტის დასახელება",
@@ -31,6 +32,12 @@ const OrderDetails = ({ seo }) => {
         },
     ];
 
+    const date = () => {
+        let z = order.created_at.split("-");
+        z[2] = z[2].split(":");
+        z[2] = z[2][0].slice(0, z[2][0].search("T"));
+        return z;
+    }
     return (
         <Layout seo={seo}>
             <div className="relative bg-custom-slate-300">
@@ -39,12 +46,12 @@ const OrderDetails = ({ seo }) => {
                     <AccountTabs tab={2} />
                     <div className="lg:w-2/3 w-full mt-10  lg:mt-0  lg:ml-10 lg:py-40  py-10">
                         <div className="pl-4 mb-10">
-                            <div className="bold text-lg mb-3">#123456789</div>
+                            <div className="bold text-lg mb-3">#{order.id}</div>
                             <strong className="mb-3 block">
-                                შეკვეთის თარიღი: 15.05.2022
+                                შეკვეთის თარიღი: {`${date()[0]} ${date()[1]} ${date()[2]}`}
                             </strong>
                             <strong className="mb-3  block">
-                                ჯამური ფასი: 2500 ₾
+                                ჯამური ფასი: {order.grand_total} ₾
                             </strong>
                         </div>
                         <div className="w-full overflow-x-scroll lg:overflow-x-hidden scrollbar pb-5 my-5">
@@ -59,7 +66,7 @@ const OrderDetails = ({ seo }) => {
                                     </th>
                                     <th className="opacity-50 text-sm">ფასი</th>
                                 </tr>
-                                {rows.map((item, index) => {
+                                {/* {rows.map((item, index) => {
                                     return (
                                         <tr key={index}>
                                             <td className="bold">
@@ -76,7 +83,27 @@ const OrderDetails = ({ seo }) => {
                                             </td>
                                         </tr>
                                     );
-                                })}
+                                })} */}
+                                {
+                                    orderitems.map((item,index)=>{
+                                        return (
+                                            <tr key={index}>
+                                                <td className="bold">
+                                                    {item.name}
+                                                </td>
+                                                <td className="bold uppercase">
+                                                    {item.size}
+                                                </td>
+                                                <td className="bold">
+                                                    {item.qty_ordered}
+                                                </td>
+                                                <td className="bold">
+                                                    ₾ {item.price}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                }
                             </table>
                         </div>
                     </div>

@@ -25,7 +25,8 @@ class Order extends Model
         'courier_service',
         'locale',
         'grand_total',
-        'payment_type'
+        'payment_type',
+        'user_id'
     ];
 
     public function getFilterScopes(): array
