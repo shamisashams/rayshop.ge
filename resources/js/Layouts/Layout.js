@@ -15,15 +15,15 @@ import LinearWithValueLabel from "../components/Preloader/Preloader";
 import { useState } from "react";
 // import { InertiaProgress } from '@inertiajs/progress'
 // import { Inertia } from "@inertiajs/inertia";
-import NProgress from 'nprogress'
-import { Inertia } from '@inertiajs/inertia'
+import NProgress from "nprogress";
+import { Inertia } from "@inertiajs/inertia";
 import { Route } from "react-router-dom";
-
-
 
 export default function Layout({ children, seo = null }) {
     // const [loading, setLoading] = useState(window.location == route("client.home.index")?true:false);
-    const [loading, setLoading] = useState(window.location != route("client.product.index")?true:false);
+    const [loading, setLoading] = useState(
+        window.location != route("client.product.index") ? true : false
+    );
 
     useEffect(() => {
         setTimeout(() => {
@@ -31,15 +31,13 @@ export default function Layout({ children, seo = null }) {
         }, [1500]);
     }, []);
 
-    Inertia.on('finish', () => {
+    Inertia.on("finish", () => {
         setLoading(false);
-    })
+    });
 
-
-    window.addEventListener("load", ()=>{
-      setLoading(false)
-     })
-
+    window.addEventListener("load", () => {
+        setLoading(false);
+    });
 
     if (seo) {
         setSeoData(seo);
@@ -57,9 +55,8 @@ export default function Layout({ children, seo = null }) {
     //     import("./AppRus.css");
     // }
 
-
     return (
-    <>
+        <>
             <LinearWithValueLabel loading={loading} />
             <CursorFollower />
             {/*<Router>*/}
