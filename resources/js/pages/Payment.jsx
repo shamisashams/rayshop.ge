@@ -87,12 +87,25 @@ const Payment = ({ seo, city }) => {
 
     const [selectBank, setSelectBank] = useState(false);
 
+    let promoCode = 1234567;
+    const [correctPromo, setCorrectPromo] = useState(false);
+    const [promoAttempt, setPromoAttempt] = useState(false);
+    const checkCode = (e) => {
+        setPromoAttempt(true);
+        if (Number(e.target.value) === promoCode) {
+            setCorrectPromo(true);
+            console.log("promo code is correct");
+        } else {
+            setCorrectPromo(false);
+        }
+    };
+
     return (
         <Layout seo={seo}>
             <div className="relative paymentPage">
                 <div className="lg:block hidden absolute bg-custom-slate-300 w-1/5 h-full right-0 top-0"></div>
                 <div className="flex items-center justify-between wrapper min-h-screen flex-col-reverse lg:flex-row">
-                    <div className="lg:w-2/3 lg:mt-32 mt-20 pb-10">
+                    <div className="lg:w-2/3 lg:mt-32 mt-20 pb-10 pt-20">
                         <div className="max-w-md mx-auto">
                             <div className="mb-3 w-full h-fit relative">
                                 <div className="absolute top-1/2 -translate-y-1/2 right-2 z-20">
@@ -112,9 +125,8 @@ const Payment = ({ seo, city }) => {
                                     {city.map((e, i) => {
                                         return (
                                             <option
-                                            key={i}
-                                                selected={
-                                                    user.city == e.id}
+                                                key={i}
+                                                selected={user.city == e.id}
                                                 value={e.id}
                                             >
                                                 {e.title}
@@ -143,7 +155,7 @@ const Payment = ({ seo, city }) => {
                             />
                             {errors.phone && <div>{errors.phone}</div>}
 
-                            <div className="text-center my-5 mb-20">
+                            <div className="text-center my-5  mb-10">
                                 <button
                                     onClick={() => setSelectBank(!selectBank)}
                                     className={`border border-solid  py-2 px-3 mx-auto transition-all ${
@@ -158,13 +170,160 @@ const Payment = ({ seo, city }) => {
                                     />
                                 </button>
                             </div>
+                            <p className="opacity-50 text-center mb-4 ">
+                                გამოიყენე პრომო კოდი
+                            </p>
+                            <div className="relative w-fil h-fit mb-10">
+                                <input
+                                    onChange={(e) => checkCode(e)}
+                                    className=" placeholder:opacity-50 text-center bold text-xl"
+                                    type="text"
+                                />
+                                {/* correct or incorrect code :  */}
+                                <img
+                                    className={`absolute top-1/2 -translate-y-1/2 right-4 ${
+                                        promoAttempt ? "block" : "hidden"
+                                    }`}
+                                    src={
+                                        correctPromo
+                                            ? "/assets/images/icons/other/correct.png"
+                                            : "/assets/images/icons/other/error.png"
+                                    }
+                                />
+                            </div>
 
-                            <form onSubmit={handleSubmit}>
+                            <div
+                                className={` transition-all duration-300
+                                    ${
+                                        correctPromo
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                    }
+                                `}
+                            >
+                                <p>
+                                    აირჩიე ნივთი{" "}
+                                    <span className="opacity-50">
+                                        (პრომო კოდი მოქმედებს მხოლოდ 1 ნივთზე)
+                                    </span>{" "}
+                                </p>
+
+                                <div
+                                    className={`bg-custom-slate-200 sm:p-5 p-3 overflow-y-scroll scrollbar h-44 mt-3 `}
+                                >
+                                    {getCart().items.map((item, index) => {
+                                        const [quantity, setquantity] =
+                                            useState(item.qty);
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`flex items-center justify-between mb-4 text-sm`}
+                                            >
+                                                <div className="flex items-center  mr-3 ">
+                                                    <input
+                                                        defaultChecked
+                                                        type="checkbox"
+                                                        id={`checkbox_${index}`}
+                                                    />
+                                                    <label
+                                                        htmlFor={`checkbox_${index}`}
+                                                    >
+                                                        <div></div>
+                                                    </label>
+                                                    <div className=" sm:w-20 w-16 h-fit shrink-0 sm:mx-3 mx-2">
+                                                        {/* <img className="w-full object-cover" src={item.product.img} alt="" /> */}
+                                                        {item.product
+                                                            .latest_image ? (
+                                                            <img
+                                                                className="w-full object-cover"
+                                                                alt=""
+                                                                src={
+                                                                    item.product
+                                                                        .latest_image !=
+                                                                    null
+                                                                        ? "/" +
+                                                                          item
+                                                                              .product
+                                                                              .latest_image
+                                                                              .path +
+                                                                          "/" +
+                                                                          item
+                                                                              .product
+                                                                              .latest_image
+                                                                              .title
+                                                                        : null
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            <img
+                                                                className="w-full object-cover"
+                                                                alt=""
+                                                                src={
+                                                                    item.product
+                                                                        .files !=
+                                                                    null
+                                                                        ? "/" +
+                                                                          item
+                                                                              .product
+                                                                              .files[0]
+                                                                              .path +
+                                                                          "/" +
+                                                                          item
+                                                                              .product
+                                                                              .files[0]
+                                                                              .title
+                                                                        : null
+                                                                }
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        {item.product.title}
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    {__(
+                                                        "client.size",
+                                                        sharedData
+                                                    )}{" "}
+                                                    :{" "}
+                                                    <span className="bold uppercase">
+                                                        {item.size}
+                                                    </span>
+                                                </div>
+                                                <div className="bold">
+                                                    {item.product.special_price
+                                                        ? item.product
+                                                              .special_price
+                                                        : item.product.price}
+                                                    {__(
+                                                        "client.gel",
+                                                        sharedData
+                                                    )}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <form
+                                className={`transition-all duration-300 ${
+                                    correctPromo ? "mt-0 " : "-mt-32"
+                                }`}
+                                onSubmit={handleSubmit}
+                            >
                                 <div className="text-center mt-10">
                                     {/* <CommonButton text="გადახდა" width="245px" /> */}
                                     <button
+                                        disabled={!correctPromo}
                                         type="submit"
-                                        className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm`}
+                                        className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm ${
+                                            correctPromo
+                                                ? "opacity-100"
+                                                : "opacity-20"
+                                        }`}
                                     >
                                         გადახდა
                                     </button>
