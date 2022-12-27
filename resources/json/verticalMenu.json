@@ -35,6 +35,13 @@
                     "i18n": "slider",
                     "icon": "language",
                     "slug": "slider"
+                },
+                {
+                    "url": "promocode.index",
+                    "name": "Promocode",
+                    "i18n": "promocode",
+                    "icon": "promocode",
+                    "slug": "promocode"
                 }
 
             ]

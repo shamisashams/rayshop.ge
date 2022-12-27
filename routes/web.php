@@ -107,6 +107,9 @@ Route::prefix('{locale?}')
 
                 Route::resource('attribute', \App\Http\Controllers\Admin\AttributeController::class);
                 Route::get('attribute/{attribute}/destroy', [\App\Http\Controllers\Admin\AttributeController::class, 'destroy'])->name('attribute.destroy');
+
+                Route::resource('promocode', \App\Http\Controllers\Admin\PromocodeController::class)->parameters(['promocode' => 'promocode']);
+                Route::get('promocode/{promocode}/destroy', [\App\Http\Controllers\Admin\PromocodeController::class, 'destroy'])->name('promocode.destroy');
             });
         });
         Route::middleware(['active'])->group(function () {
