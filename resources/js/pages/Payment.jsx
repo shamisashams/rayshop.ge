@@ -141,6 +141,9 @@ const Payment = ({ seo, city }) => {
             setDiscount(null)
             setCorrectPromo(false);
         }
+        document.querySelectorAll('[name="product_id"]').forEach((el,i) => {
+            el.checked =  false;
+        })
     };
 
     return (
