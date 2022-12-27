@@ -9,7 +9,7 @@ use App\Models\PromoCode;
 use App\Models\Slider;
 
 use App\Repositories\Eloquent\CityRepository;
-use App\Repositories\Eloquent\PromoCodeRepository;
+use App\Repositories\Eloquent\PromocodeRepository;
 
 use App\Repositories\SliderRepositoryInterface;
 use Illuminate\Http\Request;
