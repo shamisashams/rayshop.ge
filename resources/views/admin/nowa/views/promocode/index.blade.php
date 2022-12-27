@@ -77,7 +77,7 @@
                                             <td>{{$slider->id}}</td>
                                             <td>
 
-                                                {{$slider->status}}
+                                                <span {!! $slider->status == 'active'?'style="color:green"':'style="color:red"' !!}>{{$slider->status}}</span>
 
                                             </td>
                                             <td>{{$slider->discount}}</td>
