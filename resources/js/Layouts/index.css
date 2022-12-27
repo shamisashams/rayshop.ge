@@ -116,10 +116,12 @@ textarea:focus {
     background-color: #f5f5f577;
     box-shadow: 0 0 4px 2px #3fa0cd36;
 }
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
     display: none;
 }
-input[type="checkbox"] + label {
+input[type="checkbox"] + label,
+input[type="radio"] + label {
     width: 21px;
     height: 21px;
     background-color: #e2e2e2;
@@ -130,17 +132,20 @@ input[type="checkbox"] + label {
     transition: 0.3s;
     cursor: pointer;
 }
-input[type="checkbox"] + label div {
+input[type="checkbox"] + label div,
+input[type="radio"] + label div {
     width: 11px;
     height: 11px;
     border-radius: 1px;
     background-color: #fff;
     transition: 0.3s;
 }
-input[type="checkbox"]:checked + label {
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
     background-color: #fff;
 }
-input[type="checkbox"]:checked + label div {
+input[type="checkbox"]:checked + label div,
+input[type="radio"]:checked + label div {
     background-color: #ed5c2f;
 }
 select {

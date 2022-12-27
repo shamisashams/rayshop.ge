@@ -221,12 +221,12 @@ const Payment = ({ seo, city }) => {
                                             >
                                                 <div className="flex items-center  mr-3 ">
                                                     <input
-                                                        defaultChecked
                                                         type="radio"
-                                                        id={`checkbox_${index}`}
+                                                        id={`radio_${index}`}
+                                                        name="radioButtons"
                                                     />
                                                     <label
-                                                        htmlFor={`checkbox_${index}`}
+                                                        htmlFor={`radio_${index}`}
                                                     >
                                                         <div></div>
                                                     </label>
