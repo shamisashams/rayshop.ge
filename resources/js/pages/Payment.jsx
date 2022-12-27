@@ -124,6 +124,9 @@ const Payment = ({ seo, city }) => {
                         ...values,
                         promo_code: response.data.promocode,
                     }));
+                } else {
+                    setDiscount(null);
+                    setCorrectPromo(false);
                 }
             });
 
@@ -135,6 +138,7 @@ const Payment = ({ seo, city }) => {
                 ...values,
                 promo_code: null,
             }));
+            setDiscount(null)
             setCorrectPromo(false);
         }
     };
