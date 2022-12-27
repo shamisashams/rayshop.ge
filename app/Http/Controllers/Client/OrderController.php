@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\City;
 use App\Models\OrderItem;
 use App\Models\Page;
+use App\Models\Promocode;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SendOrder;
 use Illuminate\Support\Facades\Mail;
@@ -217,7 +218,7 @@ class OrderController extends Controller
 
     public function order(Request $request)
     {
-        // dd($request->post());
+        // dd($request->all());
         $request->validate([
             'first_name' => 'required',
             // 'last_name' => 'required',
@@ -238,6 +239,16 @@ class OrderController extends Controller
         $data['city'] = City::with("translations")->find($int)->title;
         $data['grand_total'] = $cart['total'] + (int)$shipping_price;
 
+        if ($request->post('promo_code') && $request->post('promocode_product')){
+            $promocode = Promocode::query()->where('id',$request->post('promo_code')['id'])->first();
+            $product_ = Product::query()->where('id',$request->post('promocode_product'))->first();
+
+            if($product_ && $promocode){
+                $price = $product_->special_price ? $product_->special_price : $product_->price;
+                $data['grand_total'] = $data['grand_total'] - ($price * $promocode->discount) / 100;
+            }
+
+        }
 
 
         $product_ids = [];
@@ -299,6 +310,17 @@ class OrderController extends Controller
 
                 DataBase::commit();
 
+                if ($request->post('promo_code') && $request->post('promocode_product')){
+                    $promocode = Promocode::query()->where('id',$request->post('promo_code')['id'])->first();
+                    $product_ = Product::query()->where('id',$request->post('promocode_product'))->first();
+
+
+                    if($product_ && $promocode){
+                        $promocode->update(['order_id' => $order->id,'product_id' => $product_->id,'status' => 'used','user_id' => \auth()->id()]);
+                    }
+
+                }
+
 
                 if ($order->payment_method == 1 && $order->payment_type == 'bog') {
                     return app(BogPaymentController::class)->make_order($order->id, $order->grand_total);
@@ -353,5 +375,22 @@ class OrderController extends Controller
             'og_title' => 'success',
             'og_description' => 'success',
         ]);
+    }
+
+
+    public function checkPromocode(Request $request){
+        $promocode = Promocode::query()->where('promocode',$request->post('promocode'))->where('status','active')->first();
+        if($promocode){
+            session(['promocode' => $promocode]);
+            return ['status' => 'ok','promocode' => $promocode];
+        } else {
+            session()->forget('promocode');
+            return ['status' => 'error'];
+        }
+    }
+
+    public function removePromocode(Request $request){
+            session()->forget('promocode');
+            return ['status' => 'error'];
     }
 }

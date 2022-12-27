@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import Layout from "../Layouts/Layout";
 import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi";
 import { Link, usePage } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
+import axios from "axios";
 
 const getCart = function () {
     let cart = [];
@@ -40,7 +41,7 @@ const updateCart = (quantity, index) => {
     cart = JSON.parse(cart);
     cart[index].qty = quantity;
     localStorage.setItem("cart", JSON.stringify(cart));
-    // Inertia.visit(window.location.href);
+     Inertia.visit(window.location.href);
 };
 
 function findArrayElementByTitle(array, title) {
@@ -69,7 +70,11 @@ const Payment = ({ seo, city }) => {
         email: user.email,
         phone: user.phone,
         cart: getCart(),
+        promo_code: null,
+        promocode_product: null
     });
+
+    const [discount,setDiscount] = useState('');
 
     function handleChange(e) {
         const key = e.target.id;
@@ -78,6 +83,23 @@ const Payment = ({ seo, city }) => {
             ...values,
             [key]: value,
         }));
+
+
+    }
+
+    function handleChange2(e) {
+
+        const value = e.target.value;
+        setValues((values) => ({
+            ...values,
+            promocode_product: value,
+        }));
+        let data = e.target.dataset.price;
+        data = parseFloat(data);
+        //alert(data)
+        if(values.promo_code){
+            setDiscount(data * parseFloat(values.promo_code.discount)/100);
+        }
     }
 
     function handleSubmit(e) {
@@ -92,10 +114,27 @@ const Payment = ({ seo, city }) => {
     const [promoAttempt, setPromoAttempt] = useState(false);
     const checkCode = (e) => {
         setPromoAttempt(true);
-        if (Number(e.target.value) === promoCode) {
-            setCorrectPromo(true);
-            console.log("promo code is correct");
+        if (e.target.value.length > 7 && e.target.value.length < 9) {
+            axios.post(route('check-promocode'),{promocode:e.target.value}).then((response)=>{
+                console.log(response.data);
+                if(response.data.status === 'ok'){
+                    setCorrectPromo(true);
+                    console.log("promo code is correct");
+                    setValues((values) => ({
+                        ...values,
+                        promo_code: response.data.promocode,
+                    }));
+                }
+            });
+
         } else {
+            axios.get(route('remove-promocode')).then((response)=>{
+                console.log(response.data);
+            });
+            setValues((values) => ({
+                ...values,
+                promo_code: null,
+            }));
             setCorrectPromo(false);
         }
     };
@@ -178,6 +217,7 @@ const Payment = ({ seo, city }) => {
                                     onChange={(e) => checkCode(e)}
                                     className=" placeholder:opacity-50 text-center bold text-xl"
                                     type="text"
+
                                 />
                                 {/* correct or incorrect code :  */}
                                 <img
@@ -223,7 +263,13 @@ const Payment = ({ seo, city }) => {
                                                     <input
                                                         type="radio"
                                                         id={`radio_${index}`}
-                                                        name="radioButtons"
+                                                        name="product_id"
+                                                        value={item.product.id}
+                                                        onChange={handleChange2}
+                                                        data-price={item.product.special_price
+                                                            ? item.product
+                                                                .special_price
+                                                            : item.product.price}
                                                     />
                                                     <label
                                                         htmlFor={`radio_${index}`}
@@ -317,13 +363,9 @@ const Payment = ({ seo, city }) => {
                                 <div className="text-center mt-10">
                                     {/* <CommonButton text="გადახდა" width="245px" /> */}
                                     <button
-                                        disabled={!correctPromo}
+                                        //disabled={!correctPromo}
                                         type="submit"
-                                        className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm ${
-                                            correctPromo
-                                                ? "opacity-100"
-                                                : "opacity-20"
-                                        }`}
+                                        className={`bold xl:py-5 py-4 xl:px-12 px-9 relative commonBtn whitespace-nowrap xl:text-base text-sm opacity-100`}
                                     >
                                         გადახდა
                                     </button>
@@ -510,16 +552,18 @@ const Payment = ({ seo, city }) => {
                                           if (e.id == cityid) {
                                               return (
                                                   <p>
-                                                      {e.ship_price * 1 +
+                                                      {discount ? e.ship_price * 1 +
                                                           getCart().total.toFixed(
                                                               2
                                                           ) *
-                                                              1}
+                                                              1 - discount : e.ship_price * 1 +
+                                                          getCart().total.toFixed(2) * 1 }
                                                   </p>
                                               );
                                           }
                                       })
-                                    : getCart().total.toFixed(2) * 1}
+                                    : discount ? getCart().total.toFixed(2) * 1 - discount : getCart().total.toFixed(2) * 1}
+
                             </span>
                         </div>
                     </div>

@@ -79,7 +79,7 @@
                         <label class="form-label">@lang('admin.status')</label>
                         <select class="form-control" name="status">
                             @foreach($types as $key => $type)
-                                <option value="{{$key}}" {{$model->type == $key ? 'selected':''}}>{{$type}}</option>
+                                <option value="{{$key}}" {{$model->status == $key ? 'selected':''}}>{{$type}}</option>
                             @endforeach
                         </select>
                         @error('reward')

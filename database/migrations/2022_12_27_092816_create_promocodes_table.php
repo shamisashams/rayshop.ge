@@ -17,7 +17,8 @@ class CreatePromocodesTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('order_id')->unsigned();
-            $table->index(['user_id','order_id']);
+            $table->bigInteger('product_id')->unsigned();
+            $table->index(['user_id','order_id','product_id']);
             $table->float('discount')->nullable();
             $table->string('promocode')->nullable();
             $table->string('status')->nullable();

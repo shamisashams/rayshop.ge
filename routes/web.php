@@ -159,6 +159,10 @@ Route::prefix('{locale?}')
             Route::post('updateuser', [\App\Http\Controllers\Client\AuthController::class, 'updateuser'])->name('client.updateuser');
 
 
+            Route::post('check-promocode',[\App\Http\Controllers\Client\OrderController::class,'checkPromocode'])->name('check-promocode');
+            Route::get('remove-promocode',[\App\Http\Controllers\Client\OrderController::class,'removePromocode'])->name('remove-promocode');
+
+
 
 
             Route::middleware(['guest'])->group(function () {
