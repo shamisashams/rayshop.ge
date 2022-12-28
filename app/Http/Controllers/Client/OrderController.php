@@ -218,7 +218,7 @@ class OrderController extends Controller
 
     public function order(Request $request)
     {
-        // dd($request->all());
+         //dd($request->all());
         $request->validate([
             'first_name' => 'required',
             // 'last_name' => 'required',
@@ -237,18 +237,7 @@ class OrderController extends Controller
         $shipping_price = City::find($int)->ship_price;
         $data['courier_service'] = $shipping_price;
         $data['city'] = City::with("translations")->find($int)->title;
-        $data['grand_total'] = $cart['total'] + (int)$shipping_price;
 
-        if ($request->post('promo_code') && $request->post('promocode_product')){
-            $promocode = Promocode::query()->where('id',$request->post('promo_code')['id'])->first();
-            $product_ = Product::query()->where('id',$request->post('promocode_product'))->first();
-
-            if($product_ && $promocode){
-                $price = $product_->special_price ? $product_->special_price : $product_->price;
-                $data['grand_total'] = $data['grand_total'] - ($price * $promocode->discount) / 100;
-            }
-
-        }
 
 
         $product_ids = [];
@@ -260,13 +249,10 @@ class OrderController extends Controller
         if ($products) {
             $prod_data = [];
             foreach ($products as $product) {
-                $prod_data[$product->id]['qty'] = $product->quantity;
-                $prod_data[$product->id]['status'] = $product->status;
-                $prod_data[$product->id]['price'] = $product->price;
-                $prod_data[$product->id]['special_price'] = $product->special_price;
+                $prod_data[$product->id] = $product;
             }
 
-            $error = true;
+            /*$error = true;
             foreach ($cart['items'] as $item) {
                 if (isset($prod_data[$item['product']['id']])) {
                     $price = ($prod_data[$item['product']['id']]['special_price'] !== null) ? $prod_data[$item['product']['id']]['special_price'] : $prod_data[$item['product']['id']]['price'];
@@ -277,7 +263,38 @@ class OrderController extends Controller
                     $error = true;
                     break;
                 }
+            }*/
+
+            $total = 0;
+            foreach ($cart['items'] as &$item) {
+                if(isset($prod_data[$item['product']['id']])){
+                    $item['product'] = $prod_data[$item['product']['id']];
+                    $total += $item['qty'] * ($item['product']['special_price'] ? $item['product']['special_price'] : $item['product']['price']);
+                } else unset($item);
+
+
             }
+
+            $cart['total'] = $total;
+
+
+            $data['grand_total'] = $cart['total'] + (float)$shipping_price;
+
+            //dd($data);
+            if ($request->post('promo_code') && $request->post('promocode_product')){
+                $promocode = Promocode::query()->where('id',$request->post('promo_code')['id'])->first();
+                $product_ = Product::query()->where('id',$request->post('promocode_product'))->first();
+
+
+                if($product_ && $promocode){
+                    $price = $product_->special_price ? $product_->special_price : $product_->price;
+                    //dd(($price * $promocode->discount) / 100);
+                    $data['grand_total'] = $data['grand_total'] - ($price * $promocode->discount) / 100;
+                }
+
+            }
+
+            //dd($cart,$data);
 
 
             // if ($error) {

@@ -24,8 +24,24 @@ const getCart = function () {
         items: cart,
         total: parseFloat(total),
     };
+
+
+
     return obj;
+
 };
+
+async function getProduct(id) {
+
+
+    return axios.get(route('get-cart-items'), {params: {product_id: id}}).then(function (response) {
+        // handle success
+        console.log(response.data);
+
+        return response.data
+
+    });
+}
 
 const removeCartItem = function (i) {
     let cart = [];
@@ -73,6 +89,36 @@ const Payment = ({ seo, city }) => {
         promo_code: null,
         promocode_product: null
     });
+
+
+    const [cartTotal,setCartTotal] = useState(0);
+
+    let cart = [];
+    let _cart = localStorage.getItem("cart");
+    if (_cart !== null) cart = JSON.parse(_cart);
+
+    let total = 0;
+    let product_id = [];
+    cart.forEach(function (el, i) {
+        product_id.push(el.product.id);
+    });
+
+     axios.get(route('get-cart-items2'), {params: {product_id: product_id}}).then(function (response) {
+        // handle success
+        console.log(response.data);
+
+        cart.forEach(function (el, i) {
+            total +=
+                el.qty *
+                (response.data[el.product.id].special_price !== null
+                    ? response.data[el.product.id].special_price
+                    : response.data[el.product.id].price);
+        });
+        //alert(total)
+
+        setCartTotal(total);
+    });
+
 
     const [discount,setDiscount] = useState('');
 
@@ -261,6 +307,17 @@ const Payment = ({ seo, city }) => {
                                     {getCart().items.map((item, index) => {
                                         const [quantity, setquantity] =
                                             useState(item.qty);
+
+                                        const [realProduct2, setRealProduct2] = useState(
+                                            null,[]
+                                        );
+
+                                        useEffect(()=>{
+                                            getProduct(item.product.id).then((data)=>{
+                                                console.log(data)
+                                                setRealProduct2(data)
+                                            })
+                                        },[]);
                                         return (
                                             <div
                                                 key={index}
@@ -273,10 +330,10 @@ const Payment = ({ seo, city }) => {
                                                         name="product_id"
                                                         value={item.product.id}
                                                         onChange={handleChange2}
-                                                        data-price={item.product.special_price
-                                                            ? item.product
+                                                        data-price={realProduct2?realProduct2.special_price
+                                                            ? realProduct2
                                                                 .special_price
-                                                            : item.product.price}
+                                                            : realProduct2.price:null}
                                                     />
                                                     <label
                                                         htmlFor={`radio_${index}`}
@@ -285,23 +342,20 @@ const Payment = ({ seo, city }) => {
                                                     </label>
                                                     <div className=" sm:w-20 w-16 h-fit shrink-0 sm:mx-3 mx-2">
                                                         {/* <img className="w-full object-cover" src={item.product.img} alt="" /> */}
-                                                        {item.product
-                                                            .latest_image ? (
+                                                        {realProduct2 ? (
                                                             <img
                                                                 className="w-full object-cover"
                                                                 alt=""
                                                                 src={
-                                                                    item.product
+                                                                    realProduct2
                                                                         .latest_image !=
                                                                     null
                                                                         ? "/" +
-                                                                          item
-                                                                              .product
+                                                                        realProduct2
                                                                               .latest_image
                                                                               .path +
                                                                           "/" +
-                                                                          item
-                                                                              .product
+                                                                        realProduct2
                                                                               .latest_image
                                                                               .title
                                                                         : null
@@ -312,26 +366,24 @@ const Payment = ({ seo, city }) => {
                                                                 className="w-full object-cover"
                                                                 alt=""
                                                                 src={
-                                                                    item.product
+                                                                    realProduct2?(realProduct2
                                                                         .files !=
                                                                     null
                                                                         ? "/" +
-                                                                          item
-                                                                              .product
+                                                                        realProduct2
                                                                               .files[0]
                                                                               .path +
                                                                           "/" +
-                                                                          item
-                                                                              .product
+                                                                        realProduct2
                                                                               .files[0]
                                                                               .title
-                                                                        : null
+                                                                        : null):null
                                                                 }
                                                             />
                                                         )}
                                                     </div>
                                                     <div>
-                                                        {item.product.title}
+                                                        {realProduct2?realProduct2.title:null}
                                                     </div>
                                                 </div>
 
@@ -346,10 +398,10 @@ const Payment = ({ seo, city }) => {
                                                     </span>
                                                 </div>
                                                 <div className="bold">
-                                                    {item.product.special_price
-                                                        ? item.product
+                                                    {realProduct2?realProduct2.special_price
+                                                        ? realProduct2
                                                               .special_price
-                                                        : item.product.price}
+                                                        : realProduct2.price:null}
                                                     {__(
                                                         "client.gel",
                                                         sharedData
@@ -389,6 +441,17 @@ const Payment = ({ seo, city }) => {
                                 const [quantity, setquantity] = useState(
                                     item.qty
                                 );
+                                const [realProduct, setRealProduct] = useState(
+                                    null,[]
+                                );
+
+                                useEffect(()=>{
+                                    getProduct(item.product.id).then((data)=>{
+                                        console.log(data)
+                                        setRealProduct(data)
+                                    })
+                                },[]);
+
                                 return (
                                     <div
                                         key={index}
@@ -409,20 +472,20 @@ const Payment = ({ seo, city }) => {
                                             </label>
                                             <div className="lg:w-28 w-20 h-fit shrink-0 sm:mx-5 mx-2">
                                                 {/* <img className="w-full object-cover" src={item.product.img} alt="" /> */}
-                                                {item.product.latest_image ? (
+                                                {realProduct ? (
                                                     <img
                                                         className="w-full object-cover"
                                                         alt=""
                                                         src={
-                                                            item.product
+                                                            realProduct
                                                                 .latest_image !=
                                                             null
                                                                 ? "/" +
-                                                                  item.product
+                                                                realProduct
                                                                       .latest_image
                                                                       .path +
                                                                   "/" +
-                                                                  item.product
+                                                                realProduct
                                                                       .latest_image
                                                                       .title
                                                                 : null
@@ -433,28 +496,28 @@ const Payment = ({ seo, city }) => {
                                                         className="w-full object-cover"
                                                         alt=""
                                                         src={
-                                                            item.product
+                                                            realProduct ? (realProduct
                                                                 .files != null
                                                                 ? "/" +
-                                                                  item.product
+                                                                realProduct
                                                                       .files[0]
                                                                       .path +
                                                                   "/" +
-                                                                  item.product
+                                                                realProduct
                                                                       .files[0]
                                                                       .title
-                                                                : null
+                                                                : null):null
                                                         }
                                                     />
                                                 )}
                                             </div>
                                             <div className="lg:w-32 w-24">
-                                                <div>{item.product.name}</div>
+                                                <div>{realProduct ? realProduct.title :null}</div>
                                                 <div className="bold mb-3 mt-1">
-                                                    {item.product.special_price
-                                                        ? item.product
+                                                    {realProduct ? realProduct.special_price
+                                                        ? realProduct
                                                               .special_price
-                                                        : item.product.price}
+                                                        : realProduct.price:null}
                                                     ლარი
                                                 </div>
                                                 <div>
@@ -560,16 +623,16 @@ const Payment = ({ seo, city }) => {
                                               return (
                                                   <p>
                                                       {discount ? e.ship_price * 1 +
-                                                          getCart().total.toFixed(
+                                                          cartTotal.toFixed(
                                                               2
                                                           ) *
                                                               1 - discount : e.ship_price * 1 +
-                                                          getCart().total.toFixed(2) * 1 }
+                                                          cartTotal.toFixed(2) * 1 }
                                                   </p>
                                               );
                                           }
                                       })
-                                    : discount ? getCart().total.toFixed(2) * 1 - discount : getCart().total.toFixed(2) * 1}
+                                    : discount ? cartTotal.toFixed(2) * 1 - discount : cartTotal.toFixed(2) * 1}
 
                             </span>
                         </div>

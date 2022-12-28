@@ -161,7 +161,8 @@ Route::prefix('{locale?}')
 
             Route::post('check-promocode',[\App\Http\Controllers\Client\OrderController::class,'checkPromocode'])->name('check-promocode');
             Route::get('remove-promocode',[\App\Http\Controllers\Client\OrderController::class,'removePromocode'])->name('remove-promocode');
-
+            Route::get('get-cart-items',[\App\Http\Controllers\Client\CartController::class,'getCartItems'])->name('get-cart-items');
+            Route::get('get-cart-items2',[\App\Http\Controllers\Client\CartController::class,'getCartItems2'])->name('get-cart-items2');
 
 
 

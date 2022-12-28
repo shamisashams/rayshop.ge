@@ -205,4 +205,25 @@ class CartController extends Controller
         ]);
     }
 
+
+    public function getCartItems(Request $request){
+
+        $data = Product::with(['translation','latestImage','files'])->where('id',$request->get('product_id'))->first();
+
+
+        return $data;
+    }
+
+    public function getCartItems2(Request $request){
+
+        $data = Product::with(['translation','latestImage','files'])->whereIn('id',$request->get('product_id'))->get();
+
+        $result = [];
+
+        foreach ($data as $product){
+            $result[$product->id] = $product;
+        }
+
+        return $result;
+    }
 }
